@@ -17,8 +17,6 @@
     "chai",
     // Use Zod v4 instead of v3
     "zod/v3",
-    // Sentry is imported with `import *`
-    "@sentry/nextjs"
   ],
 
   // Vitest
@@ -62,5 +60,6 @@
     "pcss",
     "postcss",
     "github-actions-workflow"
-  ]
+  ],
+  "i18n-ally.sourceLanguage": "en"
 }

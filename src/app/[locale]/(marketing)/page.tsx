@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Sponsors } from '@/components/Sponsors';
+import Header from '@/components/Header';
 
 type IIndexProps = {
   params: Promise<{ locale: string }>;
@@ -29,6 +30,7 @@ export default async function Index(props: IIndexProps) {
 
   return (
     <>
+    <Header />
       <p>
         {`Follow `}
         <a

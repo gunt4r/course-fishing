@@ -1,6 +1,5 @@
 import type { NextConfig } from 'next';
 import withBundleAnalyzer from '@next/bundle-analyzer';
-import { withSentryConfig } from '@sentry/nextjs';
 import createNextIntlPlugin from 'next-intl/plugin';
 import './src/libs/Env';
 
@@ -26,7 +25,7 @@ if (process.env.ANALYZE === 'true') {
 
 // Conditionally enable Sentry configuration
 if (!process.env.NEXT_PUBLIC_SENTRY_DISABLED) {
-  configWithPlugins = withSentryConfig(configWithPlugins, {
+  configWithPlugins = configWithPlugins, {
     // For all available options, see:
     // https://www.npmjs.com/package/@sentry/webpack-plugin#options
     org: process.env.SENTRY_ORGANIZATION,
@@ -57,7 +56,7 @@ if (!process.env.NEXT_PUBLIC_SENTRY_DISABLED) {
 
     // Disable Sentry telemetry
     telemetry: false,
-  });
+  };
 }
 
 const nextConfig = configWithPlugins;

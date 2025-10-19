@@ -1,6 +1,6 @@
 {
   "RootLayout": {
-    "home_link": "Home",
+    "home_link": "Acasă",
     "stories_link": "Istorii",
     "reviews_link": "Recenzii",
     "products_link": "Curs",
@@ -8,7 +8,7 @@
     "sign_up_link": "Înregistrare"
   },
   "Header": {
-    "home_link": "Home",
+    "home_link": "Acasă",
     "stories_link": "Istorii",
     "reviews_link": "Recenzii",
     "products_link": "Curs",
