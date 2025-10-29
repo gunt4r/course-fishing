@@ -1,4 +1,5 @@
-import { setRequestLocale } from 'next-intl/server';
+import Header from "@/components/Header";
+import { setRequestLocale } from "next-intl/server";
 
 export default async function CenteredLayout(props: {
   children: React.ReactNode;
@@ -8,8 +9,11 @@ export default async function CenteredLayout(props: {
   setRequestLocale(locale);
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      {props.children}
-    </div>
+    <section>
+      <Header />
+      <div className="flex min-h-screen items-center justify-center">
+        {props.children}
+      </div>
+    </section>
   );
 }

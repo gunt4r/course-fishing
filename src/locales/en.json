@@ -1,12 +1,4 @@
 {
-  "RootLayout": {
-    "home_link": "Home",
-    "stories_link": "Istorii",
-    "reviews_link": "Recenzii",
-    "products_link": "Curs",
-    "sign_in_link": "Autentificare",
-    "sign_up_link": "Înregistrare"
-  },
   "Header": {
     "home_link": "Home",
     "stories_link": "Istorii",
@@ -15,6 +7,14 @@
     "sign_in_link": "Autentificare",
     "sign_up_link": "Înregistrare"
   },
+  "Footer": {
+    "description": "Nu pierde timpul - fă primul pas spre visul tău!",
+    "small_description": "Proiectul AlexFisherWay este un curs de formare pentru autoangajare în industria pescuitului. Nu este o agenție de ocupare a forței de muncă, o agenție de crewing, nu garantează angajarea cursanților.",
+    "policy": "Acordul utilizatorului și politica de confidențialitate",
+    "copyright": "Toate drepturile rezervate ",
+    "contacts": "Contacte",
+    "navigation": "Navigare"
+  },
   "BaseTemplate": {
     "description": "Starter code for your Nextjs Boilerplate with Tailwind CSS",
     "made_with": "Made with <author></author>."
@@ -22,7 +22,45 @@
   "Index": {
     "meta_title": "Next.js Boilerplate Presentation",
     "meta_description": "Next js Boilerplate is the perfect starter code for your project. Build your React application with the Next.js framework.",
-    "sponsors_title": "Sponsors"
+    "sponsors_title": "Sponsors",
+    "hero_link": "Obțineți acces acum!",
+    "benefits_title": "O oportunitate ideală pentru bărbații dispuși să muncească cu mâinile și să-și întrețină familia",
+    "benefits_money_title": "Venituri de la 6 000 € pe lună",
+    "benefits_money_description": "Câștigați 10.000 € pe lună lucrând pe bărci de pescuit moderne!",
+    "benefits_housing_title": "Cazare, mese, bilete incluse",
+    "benefits_housing_description": "Pe navele Norwegian, angajatorul are grijă de tot: cazare, mese, zboruri. Salariul este curat, fără cheltuieli suplimentare din partea dumneavoastră!",
+    "benefits_experience_title": "Este posibil fără experiență – vă vom învăța totul!",
+    "benefits_experience_description": "Începeți să lucrați ca pescar de navă de la zero – vă vom învăța tot ce aveți nevoie pentru angajare și vă vom pregăti pentru noua dvs. profesie!",
+    "steps_title": "De unde să începem?",
+    "steps_follow_title": "Urmați cursul",
+    "steps_follow_description": "Urmând cursul, veți primi cele mai valoroase materiale pentru a vă pregăti în vederea angajării în flota de pescuit din Norvegia și din alte țări ale UE.",
+    "steps_documents_title": "Depuneți documentația",
+    "steps_documents_description": "Folosind materialele și planul nostru pas cu pas, vă pregătiți și vă depuneți actele pentru instanțele râvnite.",
+    "steps_ready_title": "Du-te la navă",
+    "steps_ready_description": "Cu documentele pregătite și contactele navelor de pescuit în mână, vă puteți stabili cu ușurință asupra unei nave.",
+    "creator_title": "Despre creatorul cursului",
+    "creator_description": "Numele meu este Alexey și am trecut personal de la statutul de începător la cel de navigator pe o navă de pescuit crabi în Norvegia. Știu cât de dificil este să înțelegi toate cerințele, să pregătești documentele și să găsești un angajator. De-a lungul anilor am adunat: <ul><li>Contacte ale angajatorilor verificați.</li><li>Experiență personală de interviu.</li><li>Înțelegerea completă a ceea ce este necesar pentru a reuși în această industrie.</li></ul> Scopul meu este să vă ajut să evitați greșelile și să vă faceți călătoria pe mare cât mai ușoară și de succes posibil.",
+    "creator_read_more": "Citește mai mult",
+    "statistics_title": "Statistici în Norvegia",
+    "statistics_boats_description": "Numărul aproximativ al tuturor navelor (mari și mici) din Norvegia. Dar unde puteți obține cu adevărat un loc de muncă cu până la 1000 de nave",
+    "statistics_people_description": "Oamenii din Norvegia lucrează deja în sectorul pescuitului",
+    "statistics_salary_description": "Salariul mediu lunar al unui marinar obișnuit(€)",
+    "faq_title": "Răspunsuri la întrebări",
+
+    "faq_first_title": "Cum mă va ajuta acest curs să obțin un loc de muncă în flota de pescuit?",
+    "faq_first_description": "Cursul AlexFisherWay este un plan pas cu pas pentru angajarea pe nave de pescuit de crabi și de pescuit și în fabrici de prelucrare a peștelui în Norvegia. Vă oferim toate instrumentele și cunoștințele de care aveți nevoie pentru a vă angaja cu succes, sfaturi privind adaptarea și examenele medicale, inclusiv contacte cu angajatori nu numai în Norvegia, ci și în Irlanda, Danemarca și Anglia, deoarece Norvegia este o nișă prea îngustă și este posibil să nu existe suficiente nave pentru toată lumea. ",
+    "faq_second_title": "Cine poate urma cursul?",
+    "faq_second_description": "Cursul se adresează cetățenilor UE sau deținătorilor unui permis/permis de ședere în UE și celor care au un permis de muncă în Norvegia, Irlanda, Danemarca sau Anglia. Dacă îndepliniți aceste criterii, cursul vă va ajuta să obțineți un loc de muncă în flota de pescuit. ",
+    "faq_third_title": "Care sunt cerințele de sănătate pentru a lucra pe o navă?",
+    "faq_third_description": "Pentru angajarea în flota de pescuit, trebuie să treceți un examen medical pentru a obține un certificat maritim norvegian. Vă vom explica în detaliu cum să treceți prin acest proces și ce documente sunt necesare pentru a-l obține. ",
+    "faq_fourth_title": "Cum pot obține un certificat medical pentru a lucra pe nave maritime în Norvegia?",
+    "faq_fourth_description": "Pentru a obține un certificat medical, trebuie să fiți examinat de un medic acreditat care va efectua testele și verificările necesare. În cursul nostru vă prezentăm toți pașii pentru a vă ajuta să treceți cu succes de certificatul medical. ",
+    "faq_fifth_title": "Trebuie să aveți experiență pe nave de pescuit pentru a obține un loc de muncă în acest domeniu?",
+    "faq_fifth_description": "Experiența de lucru pe nave de pescuit este încurajată, dar nu obligatorie. Mulți angajatori caută angajați cu experiență în domenii conexe, cum ar fi prelucrarea peștelui sau alte activități din industria marină. Cheia este dorința de a lucra în locuri solicitante din punct de vedere fizic și o adaptare rapidă.  ",
+    "faq_sixth_title": "Cât timp va dura să obțineți un loc de muncă?",
+    "faq_sixth_description": "Timpul scurs de la începerea formării până la angajare depinde de eforturile tale, de dorința ta de a parcurge toate etapele și de disponibilitatea locurilor de muncă vacante. Cu toate acestea, cu cursul nostru veți primi toate instrumentele și sprijinul de care aveți nevoie pentru a accelera considerabil procesul. ",
+    "faq_seventh_title": "Ce fac dacă nu vorbesc norvegiană?",
+    "faq_seventh_description": "Barierele lingvistice nu sunt o problemă. În cursul nostru vă arătăm cât de ușor este să începeți să lucrați chiar dacă nu vorbiți norvegiană, deoarece statistic 90% dintre norvegieni au engleza ca a doua limbă. 3 lecții din curs sunt dedicate învățării limbii engleze de la zero, de asemenea, engleza maritimă și modelul de interviu pentru angajare. Lecții care vă vor ajuta să vă adaptați mai repede la lucrul pe o navă."
   },
   "Counter": {
     "meta_title": "Counter",

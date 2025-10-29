@@ -1,6 +1,8 @@
 /* eslint-disable jsonc/sort-keys */
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     // ======================================================================
     // Language & Environment
     // Defines JavaScript version and runtime environment
@@ -20,7 +22,7 @@
     "strictNullChecks": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
-
+    "strictPropertyInitialization": false,
     // ======================================================================
     // Type Safety - Advanced
     // Additional checks for higher code quality
@@ -74,5 +76,11 @@
 
   // Files to include/exclude from the project
   "exclude": ["node_modules", "**/*.spec.ts", "**/*.e2e.ts"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "**/*.mts"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "**/*.mts"
+  ]
 }

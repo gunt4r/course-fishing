@@ -1,15 +1,23 @@
-@layer theme, base, clerk, components, utilities; /* Ensure Clerk is compatible with Tailwind CSS v4 */
+@layer theme, base, components, utilities;
 
-@import 'tailwindcss';
- @import "tailwindcss";
- @plugin '../hero.ts';
+@import "tailwindcss";
+@import "tailwindcss";
+@plugin '../hero.ts';
 /* Note: You may need to change the path to fit your project structure */
- @source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@source '../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+html {
+  background-color: rgba(6, 4, 17, 0.92);
+}
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: linear-gradient(180deg,rgba(1, 34, 166, 0.98) 0%, rgba(14, 11, 30, 0.93) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(14, 11, 30, 0.92) 0%,
+    rgba(1, 34, 166, 0.88) 47%,
+    rgba(14, 11, 30, 0.93) 100%
+  );
   background-repeat: no-repeat;
   transition: all 0.3s ease-in-out;
 }
