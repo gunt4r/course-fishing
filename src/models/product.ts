@@ -5,9 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 import { CartItem } from "./cartItem";
-
+import type { Order } from "./order";
 @Entity({ name: "products" })
 export class Product {
   @PrimaryGeneratedColumn("uuid")
@@ -28,14 +30,28 @@ export class Product {
   @Column({ type: "boolean", default: true })
   isActive: boolean;
 
-  @OneToMany(() => CartItem, (cartItem) => cartItem.product)
+  @OneToMany("CartItem", "product", { cascade: true })
   cartItems: CartItem[];
 
   @Column({ type: "text", nullable: true })
-  originalHtml: string;
+  html: string;
 
   @Column({ type: "text", nullable: true })
   sanitizedHtml: string;
+
+  @ManyToMany("Order", "products", { cascade: true })
+  @JoinTable({
+    name: "order_products",
+    joinColumn: {
+      name: "product_id",
+      referencedColumnName: "id",
+    },
+    inverseJoinColumn: {
+      name: "order_id",
+      referencedColumnName: "id",
+    },
+  })
+  orders: Order[];
 
   @CreateDateColumn({ type: "timestamptz" })
   createdAt: Date;

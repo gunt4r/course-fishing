@@ -3,6 +3,7 @@ import {
   getOrCreateCartForRequest,
   addToCart as addToCartService,
   mergeGuestCartIntoUser,
+  deleteItemFromCart,
 } from "@/services/cart/service";
 
 const COOKIE_NAMES_TO_COPY = [
@@ -36,41 +37,76 @@ export async function GET(request: NextRequest) {
     await copyCookies(responseInternal as any, out as any);
     return out;
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error?.message || String(error) }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: error?.message || String(error) },
+      { status: 500 },
+    );
   }
 }
 
 export async function POST(request: NextRequest) {
   const url = new URL(request.url);
   const action = url.searchParams.get("action");
-//  Merge carts from guest to user
+  //  Merge carts from guest to user
   if (action === "merge") {
     const responseInternal = NextResponse.next();
     try {
-      const mergedCart = await mergeGuestCartIntoUser(request, responseInternal);
-      const out = NextResponse.json({ success: true, cart: mergedCart }, { status: 200 });
+      const mergedCart = await mergeGuestCartIntoUser(
+        request,
+        responseInternal,
+      );
+      const out = NextResponse.json(
+        { success: true, cart: mergedCart },
+        { status: 200 },
+      );
       await copyCookies(responseInternal as any, out as any);
       return out;
     } catch (error: any) {
-      return NextResponse.json({ success: false, error: error?.message || String(error) }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: error?.message || String(error) },
+        { status: 400 },
+      );
     }
   }
-  // Adding product to cart
   const responseInternal = NextResponse.next();
   try {
     const body = await request.json().catch(() => ({}));
     const productId = body?.productId;
-    const quantity = Number(body?.quantity ?? 1);
 
     if (!productId) {
-      return NextResponse.json({ success: false, error: "productId is required" }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: "productId is required" },
+        { status: 400 },
+      );
     }
 
-    const result = await addToCartService(request, responseInternal, productId, quantity);
-    const out = NextResponse.json({ success: true, cart: result.cart }, { status: 200 });
+    const result = await addToCartService(request, responseInternal, productId);
+    const out = NextResponse.json(
+      { success: true, cart: result.cart },
+      { status: 200 },
+    );
     await copyCookies(responseInternal as any, out as any);
     return out;
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error?.message || String(error) }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: error?.message || String(error) },
+      { status: 500 },
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest, response: NextResponse) {
+  try {
+    const { productId } = await request.json().catch(() => ({}));
+    if (productId) {
+      const result = await deleteItemFromCart(request, response, productId);
+      return NextResponse.json({ success: true, result }, { status: 200 });
+    }
+    return NextResponse.json(
+      { success: false, error: "productId is required" },
+      { status: 400 },
+    );
+  } catch (error) {
+    throw error;
   }
 }

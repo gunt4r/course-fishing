@@ -19,6 +19,7 @@ export function useCurrentUser() {
       }
     },
     retry: false,
+    staleTime: 60 * 60 * 1000,
   });
 }
 export function getUser(id: string) {

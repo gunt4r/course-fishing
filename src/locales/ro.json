@@ -4,6 +4,7 @@
     "stories_link": "Istorii",
     "reviews_link": "Recenzii",
     "products_link": "Curs",
+    "cart_link": "Coș",
     "sign_in_link": "Autentificare",
     "sign_up_link": "Înregistrare"
   },
@@ -14,10 +15,6 @@
     "copyright": "Toate drepturile rezervate ",
     "contacts": "Contacte",
     "navigation": "Navigare"
-  },
-  "BaseTemplate": {
-    "description": "Starter code for your Nextjs Boilerplate with Tailwind CSS",
-    "made_with": "Made with <author></author>."
   },
   "Index": {
     "meta_title": "Next.js Boilerplate Presentation",
@@ -61,19 +58,39 @@
     "faq_seventh_title": "Ce fac dacă nu vorbesc norvegiană?",
     "faq_seventh_description": "Barierele lingvistice nu sunt o problemă. În cursul nostru vă arătăm cât de ușor este să începeți să lucrați chiar dacă nu vorbiți norvegiană, deoarece statistic 90% dintre norvegieni au engleza ca a doua limbă. 3 lecții din curs sunt dedicate învățării limbii engleze de la zero, de asemenea, engleza maritimă și modelul de interviu pentru angajare. Lecții care vă vor ajuta să vă adaptați mai repede la lucrul pe o navă."
   },
-  "Counter": {
-    "meta_title": "Counter",
-    "meta_description": "An example of DB operation",
-    "security_powered_by": "Security, bot detection and rate limiting powered by"
+  "Products": {
+    "meta_title": "Produse",
+    "meta_description": "Produse page description",
+    "title": "Produse",
+    "buy_now": "Cumpără acum",
+    "product_has_been_added": "Produsul a fost adaugat in cosul de cumparaturi!",
+    "product_adding_error": "Eroare la adaugarea produsului in cosul de cumparaturi!",
+    "product_has_been_removed": "Produsul a fost sters din cosul de cumparaturi!"
   },
-  "CounterForm": {
-    "presentation": "The counter is stored in the database and incremented by the value you provide.",
-    "label_increment": "Increment by",
-    "button_increment": "Increment",
-    "error_increment_range": "Value must be between 1 and 3"
+  "ProductSlug": {
+    "meta_title": "Produs {slug}",
+    "meta_description": "Produs {slug} description"
   },
-  "CurrentCount": {
-    "count": "Count: {count}"
+  "Cart": {
+    "meta_title": "Coș de cumpărături",
+    "meta_description": "Pagina coșului de cumpărături",
+    "title": "Coș",
+    "empty_cart": "Coșul este gol",
+    "continue_shopping": "Continuați cumpărăturile",
+    "checkout": "Finalizați comanda",
+    "total": "Total",
+    "subtotal": "Subtotal"
+  },
+  "Checkout": {
+    "meta_title": "Finalizare comandă",
+    "meta_description": "Pagina de finalizare a comenzii",
+    "title": "Finalizare comandă",
+    "email_address": "Adresă de email",
+    "phone": "Număr de telefon",
+    "password": "Parola",
+    "place_order": "Plasează comanda",
+    "order_successful": "Comanda a fost plasată cu succes!",
+    "order_failed": "Eroare la plasarea comenzii!"
   },
   "About": {
     "meta_title": "About",

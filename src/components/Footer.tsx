@@ -50,6 +50,11 @@ export default function Footer() {
                   {navigationTranslation("stories_link")}
                 </MyLink>
               </li>
+              <li>
+                <MyLink addHoverOpacity href="/cart">
+                  {navigationTranslation("cart_link")}
+                </MyLink>
+              </li>
             </ul>
           </div>
         </section>

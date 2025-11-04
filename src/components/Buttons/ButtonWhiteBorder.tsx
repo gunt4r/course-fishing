@@ -4,6 +4,7 @@ export default function LinkWhiteBorder({
   href,
   children,
   classNames,
+  showIcon = true,
   ...props
 }: {
   href: string;
@@ -17,7 +18,7 @@ export default function LinkWhiteBorder({
       {...props}
       additionalClassNames={`border gap-2 rounded-full text-cyan-50 border-white py-2 px-4 hover:bg-white hover:text-black transition-all duration-300 ${classNames}`}
     >
-      <Icon icon={"ri:play-fill"} />
+      {showIcon && <Icon icon={"ep:arrow-right"} />}
       {children}
     </MyLink>
   );

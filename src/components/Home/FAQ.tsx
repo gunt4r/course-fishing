@@ -72,7 +72,7 @@ export default function FAQ() {
             >
               <DisclosureButton
                 onClick={() => togglePanel(idx)}
-                className="w-full flex items-center justify-between gap-4 px-6 py-4 md:py-5 text-left"
+                className="w-full flex items-center justify-between gap-4 px-6 py-4 md:py-5 text-left cursour-pointer"
               >
                 <div>
                   <h3 className="text-lg md:text-xl font-semibold text-slate-100 group-hover:text-white transition-colors">
@@ -81,14 +81,14 @@ export default function FAQ() {
                 </div>
 
                 <span
-                  className={`ml-4 shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-slate-800/40 backdrop-blur-sm border border-white/6 transition-transform duration-500 ease-out ${
+                  className={`ml-4 shrink-0 flex items-center justify-center h-10 w-10 rounded-full bg-slate-800/40 backdrop-blur-sm border border-white/6 transition-transform duration-500 ease-out cursor-pointer ${
                     openPanels[idx] ? "rotate-180" : ""
                   }`}
                   aria-hidden
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-slate-200"
+                    className="h-5 w-5 text-slate-200 mt-[4px]"
                     viewBox="0 0 20 20"
                     fill="none"
                     stroke="currentColor"

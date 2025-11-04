@@ -29,7 +29,7 @@ export class Cart {
   @Column({ type: "varchar", length: 255, nullable: true, unique: true })
   sessionId: string | null;
 
-  @OneToMany(() => CartItem, (cartItem) => cartItem.cart, {
+  @OneToMany("CartItem", "cart", {
     cascade: true,
     eager: true,
   })
@@ -48,10 +48,7 @@ export class Cart {
   updatedAt: Date;
 
   getSubtotal(): number {
-    return this.items.reduce(
-      (sum, item) => sum + Number(item.price),
-      0,
-    );
+    return this.items.reduce((sum, item) => sum + Number(item.price), 0);
   }
 
   getDiscount(): number {
@@ -61,5 +58,4 @@ export class Cart {
   getTotal(): number {
     return this.getSubtotal() - this.getDiscount();
   }
-
 }

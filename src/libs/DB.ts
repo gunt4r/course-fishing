@@ -4,6 +4,7 @@ import { User } from "@/models/user";
 import { Cart } from "@/models/cart";
 import { Product } from "@/models/product";
 import { CartItem } from "@/models/cartItem";
+import { Order } from "@/models/order";
 const options = {
   type: "postgres" as const,
   host: process.env.DB_HOST,
@@ -11,7 +12,7 @@ const options = {
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: [User, Cart, Product, CartItem],
+  entities: [User, Cart, Product, CartItem, Order],
   synchronize: process.env.NODE_ENV !== "production", // dev only
   logging: process.env.NODE_ENV !== "production",
 };

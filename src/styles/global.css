@@ -20,4 +20,5 @@ body {
   );
   background-repeat: no-repeat;
   transition: all 0.3s ease-in-out;
+  color: lab(98.3303% -5.97429 -2.62109);
 }

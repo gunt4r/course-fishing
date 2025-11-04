@@ -1,11 +1,10 @@
-import { NextResponse } from "next/server";
 import { authentication } from "@/services/users/service";
 import { NextResponse, NextRequest } from "next/server";
 export async function POST(request: NextRequest, response: NextResponse) {
   try {
     const data = await request.json();
 
-    const user = await authentication(data, request, response);
+    const user = await authentication(data, response);
 
     return NextResponse.json(user, { status: 201 });
   } catch (error: any) {

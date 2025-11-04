@@ -37,7 +37,8 @@ export const getUserByEmail = async (email: string) => {
     const dataSource = await getDataSource();
     const user = await dataSource.getRepository(User).findOneBy({ email });
     if (!user) {
-      throw new Error("User not found");
+      logger.info(`User with email ${email} not found`);
+      return null;
     }
     logger.info("User fetched successfully");
     return user;
@@ -49,7 +50,7 @@ export const registration = async (
   data: Partial<User>,
 ): Promise<Partial<User>> => {
   try {
-    const { password, email, firstName, lastName, phone } = data;
+    const { password, email, phone } = data;
 
     if (!password || !email || !phone) {
       throw new Error("Password, email and phone are required");
@@ -59,7 +60,7 @@ export const registration = async (
       throw new Error("Password must be at least 8 characters long");
     }
 
-    const existingUser = await getUserById(email);
+    const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
       throw new Error("User with this email already exists");
@@ -73,8 +74,6 @@ export const registration = async (
     const user = userRepository.create({
       password: hashedPassword,
       email,
-      firstName,
-      lastName,
       phone,
     });
 
@@ -112,7 +111,7 @@ export const authentication = async (
     }
     const token = sign(
       { id: user.id, email: user.email, role: user.role },
-      "secret",
+      process.env.JWT_SECRET as string,
       { expiresIn: "10m" },
     );
     const { password: _, ...userWithoutPassword } = user;
@@ -173,12 +172,22 @@ export const getUserIdFromRequest = (
     return undefined;
   }
 };
-
+export const getUserIdFromToken = (token: string): string | undefined => {
+  if (!token) return undefined;
+  try {
+    const payload = verify(token, process.env.JWT_SECRET as string) as any;
+    return payload?.id;
+  } catch (e) {
+    return undefined;
+  }
+};
 export const ensureSessionCookie = (
   request: NextRequest,
   response: NextResponse,
 ) => {
-  let sessionId = request.cookies.get(process.env.NAME_SESSION_ID as string)?.value;
+  let sessionId = request.cookies.get(
+    process.env.NAME_SESSION_ID as string,
+  )?.value;
   if (!sessionId) {
     sessionId = uuidv4();
     response.cookies.set({
