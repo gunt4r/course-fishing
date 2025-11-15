@@ -19,7 +19,7 @@ export default function BodyProducts() {
     }, 1500);
   }
   return (
-    <section className="mb-20">
+    <section className="mb-20 w-full">
       <Title additionalClassNames="text-3xl uppercase mb-20">
         {t("title")}
       </Title>

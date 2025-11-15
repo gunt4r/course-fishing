@@ -8,7 +8,6 @@ import { useTranslations } from "next-intl";
 import LinkWhiteBorder from "@/components/Buttons/ButtonWhiteBorder";
 export default function Cart() {
   const { data: userCart, isLoading } = useCart();
-  console.log("userCart in Cart component", userCart);
   const t = useTranslations("Cart");
   if (isLoading) return <Loader />;
   return (

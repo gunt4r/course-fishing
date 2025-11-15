@@ -14,7 +14,10 @@ export default function Hero() {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         className="w-3/4 flex mx-auto mt-10 mb-12 max-w-6xl"
       />
-      <LinkWhiteBorder classNames="flex justify-self-center" href="/products">
+      <LinkWhiteBorder
+        wrapperClassNames="flex justify-self-center"
+        href="/products"
+      >
         {t("hero_link")}
       </LinkWhiteBorder>
     </section>

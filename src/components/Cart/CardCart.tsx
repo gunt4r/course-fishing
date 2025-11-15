@@ -2,6 +2,8 @@
 import { Icon } from "@iconify/react";
 import { useDeleteItemFromCart } from "@/app/queries/cart/cartQuery";
 import toast from "react-hot-toast";
+import MyLink from "../Link";
+import { Image } from "@heroui/react";
 interface CardCartProps {
   cartItem: {
     id: string;
@@ -33,16 +35,16 @@ export default function CardCart({ cartItem }: CardCartProps) {
             className="text-zinc-600 duration-300 transition-colors hover:text-red-500 mr-4 cursor-pointer"
           />
         </button>
-        <img
+        <MyLink href={`/products/${cartItem.id}`}><Image
           src={cartItem.image}
           alt={cartItem.name}
-          className="w-16 h-16 object-cover rounded mr-4"
-        />
+          className="h-16 object-cover rounded mr-4"
+        /></MyLink>
         <div>
-          <h3 className="text-lg font-medium">{cartItem.name}</h3>
+          <MyLink href={`/products/${cartItem.id}`}><h3 className="text-lg font-medium">{cartItem.name}</h3></MyLink>
         </div>
       </div>
-      <div className="text-lg font-semibold">{cartItem.price} €</div>
+      <MyLink href={`/products/${cartItem.id}`}><p className="text-lg font-semibold">{cartItem.price} €</p></MyLink>
     </div>
   );
 }

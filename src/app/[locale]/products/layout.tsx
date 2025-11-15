@@ -11,7 +11,7 @@ export default async function Layout(props: {
   setRequestLocale(locale);
   return (
     <>
-      <Toaster />
+      <Toaster position="bottom-right" />
       <Header />
       <Container>
         <main>{props.children}</main>

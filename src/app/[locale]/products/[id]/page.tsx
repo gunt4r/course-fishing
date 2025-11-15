@@ -7,14 +7,16 @@ import { useParams } from "next/navigation";
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/react";
 import { useTranslations } from "next-intl";
 import { useAddToCart } from "@/app/queries/cart/cartQuery";
+import { useState } from "react";
 export default function ProductPage() {
   const { id } = useParams();
   const { data, isLoading, isError, error } = useProduct(id as string);
   const router = useRouter();
-  const { mutate: addToCart } = useAddToCart();
+  const { mutate: addToCart, isPending } = useAddToCart();
   const tHeader = useTranslations("Header");
   const tProducts = useTranslations("Products");
-  if (isLoading) return <Loader />;
+  const [ isRedirecting, setIsRedirecting ] = useState<boolean>(false);
+  if (isLoading || isPending || isRedirecting) return <Loader />;
 
   if (isError) {
     toast.error(error.message);
@@ -25,6 +27,7 @@ export default function ProductPage() {
   const handleSubmit = () => {
     addToCart(id as string, {
       onSuccess: () => {
+        setIsRedirecting(true);
         toast.success(tProducts("product_has_been_added"));
         setTimeout(() => {
           router.push("/cart");
@@ -37,7 +40,7 @@ export default function ProductPage() {
   };
   return (
     <section className="mt-40">
-      <main className="flex items-center gap-16 lg:flex-row flex-col">
+      <main className="flex items-center gap-16 lg:flex-row flex-col mb-40">
         <img
           src={data.product.image || "https://picsum.photos/192/180"}
           className="w-2/4"
@@ -46,18 +49,32 @@ export default function ProductPage() {
         <div>
           <Breadcrumbs variant="light" underline="hover" className="mb-20">
             <BreadcrumbItem
-              className="duration-300 transition-opacity hover:underline-offset-4 hover:opacity-75"
+              className="duration-300 transition-opacity cursor-pointer hover:underline-offset-4 hover:opacity-75"
+              classNames={{
+                item: "text-cyan-50",
+                separator: "text-cyan-50",
+              }}
               href="/"
             >
               {tHeader("home_link")}
             </BreadcrumbItem>
             <BreadcrumbItem
-              className="duration-300 transition-opacity hover:underline-offset-4 hover:opacity-75"
+              className="duration-300 transition-opacity cursor-pointer hover:underline-offset-4 hover:opacity-75"
               href="/products"
+              classNames={{
+                item: "text-cyan-50",
+                separator: "text-cyan-50",
+              }}
             >
               {tProducts("title")}
             </BreadcrumbItem>
-            <BreadcrumbItem className="duration-300 transition-opacity hover:underline-offset-4 hover:opacity-75">
+            <BreadcrumbItem
+              className="duration-300 transition-opacity cursor-pointer hover:underline-offset-4 hover:opacity-75"
+              classNames={{
+                item: "text-cyan-50",
+                separator: "text-cyan-50",
+              }}
+            >
               {data.product.name}
             </BreadcrumbItem>
           </Breadcrumbs>
@@ -76,6 +93,7 @@ export default function ProductPage() {
       </main>
       <div
         dangerouslySetInnerHTML={{ __html: data.product.sanitizedHtml }}
+        className="flex self-center justify-self-center"
       ></div>
     </section>
   );

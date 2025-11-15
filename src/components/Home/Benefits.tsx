@@ -10,41 +10,14 @@ import "swiper/css/pagination";
 import "./styleBenefits.scss";
 import MyLink from "../Link";
 import { Icon } from "@iconify/react";
+import { useGetArticlesByType } from "@/app/queries/articles/articlesQuery";
+import Loader from "../Loader";
+import { ArticleEnum } from "@/config/enum";
 export default function Benefits() {
+  const { data: articles, isLoading } = useGetArticlesByType(
+    ArticleEnum.testimonial,
+  );
   const t = useTranslations("Index");
-  const slides = [
-    {
-      id: 1,
-      title: "Explore the Mountains",
-      image:
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1920&q=80",
-    },
-    {
-      id: 2,
-      title: "Urban Lifestyle",
-      image:
-        "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1920&q=80",
-    },
-    {
-      id: 3,
-      title: "Ocean Breeze",
-      image:
-        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80",
-    },
-    {
-      id: 4,
-      title: "Desert Dreams",
-      image:
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1920&q=80",
-    },
-    {
-      id: 5,
-      title: "Forest Escape",
-      image:
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1920&q=80",
-    },
-  ];
-
   const benefits = [
     {
       id: 1,
@@ -65,34 +38,37 @@ export default function Benefits() {
       icon: "arcticons:studysmarter",
     },
   ];
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <section className="mb-20">
       <Title additionalClassNames="mb-16">{t("benefits_title")}</Title>
-      <center className="flex items-center">
+      <center className="flex items-center lg:flex-row flex-col ">
         <aside className="w-2/4">
           <Swiper
             modules={[A11y, Pagination]}
             slidesPerView={1}
             onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}
-            className="max-w-4xl w-3/4 max-h-[600px] mt-16 mb-6 "
+            className="max-w-4xl md:w-3/4 w-full md:h-[400px] h-[350px] max-h-[600px] mt-16 lg:mb-6 mb-20"
             effect="cards"
             pagination={{ clickable: true }}
           >
-            {slides.map((slide) => (
+            {articles.map((slide: any) => (
               <SwiperSlide key={slide.id}>
                 <MyLink href={`/products/${slide.id}`}>
-                  <div className="flex flex-col items-center relative">
+                  <div className="flexflex-col items-center relative ">
                     <img
                       src={slide.image}
                       alt={slide.title}
-                      className="w-full h-[530px] max-w-3xl rounded-4xl
+                      className="w-full md:h-[400px] h-[300px] max-w-3xl rounded-4xl
                     flex mx-auto"
                     />
                     <div className="absolute -bottom-[5px] bg-cyan-950 w-full max-h-52 h-1/5 flex items-center justify-center rounded-b-4xl">
-                      <h2 className="text-2xl text-cyan-50 font-bold">
+                      <p className="text-2xl text-cyan-50 font-bold">
                         {slide.title}
-                      </h2>
+                      </p>
                     </div>
                   </div>
                 </MyLink>

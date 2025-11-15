@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { registration } from "@/services/users/service";
 export async function POST(request: Request) {
   try {
+    console.log(request);
     const data = await request.json();
 
     const user = await registration(data);

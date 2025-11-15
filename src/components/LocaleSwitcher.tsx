@@ -1,10 +1,7 @@
 "use client";
-
-import type { ChangeEventHandler } from "react";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
 import { usePathname } from "@/libs/I18nNavigation";
-import { routing } from "@/libs/I18nRouting";
 import { Icon } from "@iconify/react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 export const LocaleSwitcher = ({ className }: { className?: string }) => {
@@ -12,7 +9,7 @@ export const LocaleSwitcher = ({ className }: { className?: string }) => {
   const pathname = usePathname();
   const locale = useLocale();
 
-  const handleChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+  const handleChange = (event: any) => {
     router.push(`/${event.target.value}${pathname}`);
     router.refresh();
   };
@@ -64,16 +61,3 @@ export const LocaleSwitcher = ({ className }: { className?: string }) => {
     </Menu>
   );
 };
-
-// <select
-//   defaultValue={locale}
-//   onChange={handleChange}
-//   className="cursor-pointer outline-none text-cyan-50 font-medium focus:opacity-80 hover:opacity-80 transition-opacity duration-300"
-//   aria-label="lang-switcher"
-// >
-//   {routing.locales.map(elt => (
-//     <option className='text-cyan-950 cursor-pointer' key={elt} value={elt}>
-//       {elt.toUpperCase()}
-//     </option>
-//   ))}
-// </select>

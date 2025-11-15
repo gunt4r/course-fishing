@@ -6,7 +6,26 @@
     "products_link": "Curs",
     "cart_link": "Coș",
     "sign_in_link": "Autentificare",
-    "sign_up_link": "Înregistrare"
+    "sign_up_link": "Înregistrare",
+    "settings_link": "Setări",
+    "sign_out_link": "Deconectare",
+    "admin_link": "Admin",
+    "sign_out_success_toast": "Deconectare cu succes!",
+    "sign_in_success_toast": "Autentificare cu succes!",
+    "sign_up_success_toast": "Cont creat cu succes!",
+    "sign_in_error_toast": "Eroare la autentificare!",
+    "sign_up_error_toast": "Eroare la crearea contului!",
+    "sign_out_error_toast": "Eroare la deconectare!",
+    "profile_update_success": "Profilul a fost actualizat cu succes!",
+    "cancel": "Anulare",
+    "confirm": "Confirma",
+    "saving": "Salvare...",
+    "saved": "Salvat cu succes!",
+    "save": "Salvează",
+    "delete": "Sterge",
+    "deleting": "Stergere...",
+    "deleted": "Sters cu succes!",
+    "delete_message": "Esti sigur ca vrei sa stergi acest item?"
   },
   "Footer": {
     "description": "Nu pierde timpul - fă primul pas spre visul tău!",
@@ -89,6 +108,12 @@
     "email_address": "Adresă de email",
     "phone": "Număr de telefon",
     "password": "Parola",
+    "confirm_password": "Confirmare parola",
+    "new_password": "Parola noua",
+    "change_password": "Schimbă parola",
+    "password_condition": "Parola trebuie sa contina cel putin 8 caractere",
+    "password_placeholder_leave": "Lasă acest camp gol pentru a nu schimba parola",
+    "repeat_password": "Repetă parola nouă",
     "place_order": "Plasează comanda",
     "order_successful": "Comanda a fost plasată cu succes!",
     "order_failed": "Eroare la plasarea comenzii!"
@@ -99,33 +124,107 @@
     "about_paragraph": "Welcome to our About page! We are a team of passionate individuals dedicated to creating amazing software.",
     "translation_powered_by": "Translation powered by"
   },
-  "Portfolio": {
-    "meta_title": "Portfolio",
-    "meta_description": "Welcome to my portfolio page!",
-    "presentation": "Welcome to my portfolio page! Here you will find a carefully curated collection of my work and accomplishments. Through this portfolio, I'm to showcase my expertise, creativity, and the value I can bring to your projects.",
-    "portfolio_name": "Portfolio {name}",
-    "error_reporting_powered_by": "Error reporting powered by",
-    "coverage_powered_by": "Code coverage powered by"
-  },
-  "PortfolioSlug": {
-    "meta_title": "Portfolio {slug}",
-    "meta_description": "Portfolio {slug} description",
-    "header": "Portfolio {slug}",
-    "content": "Created a set of promotional materials and branding elements for a corporate event. Crafted a visually unified theme, encompassing a logo, posters, banners, and digital assets. Integrated the client's brand identity while infusing it with a contemporary and innovative approach.",
-    "code_review_powered_by": "Code review powered by"
-  },
   "SignIn": {
     "meta_title": "Sign in",
-    "meta_description": "Seamlessly sign in to your account with our user-friendly login process."
+    "meta_description": "Seamlessly sign in to your account with our user-friendly login process.",
+    "sign_in": "Autentificare",
+    "sign_in_button": "Autentifică-te",
+    "sign_in_error": "Eroare la autentificare!",
+    "sign_in_success": "Autentificare cu succes!"
   },
   "SignUp": {
     "meta_title": "Sign up",
-    "meta_description": "Effortlessly create an account through our intuitive sign-up process."
+    "meta_description": "Effortlessly create an account through our intuitive sign-up process.",
+    "agree_terms": "",
+    "sign_up": "Înregistrare",
+    "sign_up_button": "Înregistrează-te",
+    "sign_up_error": "Eroare la crearea contului!",
+    "sign_up_success": "Cont creat cu succes!"
   },
   "Dashboard": {
     "meta_title": "Dashboard",
     "hello_message": "Hello {email}!",
-    "alternative_message": "Want to build your SaaS faster using the same stack? Try <url></url>."
+    "alternative_message": "Want to build your SaaS faster using the same stack? Try <url></url>.",
+    "count_orders": "Comenzi",
+    "count_viewers": "Vizitatori",
+    "count_users": "Utilizatori",
+    "total_revenue": "Venit total",
+    "monthly_revenue": "Venit lunar",
+    "last_orders": "Comenzi recente",
+    "add": "Adaugă",
+    "adding": "Adaugăm...",
+    "added": "Adăugat",
+    "edit": "Editeaza",
+    "delete": "Sterge",
+    "deleted": "Șters",
+    "delete_message": "Esti sigur ca vrei sa stergi acest item?",
+    "cancel": "Anuleaza",
+    "confirm": "Confirma",
+    "role": "Rol",
+    "updating": "Actualizare...",
+    "updated": "Actualizat",
+    "update": "Actualizare",
+    "error": "Eroare",
+    "success": "Succes",
+    "total_amount": "Suma totală",
+    "date": "Data",
+    "status": "Status",
+    "actions": "Actiuni",
+    "view": "Vizualizare",
+    "order_id": "ID comanda",
+    "user_id": "ID utilizator",
+    "product_id": "ID produs",
+    "quantity": "Cantitate",
+    "selected": "Selectat",
+    "Products": {
+      "add": "Add Product",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "form": {
+        "name": "Product Name",
+        "description": "Description",
+        "price": "Price",
+        "image": "Product Image",
+        "active": "Active",
+        "activeDescription": "Whether the product is available for purchase",
+        "htmlContent": "HTML Content",
+        "htmlDescription": "Custom HTML block that will be appended to product page",
+        "htmlPlaceholder": "Create block HTML that will be appended to product page...",
+        "document": "PDF Document",
+        "documentDescription": "Upload course material (PDF format, max 20MB)",
+        "viewCurrentDocument": "View current document",
+        "uploadingPdf": "Uploading PDF..."
+      },
+      "errors": {
+        "creation": "Error creating product",
+        "update": "Error updating product",
+        "delete": "Error deleting product"
+      }
+    },
+    "Articles": {
+      "add": "Add Article",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "form": {
+        "name": "Article Name",
+        "description": "Description",
+        "price": "Price",
+        "image": "Article Image",
+        "active": "Active",
+        "activeDescription": "Whether the article is available",
+        "type": "Tipul articolului",
+        "review": "Recenzie",
+        "testimonial": "Istorie",
+        "htmlContent": "HTML Content",
+        "htmlDescription": "Custom HTML block that will be appended to article page",
+        "htmlPlaceholder": "Create block HTML that will be appended to article page..."
+      },
+      "errors": {
+        "creation": "Error creating article",
+        "update": "Error updating article",
+        "delete": "Error deleting article"
+      }
+    }
   },
   "UserProfile": {
     "meta_title": "User Profile"

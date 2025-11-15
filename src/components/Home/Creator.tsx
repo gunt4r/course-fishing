@@ -10,7 +10,7 @@ export default function Creator() {
         {t("creator_title")}
       </p>
       <Title additionalClassNames="mb-16">AlexFisherWay</Title>
-      <div className="flex items-center gap-20">
+      <div className="flex items-center gap-20 flex-col lg:flex-row">
         <img
           className="max-h-[600px] max-w-2/4 rounded-4xl"
           src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1920&q=80"

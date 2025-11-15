@@ -2,7 +2,7 @@
 
 import type { NavbarProps } from "@heroui/react";
 
-import React from "react";
+import { useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -19,9 +19,15 @@ import Logo from "./Logo";
 import Container from "./container/Container";
 import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "./LocaleSwitcher";
+import { useCurrentUser } from "@/app/queries/users/userQuery";
+import Loader from "./Loader";
+import HeaderDropdown from "./HeaderDropdown";
 export default function Header(props: NavbarProps) {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: user, isLoading } = useCurrentUser();
   const t = useTranslations("Header");
+  if (isLoading) return <Loader />;
+
   return (
     <Container>
       <Navbar
@@ -30,10 +36,10 @@ export default function Header(props: NavbarProps) {
           base: cn("border-default-100", {
             "bg-default-200/50 dark:bg-default-100/50": isMenuOpen,
           }),
-          wrapper: "w-full justify-between",
-          item: "hidden md:flex",
+          wrapper: "w-full justify-between max-w-7xl",
+          item: "hidden lg:flex",
         }}
-        className="backdrop-filter-none py-5"
+        className="backdrop-filter-none py-5 bg-transparent"
         height="60px"
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
@@ -43,7 +49,7 @@ export default function Header(props: NavbarProps) {
             <Logo />
           </div>
         </NavbarBrand>
-        <NavbarContent justify="center" className="gap-8">
+        <NavbarContent justify="center" className="gap-8 ">
           <NavbarItem>
             <Link
               className="text-cyan-50 hover:opacity-80 transition-opacity"
@@ -83,27 +89,7 @@ export default function Header(props: NavbarProps) {
         </NavbarContent>
         <NavbarContent className="hidden md:flex" justify="end">
           <NavbarItem className="ml-2 flex! gap-2">
-            <Button
-              className="text-cyan-50 cursor-pointer self-center rounded-full py-2.5 px-4 hover:bg-cyan-50 hover:text-blue-950 hover:transition-colors duration-300 "
-              as={Link}
-              href="/sign-in"
-              radius="full"
-              variant="light"
-            >
-              {t("sign_in_link")}
-            </Button>
-            <Button
-              className="bg-foreground py-2.5 px-4 flex text-background font-medium hover:opacity-80 transition-opacity cursor-pointer"
-              color="secondary"
-              endContent={<Icon icon="solar:alt-arrow-right-linear" />}
-              radius="full"
-              variant="flat"
-              size="lg"
-              as={Link}
-              href="/sign-up"
-            >
-              {t("sign_up_link")}
-            </Button>
+            <HeaderDropdown user={user} />
             <LocaleSwitcher />
           </NavbarItem>
         </NavbarContent>

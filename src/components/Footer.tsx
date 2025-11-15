@@ -20,14 +20,17 @@ export default function Footer() {
             <p className="text-2xl text-center mb-4">{t("contacts")}</p>{" "}
             <div className="flex justify-center items-center gap-3.5">
               <Icon icon="material-symbols:mail" />{" "}
-              <a href="mailto:office@alexfisherway.com">
+              <a
+                href="mailto:office@alexfisherway.com"
+                className="duration-400 hover:opacity-50 transition-opacity"
+              >
                 office@alexfisherway.com
               </a>
             </div>
           </div>
-          <div>
+          <div className="md:self-start self-center w-fit justify-self-center">
             <p className="text-2xl mb-4">{t("navigation")}</p>{" "}
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-3 md:self-start">
               <li>
                 <MyLink addHoverOpacity href="/">
                   {navigationTranslation("home_link")}
@@ -65,7 +68,12 @@ export default function Footer() {
           </MyLink>
           <p>
             {t("copyright")} {new Date().getFullYear()}.{" "}
-            <a href="mailto:vladprangati@gmail.com">Made by Vlad Prangati</a>
+            <a
+              className="duration-400 hover:opacity-50 transition-opacity"
+              href="mailto:vladprangati@gmail.com"
+            >
+              Made by Vlad Prangati
+            </a>
           </p>
         </section>
       </footer>

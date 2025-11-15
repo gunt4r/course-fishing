@@ -16,7 +16,7 @@ export default function InfoCart({ totalPrice }: { totalPrice: number }) {
       </p>
       <LinkWhiteBorder
         href="/checkout"
-        classNames="mt-6 w-full justify-center uppercase"
+        wrapperClassNames="mt-6 py-4 w-full justify-center uppercase"
         showIcon={false}
       >
         {t("checkout")}

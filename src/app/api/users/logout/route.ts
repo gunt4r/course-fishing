@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
-import { logout } from "@/services/users/service";
-export async function POST(response: NextResponse) {
+export async function POST() {
   try {
-    const loggedOut = await logout(response);
-    return NextResponse.json(loggedOut, { status: 200 });
+    const res = NextResponse.json({ ok: true }, { status: 200 });
+    res.cookies.set({
+      name: process.env.NAME_JWT_TOKEN ?? "token",
+      value: "",
+      httpOnly: true,
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 0,
+    });
+    return res;
   } catch (error) {
     throw error;
   }

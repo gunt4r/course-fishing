@@ -10,7 +10,7 @@ export default async function AuthLayout(props: {
 
   let signInUrl = "/sign-in";
   let signUpUrl = "/sign-up";
-  let dashboardUrl = "/dashboard";
+  let dashboardUrl = "/admin";
   let afterSignOutUrl = "/";
 
   if (locale !== routing.defaultLocale) {

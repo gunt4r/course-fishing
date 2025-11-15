@@ -3,20 +3,24 @@ import { HashLoader } from "react-spinners";
 
 export default function Loader() {
   return (
-    <HashLoader
-      color="rgba(1, 34, 166, .88)"
+    <div
       style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
         width: "100vw",
+        height: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
         backgroundColor: "#fff",
-        zIndex: "100",
-        position: "absolute",
-        left: "0",
-        top: "0",
+        zIndex: 100,
+        margin: 0,
+        padding: 0,
+        overflow: "hidden",
       }}
-    />
+    >
+      <HashLoader color="rgba(1, 34, 166, .88)" />
+    </div>
   );
 }

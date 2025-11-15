@@ -28,8 +28,8 @@ export default function Statistics() {
         {numbers.map((step) => (
           <div key={step.id} className="flex flex-col items-center h-full">
             <AnimatedNumbers
-              useThousandsSeparator
               animateToNumber={step.title}
+              useThousandsSeparator
               fontStyle={{
                 fontSize: "3rem",
               }}

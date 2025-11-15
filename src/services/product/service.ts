@@ -1,6 +1,7 @@
 import { getDataSource } from "@/libs/DB";
 import { Product } from "@/models/product";
 import sanitizeHtml from "sanitize-html";
+import { sanitizeOptions } from "@/libs/SanitizeOptions";
 export const config = {
   api: {
     bodyParser: false,
@@ -38,8 +39,8 @@ export async function createProduct(data: Partial<Product>) {
   const dataSource = await getDataSource();
   const productRepository = dataSource.getRepository(Product);
   try {
-    const { name, description, price, image, isActive, html } = data;
-    console.log(data);
+    const { name, description, price, image, isActive, html, document } = data;
+
     if (!name || !description || !price || !image) {
       throw new Error("Name, description, price, image are required");
     }
@@ -47,7 +48,7 @@ export async function createProduct(data: Partial<Product>) {
       throw new Error("Price must be >= 0");
     }
 
-    const sanitizedHtml = sanitizeHtml(html || "");
+    const sanitizedHtml = sanitizeHtml(html || "", sanitizeOptions);
     const product = productRepository.create({
       name,
       description,
@@ -56,6 +57,7 @@ export async function createProduct(data: Partial<Product>) {
       isActive,
       html: html,
       sanitizedHtml,
+      document,
     });
     await productRepository.save(product);
     return product;
@@ -63,7 +65,24 @@ export async function createProduct(data: Partial<Product>) {
     throw error;
   }
 }
-
+export async function createProductServer(data: Partial<Product>) {
+  const dataSource = await getDataSource();
+  const productRepository = dataSource.getRepository(Product);
+  try {
+    const { name, description, price, image } = data;
+    if (!name || !description || !price || !image) {
+      throw new Error("Name, description, price, image are required");
+    }
+    if (price < 0) {
+      throw new Error("Price must be >= 0");
+    }
+    const product = productRepository.create(data);
+    await productRepository.save(product);
+    return product;
+  } catch (error) {
+    throw error;
+  }
+}
 export async function updateProduct(data: Partial<Product>) {
   const dataSource = await getDataSource();
   const productRepository = dataSource.getRepository(Product);
@@ -79,7 +98,8 @@ export async function updateProduct(data: Partial<Product>) {
     if (!product) {
       throw new Error("Product not found");
     }
-    productRepository.merge(product, data);
+    const sanitizedHtml = sanitizeHtml(html || "", sanitizeOptions);
+    productRepository.merge(product, { ...(data as Product), sanitizedHtml });
     await productRepository.save(product);
     return product;
   } catch (error) {

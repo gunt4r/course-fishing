@@ -9,4 +9,6 @@ export interface ProductProps extends CardProductProps {
   description: string;
   html: string;
   sanitizedHtml: string;
+  isActive: boolean;
+  document: string;
 }
