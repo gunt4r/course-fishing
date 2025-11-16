@@ -33,14 +33,6 @@ const baseConfig: NextConfig = {
     }
     return config;
   },
-  experimental: {
-    serverComponentsExternalPackages: [
-      'typeorm',
-      'pg',
-      'pg-native',
-      'reflect-metadata',
-    ],
-  },
 };
 
 // Initialize the Next-Intl plugin
