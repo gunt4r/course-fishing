@@ -35,16 +35,22 @@ export default function CardCart({ cartItem }: CardCartProps) {
             className="text-zinc-600 duration-300 transition-colors hover:text-red-500 mr-4 cursor-pointer"
           />
         </button>
-        <MyLink href={`/products/${cartItem.id}`}><Image
-          src={cartItem.image}
-          alt={cartItem.name}
-          className="h-16 object-cover rounded mr-4"
-        /></MyLink>
+        <MyLink href={`/products/${cartItem.id}`}>
+          <Image
+            src={cartItem.image}
+            alt={cartItem.name}
+            className="sm:h-16 h-12 object-cover rounded mr-4"
+          />
+        </MyLink>
         <div>
-          <MyLink href={`/products/${cartItem.id}`}><h3 className="text-lg font-medium">{cartItem.name}</h3></MyLink>
+          <MyLink href={`/products/${cartItem.id}`}>
+            <h3 className="text-lg font-medium">{cartItem.name}</h3>
+          </MyLink>
         </div>
       </div>
-      <MyLink href={`/products/${cartItem.id}`}><p className="text-lg font-semibold">{cartItem.price} €</p></MyLink>
+      <MyLink href={`/products/${cartItem.id}`}>
+        <p className="text-lg font-semibold">{cartItem.price} €</p>
+      </MyLink>
     </div>
   );
 }

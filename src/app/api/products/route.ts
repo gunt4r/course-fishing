@@ -145,7 +145,15 @@ export async function POST(request: NextRequest) {
     if (isNaN(price) || price < 0) {
       throw new Error("Price must be a valid positive number");
     }
-    console.log(" dataname ",name, description, price, imageUrl, html, documentUrl);
+    console.log(
+      " dataname ",
+      name,
+      description,
+      price,
+      imageUrl,
+      html,
+      documentUrl,
+    );
     const product = await createProduct({
       name,
       description,

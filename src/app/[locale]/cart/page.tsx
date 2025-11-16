@@ -16,7 +16,7 @@ export default function Cart() {
         {t("title")}
       </Title>
       {userCart && userCart.cart.items.length > 0 ? (
-        <main className="flex items-center w-full lg:gap-40 gap-20 mb-40">
+        <main className="flex items-center w-full lg:gap-40 gap-20 mb-40 md:flex-row flex-col">
           <BodyCart cartItems={userCart.cart.items} />
           <InfoCart totalPrice={userCart.cart.totalPrice} />
         </main>

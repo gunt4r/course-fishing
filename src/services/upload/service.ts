@@ -83,8 +83,8 @@ export async function uploadFile(
 }
 
 export async function uploadPdfBlob(
-  fileBlob: Blob, 
-  options: UploadOptions = {}
+  fileBlob: Blob,
+  options: UploadOptions = {},
 ): Promise<string> {
   const {
     allowedExtensions = [".pdf"],
@@ -97,7 +97,9 @@ export async function uploadPdfBlob(
   await ensureDirectoryExists(uploadDir);
 
   if (allowedMimeTypes.length && !allowedMimeTypes.includes(fileBlob.type)) {
-    throw new Error(`Invalid file type. Allowed: ${allowedMimeTypes.join(", ")}`);
+    throw new Error(
+      `Invalid file type. Allowed: ${allowedMimeTypes.join(", ")}`,
+    );
   }
 
   if (fileBlob.size > maxSize) {
@@ -106,9 +108,11 @@ export async function uploadPdfBlob(
 
   const originalName = (fileBlob as any).name || "file.pdf";
   const ext = path.extname(originalName).toLowerCase();
-  
+
   if (allowedExtensions.length && !allowedExtensions.includes(ext)) {
-    throw new Error(`Invalid file extension. Allowed: ${allowedExtensions.join(", ")}`);
+    throw new Error(
+      `Invalid file extension. Allowed: ${allowedExtensions.join(", ")}`,
+    );
   }
 
   const safeFilename = `${uuidv4()}${ext}`;

@@ -9,7 +9,7 @@ export async function generateMetadata(props: IIndexProps): Promise<Metadata> {
   const { locale } = await props.params;
   const t = await getTranslations({
     locale,
-    namespace: "Index",
+    namespace: "Products",
   });
 
   return {

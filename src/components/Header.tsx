@@ -2,7 +2,7 @@
 
 import type { NavbarProps } from "@heroui/react";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -22,6 +22,7 @@ import { LocaleSwitcher } from "./LocaleSwitcher";
 import { useCurrentUser } from "@/app/queries/users/userQuery";
 import Loader from "./Loader";
 import HeaderDropdown from "./HeaderDropdown";
+import { Transition } from "@headlessui/react";
 export default function Header(props: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: user, isLoading } = useCurrentUser();
@@ -96,84 +97,95 @@ export default function Header(props: NavbarProps) {
         <div className="flex gap-2.5 md:hidden">
           <LocaleSwitcher className="" />
           <Button
-            className="hover:bg-zinc-200 rounded-full hover:py-2.5 hover:px-4 hover:text-blue-950 hover:transition-colors duration-300  text-cyan-50 backdrop-blur-sm cursor-pointer"
+            className="hover:opacity-80 transition-opacity bg-transparent rounded-full hover:py-2.5 hover:px-4 duration-300  text-cyan-50 backdrop-blur-sm cursor-pointer"
             onPress={() => setIsMenuOpen(true)}
           >
             <Icon icon="radix-icons:hamburger-menu" />
           </Button>
         </div>
 
-        <NavbarMenu className="bg-default-200/50 shadow-medium dark:bg-default-100/50 top-0  pt-6 pb-6 backdrop-blur-md backdrop-saturate-150 flex w-full flex-col items-center max-h-screen h-screen gap-3">
-          <Button
-            className="flex p-0 md:hidden absolute top-7 right-7 w-10 h-10 bg-gray-600 rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-40 hover:bg-gray-200 hover:text-gray-500 hover:transition-colors duration-300"
-            onPress={() => setIsMenuOpen(false)}
-          >
-            <Icon icon="iconamoon:close-bold" />
-          </Button>
-          <NavbarMenuItem>
-            <Link
-              className="text-cyan-950 hover:opacity-80 transition-opacity"
-              href="/"
-              size="sm"
-            >
-              {t("home_link")}
-            </Link>
-          </NavbarMenuItem>
-          <NavbarMenuItem>
-            <Link
-              className="text-cyan-950 hover:opacity-80 transition-opacity"
-              href="/stories"
-              size="sm"
-            >
-              {t("stories_link")}
-            </Link>
-          </NavbarMenuItem>
-          <NavbarMenuItem>
-            <Link
-              className="text-cyan-950 hover:opacity-80 transition-opacity"
-              href="/reviews"
-              size="sm"
-            >
-              {t("reviews_link")}
-            </Link>
-          </NavbarMenuItem>
-          <NavbarMenuItem>
-            <Link
-              className="text-cyan-950 hover:opacity-80 transition-opacity"
-              href="/products"
-              size="sm"
-            >
-              {t("products_link")}
-            </Link>
-          </NavbarMenuItem>
-          <NavbarMenuItem className="mb-4">
+        <Transition
+          as={Fragment}
+          show={isMenuOpen}
+          enter="transition-opacity duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <NavbarMenu className="bg-default-200/20 shadow-medium dark:bg-default-100/50 top-0  pt-6 pb-6 backdrop-blur-md backdrop-saturate-150 flex w-full flex-col items-center min-h-screen h-screen gap-3 z-100 ">
             <Button
-              className="border border-zinc-800 py-2.5 px-4 flex text-cyan-950 font-medium hover:opacity-80 transition-opacity cursor-pointer hover:bg-zinc-900 hover:text-cyan-50 hover:transition-colors duration-300"
-              color="secondary"
-              endContent={<Icon icon="solar:alt-arrow-right-linear" />}
-              radius="full"
-              variant="flat"
-              as={Link}
-              href="/sign-up"
+              className="flex p-0 md:hidden absolute top-7 right-10 w-10 h-10 bg-gray-600 text-cyan-50 rounded-full bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-40 hover:bg-gray-200 hover:text-gray-500 hover:transition-colors duration-300"
+              onPress={() => setIsMenuOpen(false)}
             >
-              {t("sign_in_link")}
+              <Icon icon="iconamoon:close-bold" />
             </Button>
-          </NavbarMenuItem>
-          <NavbarMenuItem>
-            <Button
-              className="bg-foreground py-2.5 px-4 flex text-background font-medium hover:opacity-80 transition-opacity cursor-pointer"
-              color="secondary"
-              endContent={<Icon icon="solar:alt-arrow-right-linear" />}
-              radius="full"
-              variant="flat"
-              size="lg"
-              as={Link}
-              href="/sign-up"
-            >
-              {t("sign_up_link")}
-            </Button>
-          </NavbarMenuItem>
-        </NavbarMenu>
+            <NavbarMenuItem className="mt-16">
+              <Link
+                className="text-cyan-50 hover:opacity-80 transition-opacity"
+                href="/"
+                size="sm"
+              >
+                {t("home_link")}
+              </Link>
+            </NavbarMenuItem>
+            <NavbarMenuItem>
+              <Link
+                className="text-cyan-50 hover:opacity-80 transition-opacity"
+                href="/stories"
+                size="sm"
+              >
+                {t("stories_link")}
+              </Link>
+            </NavbarMenuItem>
+            <NavbarMenuItem>
+              <Link
+                className="text-cyan-50 hover:opacity-80 transition-opacity"
+                href="/reviews"
+                size="sm"
+              >
+                {t("reviews_link")}
+              </Link>
+            </NavbarMenuItem>
+            <NavbarMenuItem>
+              <Link
+                className="text-cyan-50 hover:opacity-80 transition-opacity"
+                href="/products"
+                size="sm"
+              >
+                {t("products_link")}
+              </Link>
+            </NavbarMenuItem>
+            <NavbarMenuItem className="mb-4">
+              <Button
+                className="border border-zinc-800 py-2.5 px-4 flex text-cyan-50 font-medium hover:opacity-80 transition-opacity cursor-pointer hover:bg-zinc-900 hover:text-cyan-50 hover:transition-colors duration-300"
+                color="secondary"
+                endContent={<Icon icon="solar:alt-arrow-right-linear" />}
+                radius="full"
+                variant="flat"
+                as={Link}
+                href="/sign-in"
+              >
+                {t("sign_in_link")}
+              </Button>
+            </NavbarMenuItem>
+            <NavbarMenuItem>
+              <Button
+                className="bg-foreground py-2.5 px-4 flex text-background font-medium hover:opacity-80 transition-opacity cursor-pointer"
+                color="secondary"
+                endContent={<Icon icon="solar:alt-arrow-right-linear" />}
+                radius="full"
+                variant="flat"
+                size="lg"
+                as={Link}
+                href="/sign-up"
+              >
+                {t("sign_up_link")}
+              </Button>
+            </NavbarMenuItem>
+          </NavbarMenu>
+        </Transition>
       </Navbar>
     </Container>
   );

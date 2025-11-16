@@ -27,7 +27,7 @@ export class Order {
 
   @Column({ type: "text", nullable: true })
   paypalOrderId: string;
-  
+
   @ManyToMany("Product", "orders", {
     onDelete: "SET NULL",
     eager: true,
