@@ -47,10 +47,7 @@ export const renderValue = (value: any): string | number | React.ReactNode => {
   }
   if (typeof value === "string" && isIsoDateString(value)) {
     const d = new Date(value);
-    return new Intl.DateTimeFormat(undefined, {
-      dateStyle: "medium",
-      timeStyle: "short",
-    }).format(d);
+    return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(d);
   }
   if (
     typeof value === "string" ||

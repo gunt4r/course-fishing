@@ -32,7 +32,7 @@ export default function ClientSignUp() {
   return (
     <section
       style={{ boxShadow: "0 8px 32px rgba(31,38,135,0.15)" }}
-      className="flex lg:max-w-2/5 sm:max-w-4/5 transition-all duration-300 ease-in-out my-24 w-full text-left justify-self-end flex-col justify-between items-center px-12 py-9 rounded-4xl backdrop-blur-md shadow-lg border border-white/20"
+      className="flex max-w-2/5 my-24 w-full text-left justify-self-end flex-col justify-between items-center px-12 py-9 rounded-4xl backdrop-blur-md shadow-lg border border-white/20"
     >
       <h1 className="text-2xl font-semibold mb-6 uppercase">{t("sign_up")}</h1>
       <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">

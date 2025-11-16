@@ -55,7 +55,7 @@ export class Product {
 
   @Column({ type: "varchar", length: 500, nullable: true })
   document: string;
-
+  
   @CreateDateColumn({ type: "timestamptz" })
   createdAt: Date;
 

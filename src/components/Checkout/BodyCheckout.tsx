@@ -19,7 +19,7 @@ export default function BodyCheckout({ user }: BodyCheckoutProps) {
   }, [user, setPhone, setEmail, setPassword]);
   const t = useTranslations("Checkout");
   return (
-    <div className="w-full flex">
+    <div className="w-full flex flex-col">
       <main className="w-full flex flex-col gap-6">
         <div className="flex flex-col gap-6">
           <Field className="flex flex-col gap-4">

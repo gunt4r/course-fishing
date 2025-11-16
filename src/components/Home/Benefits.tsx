@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import Title from "../Title";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Pagination } from "swiper/modules";
-import { Image } from "@heroui/react";
+
 import "swiper/css";
 import "swiper/css/effect-cards";
 import "swiper/css/pagination";
@@ -49,21 +49,23 @@ export default function Benefits() {
           <Swiper
             modules={[A11y, Pagination]}
             slidesPerView={1}
+            onSlideChange={() => console.log("slide change")}
+            onSwiper={(swiper) => console.log(swiper)}
             className="max-w-4xl md:w-3/4 w-full md:h-[400px] h-[350px] max-h-[600px] mt-16 lg:mb-6 mb-20"
             effect="cards"
             pagination={{ clickable: true }}
           >
             {articles.map((slide: any) => (
               <SwiperSlide key={slide.id}>
-                <MyLink href={`/reviews/${slide.id}`}>
+                <MyLink href={`/products/${slide.id}`}>
                   <div className="flexflex-col items-center relative ">
-                    <Image
+                    <img
                       src={slide.image}
                       alt={slide.title}
                       className="w-full md:h-[400px] h-[300px] max-w-3xl rounded-4xl
                     flex mx-auto"
                     />
-                    <div className="absolute -bottom-[5px] bg-cyan-950 w-full max-h-52 h-1/5 flex items-center justify-center rounded-b-4xl z-10">
+                    <div className="absolute -bottom-[5px] bg-cyan-950 w-full max-h-52 h-1/5 flex items-center justify-center rounded-b-4xl">
                       <p className="text-2xl text-cyan-50 font-bold">
                         {slide.title}
                       </p>

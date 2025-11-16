@@ -29,7 +29,7 @@ export default function ModalEditProduct({
     document: "",
   });
   const [file, setFile] = useState<File | null>(null);
-  const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [ pdfFile, setPdfFile ] = useState<File | null>(null);
   const [isUploadingPdf, setIsUploadingPdf] = useState(false);
   useEffect(() => {
     if (product && isModalOpen) {
@@ -251,17 +251,18 @@ export default function ModalEditProduct({
                   {t("Products.form.viewCurrentDocument")}
                 </a>
               )}
-              {form.document && !pdfFile && (
-                <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-                  Current document: {form.document}
-                </div>
-              )}
+            {form.document && !pdfFile && (
+              <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                Current document: {form.document}
+              </div>
+            )}
               {isUploadingPdf && (
                 <div className="text-sm text-gray-500 flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
                   {t("Products.form.uploadingPdf")}
                 </div>
               )}
+
             </div>
           </Field>
         </div>

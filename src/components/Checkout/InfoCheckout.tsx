@@ -15,9 +15,8 @@ interface InfoCheckoutProps {
 }
 export default function InfoCheckout({ totalPrice, items }: InfoCheckoutProps) {
   const { mutateAsync: createOrder, isPending } = useCreateOrder();
-  const { mutateAsync: createPaypalOrder, isPending: isPendingPaypal } =
-    useCreatePaypalOrder();
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const { mutateAsync: createPaypalOrder, isPending: isPendingPaypal } = useCreatePaypalOrder();
+  const [ isButtonDisabled, setIsButtonDisabled ] = useState(false);
   const { phone, password, email } = useCheckoutStore();
   const locale = useLocale();
   const router = useRouter();
@@ -38,7 +37,9 @@ export default function InfoCheckout({ totalPrice, items }: InfoCheckoutProps) {
         throw new Error(order.error || "Failed to create order");
       }
       const paypalOrder = await createPaypalOrder(
-        { orderId: order.order.id, locale: locale },
+        { orderId: order.order.id,
+          locale: locale
+         },
         {
           onSuccess: () => {
             toast.success("Order created successfully");
@@ -47,7 +48,7 @@ export default function InfoCheckout({ totalPrice, items }: InfoCheckoutProps) {
             console.log("Error creating order");
           },
         },
-      );
+      )
       if (!paypalOrder.success) {
         throw new Error(paypalOrder.error || "Failed to create order");
       }
@@ -62,7 +63,7 @@ export default function InfoCheckout({ totalPrice, items }: InfoCheckoutProps) {
   return (
     <div
       style={{ boxShadow: "0 8px 32px rgba(31,38,135,0.15)" }}
-      className="flex md:max-w-2/5 sm:max-w-4/5 transition-all duration-300 ease-in-out w-full text-left justify-self-end flex-col justify-between items-center mb-8 p-6 rounded-2xl backdrop-blur-md shadow-lg border border-white/20"
+      className="flex max-w-2/5 w-full text-left justify-self-end flex-col justify-between items-center mb-8 p-6 rounded-2xl backdrop-blur-md shadow-lg border border-white/20"
     >
       {items.map((item: any, index: number) => (
         <p

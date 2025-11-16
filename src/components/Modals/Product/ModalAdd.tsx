@@ -29,32 +29,32 @@ export default function ModalAddProduct({
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const formData = new FormData();
+    const formData = new FormData();
+    
+    formData.append("name", form.name);
+    formData.append("description", form.description);
+    formData.append("price", form.price);
+    formData.append("html", form.html);
+    formData.append("isActive", String(form.isActive));
 
-      formData.append("name", form.name);
-      formData.append("description", form.description);
-      formData.append("price", form.price);
-      formData.append("html", form.html);
-      formData.append("isActive", String(form.isActive));
+    if (file) {
+      formData.append("image", file);
+    } else if (form.image) {
+      formData.append("imageUrl", form.image);
+    }
 
-      if (file) {
-        formData.append("image", file);
-      } else if (form.image) {
-        formData.append("imageUrl", form.image);
-      }
-
-      if (pdfFile) {
-        formData.append("document", pdfFile);
-      } else if (form.document) {
-        formData.append("document", form.document);
-      }
+    if (pdfFile) {
+      formData.append("document", pdfFile);
+    } else if (form.document) {
+      formData.append("document", form.document);
+    }
       handleSubmit(formData);
       if (refetch) {
         refetch();
       }
-      setFile(null);
-      setPdfFile(null);
-      setIsModalOpen(false);
+    setFile(null);
+    setPdfFile(null);
+    setIsModalOpen(false);
       setForm({
         name: "",
         description: "",
@@ -63,7 +63,7 @@ export default function ModalAddProduct({
         isActive: true,
         html: "",
         document: "",
-      });
+      })
     } catch (err) {
       console.error(err);
       toast.error(t("errors.creation") || "Error creating product");

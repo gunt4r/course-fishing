@@ -1,7 +1,7 @@
 import { getDataSource } from "@/libs/DB";
 import { NextRequest, NextResponse } from "next/server";
 import { Product } from "@/models/product";
-import { getOrCreateCartForRequest, clearCart } from "../cart/service";
+import { getOrCreateCartForRequest } from "../cart/service";
 import { registration } from "../users/service";
 import { Order } from "@/models/order";
 import { User } from "@/models/user";
@@ -100,7 +100,7 @@ export async function createOrder(
     });
 
     await orderRepo.save(order);
-    await clearCart(cartData.id);
+    cartData.items = [];
     return order;
   } catch (error) {
     console.error("Error creating order:", error);
@@ -182,17 +182,17 @@ export async function getAllOrders(): Promise<Order[]> {
 export async function getOrderById(id: string): Promise<Order> {
   const dataSource = await getDataSource();
   const orderRepo = dataSource.getRepository(Order);
-
+  
   try {
     const order = await orderRepo.findOne({
       where: { id },
-      relations: ["user", "products"],
+      relations: ['user', 'products']
     });
-
+    
     if (!order) {
       throw new Error("Order not found");
     }
-
+    
     return order;
   } catch (error) {
     throw error;

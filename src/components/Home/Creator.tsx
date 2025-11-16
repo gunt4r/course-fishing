@@ -1,9 +1,7 @@
-"use client";
 import Title from "../Title";
 import { useTranslations } from "next-intl";
 import { Icon } from "@iconify/react";
 import LinkWhiteBorder from "../Buttons/ButtonWhiteBorder";
-import { Image } from "@heroui/react";
 export default function Creator() {
   const t = useTranslations("Index");
   return (
@@ -13,8 +11,8 @@ export default function Creator() {
       </p>
       <Title additionalClassNames="mb-16">AlexFisherWay</Title>
       <div className="flex items-center gap-20 flex-col lg:flex-row">
-        <Image
-          className="max-h-[600px] rounded-4xl w-screen object-cover"
+        <img
+          className="max-h-[600px] max-w-2/4 rounded-4xl"
           src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1920&q=80"
           alt="Creator"
         />
@@ -30,7 +28,7 @@ export default function Creator() {
             })}
           </div>
           <LinkWhiteBorder
-            wrapperClassNames="flex justify-self-center text-xl"
+            classNames="flex justify-self-center text-xl"
             href="https://www.linkedin.com/in/alexey-fisherway"
           >
             {t("creator_read_more")}
