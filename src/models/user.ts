@@ -1,3 +1,4 @@
+import type { Cart } from './cart';
 import type { Order } from './order';
 import {
   Column,
@@ -10,7 +11,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Role } from '@/config/enum';
-import { Cart } from './cart';
 
 @Entity({ name: 'users' })
 export class User {
@@ -29,7 +29,7 @@ export class User {
   @Column({ type: 'enum', enum: Role, default: Role.USER })
   role: string;
 
-  @OneToOne(() => Cart, cart => cart.user, { onDelete: 'CASCADE' })
+  @OneToOne('Cart', 'user', { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'cart_id' })
   cart: Cart;
 

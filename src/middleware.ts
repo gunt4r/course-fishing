@@ -2,7 +2,6 @@ import type { NextFetchEvent, NextRequest } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
 import { routing } from './libs/I18nRouting';
-import { isAdmin } from './services/users/service';
 
 const handleI18nRouting = createMiddleware(routing);
 
@@ -25,16 +24,11 @@ export default async function middleware(
       const loginUrl = new URL(`/sign-in`, request.url);
       return NextResponse.redirect(loginUrl);
     }
+    const { isAdminToken } = await import('@/services/users/verify');
 
-    try {
-      const userIsAdmin = await isAdmin(request);
-
-      if (!userIsAdmin) {
-        return NextResponse.redirect(new URL('/', request.url));
-      }
-    } catch (error) {
-      console.error('Admin middleware error:', error);
-      return NextResponse.redirect(new URL('/', request.url));
+    if (!isAdminToken(token)) {
+      const loginUrl = new URL(`/`, request.url);
+      return NextResponse.redirect(loginUrl);
     }
   }
   return handleI18nRouting(request);

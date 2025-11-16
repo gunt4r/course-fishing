@@ -1,4 +1,5 @@
 import type { CartItem } from './cartItem';
+import type { User } from './user';
 import {
   Column,
   CreateDateColumn,
@@ -9,7 +10,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from './user';
 
 @Entity({ name: 'carts' })
 export class Cart {
@@ -19,7 +19,7 @@ export class Cart {
   @Column({ type: 'uuid', nullable: true })
   userId: string | null;
 
-  @OneToOne(() => User, user => user.cart, {
+  @OneToOne('User', 'cart', {
     nullable: true,
     onDelete: 'CASCADE',
   })

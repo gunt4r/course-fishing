@@ -16,7 +16,7 @@ export class CartItem {
   id: string;
 
   @ManyToOne('Cart', 'items', { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'cart' })
+  @JoinColumn({ name: 'cartId' })
   cart: Cart;
 
   @ManyToOne('Product', 'cartItems', {

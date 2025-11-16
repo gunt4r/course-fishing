@@ -1,4 +1,6 @@
+'use client';
 import type { CardProductProps } from '@/types/product';
+import { Image } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import LinkWhiteBorder from '../Buttons/ButtonWhiteBorder';
 import MyLink from '../Link';
@@ -16,7 +18,7 @@ export default function CardProduct({
       additionalClassNames="flex flex-col gap-6 items-center justify-center w-full"
       href={`/products/${id}`}
     >
-      <img
+      <Image
         className="flex self-center"
         src={image || 'https://picsum.photos/192/180'}
         alt={name}

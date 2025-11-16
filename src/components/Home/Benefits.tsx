@@ -1,9 +1,9 @@
 'use client';
+import { Image } from '@heroui/react';
 import { Icon } from '@iconify/react';
 import { useTranslations } from 'next-intl';
 import { A11y, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import { useGetArticlesByType } from '@/app/queries/articles/articlesQuery';
 import { ArticleEnum } from '@/config/enum';
 import MyLink from '../Link';
@@ -56,11 +56,11 @@ export default function Benefits() {
             effect="cards"
             pagination={{ clickable: true }}
           >
-            {articles.map((slide: any) => (
+            {articles && articles.map((slide: any) => (
               <SwiperSlide key={slide.id}>
                 <MyLink href={`/products/${slide.id}`}>
-                  <div className="flexflex-col relative items-center ">
-                    <img
+                  <div className="flex flex-col relative items-center ">
+                    <Image
                       src={slide.image}
                       alt={slide.title}
                       className="mx-auto flex h-[300px] w-full max-w-3xl

@@ -1,5 +1,5 @@
 'use client';
-import { BreadcrumbItem, Breadcrumbs } from '@heroui/react';
+import { BreadcrumbItem, Breadcrumbs, Image } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 
@@ -44,7 +44,7 @@ export default function ProductPage() {
   return (
     <section className="mt-40">
       <main className="mb-40 flex flex-col items-center gap-16 lg:flex-row">
-        <img
+        <Image
           src={data.product.image || 'https://picsum.photos/192/180'}
           className="w-2/4"
           alt={data.product.name}
@@ -93,6 +93,7 @@ export default function ProductPage() {
           <button
             onClick={handleSubmit}
             className="cursor-pointer rounded-full border border-cyan-50 px-6 py-4 text-xl duration-300 hover:bg-cyan-50 hover:text-zinc-900"
+            type="button"
           >
             {tProducts('buy_now')}
           </button>
