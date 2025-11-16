@@ -1,19 +1,19 @@
-import Modal from "../Modal";
-import { useTranslations } from "next-intl";
+import type { ModalAddUserProps } from '@/types/modal';
+import type { User } from '@/types/user';
 import {
   Field,
-  Label,
   Input,
+  Label,
   Listbox,
   ListboxButton,
-  ListboxOptions,
   ListboxOption,
-} from "@headlessui/react";
-import { Icon } from "@iconify/react";
-import { Role } from "@/config/enum";
-import type { User } from "@/types/user";
-import { useState } from "react";
-import { ModalAddUserProps } from "@/types/modal";
+  ListboxOptions,
+} from '@headlessui/react';
+import { Icon } from '@iconify/react';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { Role } from '@/config/enum';
+import Modal from '../Modal';
 
 export default function ModalAddUser({
   isModalOpen,
@@ -21,17 +21,17 @@ export default function ModalAddUser({
   handleSubmit,
   isLoading,
 }: ModalAddUserProps) {
-  const t = useTranslations("Dashboard");
-  const tUser = useTranslations("Checkout");
+  const t = useTranslations('Dashboard');
+  const tUser = useTranslations('Checkout');
   const [formData, setFormData] = useState<User>({
-    email: "",
-    password: "",
-    phone: "",
+    email: '',
+    password: '',
+    phone: '',
     role: Role.USER,
   });
 
   const handleChange = (field: keyof User, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const onSubmit = (e: React.FormEvent) => {
@@ -43,37 +43,38 @@ export default function ModalAddUser({
     <Modal
       isOpen={isModalOpen}
       onClose={() => setIsModalOpen(false)}
-      title={<span>{t("add") ?? "Add User"}</span>}
+      title={<span>{t('add') ?? 'Add User'}</span>}
       size="lg"
-      footer={
-        <footer className="flex flex-row justify-between w-full">
+      footer={(
+        <footer className="flex w-full flex-row justify-between">
           <button
             onClick={() => setIsModalOpen(false)}
-            className="px-4 py-2 rounded-2xl border bg-red-700 text-cyan-100 border-slate-300 dark:border-slate-600 hover:bg-red-900 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="cursor-pointer rounded-2xl border border-slate-300 bg-red-700 px-4 py-2 text-cyan-100 transition-colors hover:bg-red-900 dark:border-slate-600 dark:hover:bg-slate-800"
             disabled={isLoading}
             type="button"
           >
-            {t("cancel") ?? "Cancel"}
+            {t('cancel') ?? 'Cancel'}
           </button>
 
           <button
             onClick={onSubmit}
-            className="px-4 py-2 rounded-2xl bg-green-700 text-white cursor-pointer disabled:opacity-50 hover:opacity-70 duration-300 transition-opacity"
+            className="cursor-pointer rounded-2xl bg-green-700 px-4 py-2 text-white transition-opacity duration-300 hover:opacity-70 disabled:opacity-50"
             disabled={isLoading}
             type="submit"
           >
-            {isLoading ? (t("adding") ?? "Adding...") : (t("add") ?? "Add")}
+            {isLoading ? (t('adding') ?? 'Adding...') : (t('add') ?? 'Add')}
           </button>
         </footer>
-      }
+      )}
     >
       <form
         onSubmit={onSubmit}
-        className="space-y-4 text-slate-900 dark:text-slate-100 px-2 mb-2.5"
+        className="mb-2.5 space-y-4 px-2 text-slate-900 dark:text-slate-100"
       >
         <Field className="flex flex-col gap-2">
-          <Label className="font-medium text-sm">
-            {tUser("email_address") ?? "Email"}{" "}
+          <Label className="text-sm font-medium">
+            {tUser('email_address') ?? 'Email'}
+            {' '}
             <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -81,15 +82,16 @@ export default function ModalAddUser({
             type="email"
             required
             value={formData.email}
-            onChange={(e) => handleChange("email", e.target.value)}
-            className="border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 rounded-lg w-full focus:outline-none focus:ring-2 transition-all"
+            onChange={e => handleChange('email', e.target.value)}
+            className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2 transition-all focus:ring-2 focus:outline-none dark:border-slate-600 dark:bg-slate-800"
             placeholder="user@example.com"
           />
         </Field>
 
         <Field className="flex flex-col gap-2">
-          <Label className="font-medium text-sm">
-            {tUser("password") ?? "Password"}{" "}
+          <Label className="text-sm font-medium">
+            {tUser('password') ?? 'Password'}
+            {' '}
             <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -98,62 +100,66 @@ export default function ModalAddUser({
             required
             minLength={6}
             value={formData.password}
-            onChange={(e) => handleChange("password", e.target.value)}
-            className="border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 rounded-lg w-full focus:outline-none focus:ring-2 transition-all"
+            onChange={e => handleChange('password', e.target.value)}
+            className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2 transition-all focus:ring-2 focus:outline-none dark:border-slate-600 dark:bg-slate-800"
             placeholder="••••••••"
           />
         </Field>
 
         <Field className="flex flex-col gap-2">
-          <Label className="font-medium text-sm">
-            {tUser("phone") ?? "Phone"} <span className="text-red-500">*</span>
+          <Label className="text-sm font-medium">
+            {tUser('phone') ?? 'Phone'}
+            {' '}
+            <span className="text-red-500">*</span>
           </Label>
           <Input
             name="phone"
             type="tel"
             required
             value={formData.phone}
-            onChange={(e) => handleChange("phone", e.target.value)}
-            className="border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 rounded-lg w-full focus:outline-none focus:ring-2  transition-all"
+            onChange={e => handleChange('phone', e.target.value)}
+            className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2 transition-all focus:ring-2 focus:outline-none dark:border-slate-600  dark:bg-slate-800"
             placeholder="+1234567890"
           />
         </Field>
 
         <Field className="flex flex-col gap-2">
-          <Label className="font-medium text-sm">
-            {t("role") ?? "Role"} <span className="text-red-500">*</span>
+          <Label className="text-sm font-medium">
+            {t('role') ?? 'Role'}
+            {' '}
+            <span className="text-red-500">*</span>
           </Label>
           <Listbox
             value={formData.role}
-            onChange={(value) => handleChange("role", value)}
+            onChange={value => handleChange('role', value)}
           >
             {({ open }) => (
               <>
-                <ListboxButton className="relative w-full cursor-pointer border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 rounded-lg text-left focus:outline-none focus:ring-2 focus:ring-zinc-800 dark:focus:ring-zinc-600 transition-all">
+                <ListboxButton className="relative w-full cursor-pointer rounded-lg border border-slate-300 bg-white px-4 py-2 text-left transition-all focus:ring-2 focus:ring-zinc-800 focus:outline-none dark:border-slate-600 dark:bg-slate-800 dark:focus:ring-zinc-600">
                   <span className="block truncate capitalize">
                     {formData.role}
                   </span>
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     <Icon
                       icon="mdi:chevron-down"
-                      className={`h-5 w-5 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}
+                      className={`h-5 w-5 text-slate-400 transition-transform ${open ? 'rotate-180' : ''}`}
                     />
                   </span>
                 </ListboxButton>
                 <ListboxOptions
                   anchor="bottom start"
-                  className="z-[100] mt-1 max-h-60 w-[var(--button-width)] overflow-auto rounded-lg bg-white dark:bg-slate-800 py-1 shadow-xl ring-1 ring-black/10 dark:ring-white/10 focus:outline-none [--anchor-gap:4px]"
+                  className="z-[100] mt-1 max-h-60 w-[var(--button-width)] overflow-auto rounded-lg bg-white py-1 shadow-xl ring-1 ring-black/10 [--anchor-gap:4px] focus:outline-none dark:bg-slate-800 dark:ring-white/10"
                 >
-                  {Object.values(Role).map((role) => (
+                  {Object.values(Role).map(role => (
                     <ListboxOption
                       key={role}
                       value={role}
-                      className="relative cursor-pointer select-none duration-300 transition-all py-2 px-4 data-[focus]:opacity-70 data-[focus]:dark:bg-cyan-900/30 hover:bg-zinc-100 data-[focus]:dark:text-cyan-100 text-slate-900 dark:text-slate-100"
+                      className="relative cursor-pointer px-4 py-2 text-slate-900 transition-all duration-300 select-none hover:bg-zinc-100 data-[focus]:opacity-70 dark:text-slate-100 data-[focus]:dark:bg-cyan-900/30 data-[focus]:dark:text-cyan-100"
                     >
                       {({ selected }) => (
                         <>
                           <span
-                            className={`block truncate capitalize ${selected ? "font-semibold" : "font-normal"}`}
+                            className={`block truncate capitalize ${selected ? 'font-semibold' : 'font-normal'}`}
                           >
                             {role}
                           </span>

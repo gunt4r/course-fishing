@@ -1,15 +1,16 @@
-import { getDataSource } from "@/libs/DB";
-import { Article } from "@/models/article";
-import { ArticleType } from "@/types/article";
-import sanitize from "sanitize-html";
-import { sanitizeOptions } from "@/libs/SanitizeOptions";
-import { ArticleEnum } from "@/config/enum";
+import type { ArticleType } from '@/types/article';
+import sanitize from 'sanitize-html';
+import { ArticleEnum } from '@/config/enum';
+import { getDataSource } from '@/libs/DB';
+import { sanitizeOptions } from '@/libs/SanitizeOptions';
+import { Article } from '@/models/article';
+
 export async function getAllArticles() {
   try {
     const dataSource = await getDataSource();
     const articleRepository = dataSource.getRepository(Article);
     const articles = await articleRepository.find({
-      order: { createdAt: "DESC" },
+      order: { createdAt: 'DESC' },
     });
     return articles;
   } catch (error) {
@@ -22,7 +23,7 @@ export async function getArticlesByType(type: keyof typeof ArticleEnum) {
   try {
     const articles = await articleRepository.find({
       where: { type: ArticleEnum[type] as ArticleType },
-      order: { createdAt: "DESC" },
+      order: { createdAt: 'DESC' },
       take: 10,
     });
     return articles;
@@ -48,7 +49,7 @@ export async function createArticle(data: any) {
     const articleRepository = dataSource.getRepository(Article);
     const { html, type, title, image, isActive } = data;
     if (!html || !type || !title || !image) {
-      throw new Error("All fields are required");
+      throw new Error('All fields are required');
     }
     const sanitizedHtml = sanitize(html, sanitizeOptions);
 
@@ -73,7 +74,7 @@ export async function updateArticle(id: string, data: Partial<Article>) {
     const articleRepository = dataSource.getRepository(Article);
     const article = await articleRepository.findOneBy({ id });
     if (!article) {
-      throw new Error("Article not found");
+      throw new Error('Article not found');
     }
     const { html } = data;
     if (html) {
@@ -94,7 +95,7 @@ export async function deleteArticle(id: string): Promise<Article> {
   try {
     const article = await getArticleById(id);
     if (!article) {
-      throw new Error("Article not found");
+      throw new Error('Article not found');
     }
     await articleRepository.remove(article);
     return article;

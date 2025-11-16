@@ -1,15 +1,10 @@
-import {
-  getCountOrder,
-  getCountViewers,
-  getRegisteredUsers,
-  getTotalRevenue,
-  getLastOrders,
-  getMonthlyRevenue,
-} from "@/services/analytics/service";
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
+    const { getCountOrder, getCountViewers, getRegisteredUsers, getTotalRevenue, getLastOrders, getMonthlyRevenue } = await import(
+      '@/services/analytics/service',
+    );
     const countOrder = await getCountOrder();
     const countViewers = await getCountViewers();
     const registeredUsers = await getRegisteredUsers();

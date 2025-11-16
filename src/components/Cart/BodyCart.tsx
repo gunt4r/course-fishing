@@ -1,9 +1,10 @@
-"use client";
-import CardCart from "./CardCart";
+'use client';
+import CardCart from './CardCart';
+
 export default function BodyCart({ cartItems }: { cartItems: any }) {
   console.log(cartItems);
   return (
-    <div className="w-3/4 flex flex-col">
+    <div className="flex w-3/4 flex-col">
       {cartItems.map((cartItem: any) => (
         <CardCart key={cartItem.id} cartItem={cartItem.product} />
       ))}

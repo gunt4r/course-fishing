@@ -1,15 +1,17 @@
-import { getDataSource } from "@/libs/DB";
-import { User } from "@/models/user";
-import * as bcrypt from "bcrypt";
-import { v4 as uuidv4 } from "uuid";
-import { sign, verify, JwtPayload } from "jsonwebtoken";
-import { NextResponse, NextRequest } from "next/server";
-import { Role } from "@/config/enum";
+import type { JwtPayload } from 'jsonwebtoken';
+import type { NextRequest, NextResponse } from 'next/server';
+import * as bcrypt from 'bcrypt';
+import { sign, verify } from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
+import { Role } from '@/config/enum';
+import { getDataSource } from '@/libs/DB';
+import { User } from '@/models/user';
+
 export async function createUserServer(data: User): Promise<Partial<User>> {
   try {
     const user = await registration(data);
     if (!user) {
-      throw new Error("User registration failed");
+      throw new Error('User registration failed');
     }
     return user;
   } catch (error) {
@@ -21,9 +23,9 @@ export const getAllUsers = async () => {
     const dataSource = await getDataSource();
     const users = await dataSource
       .getRepository(User)
-      .find({ order: { createdAt: "DESC" } });
+      .find({ order: { createdAt: 'DESC' } });
     if (!users) {
-      throw new Error("Users not found");
+      throw new Error('Users not found');
     }
     return users;
   } catch (error) {
@@ -36,7 +38,7 @@ export const getUserById = async (id: string) => {
     const dataSource = await getDataSource();
     const user = await dataSource.getRepository(User).findOneBy({ id });
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
     return user;
   } catch (error) {
@@ -48,7 +50,7 @@ export const getUserByEmail = async (email: string) => {
     const dataSource = await getDataSource();
     const user = await dataSource.getRepository(User).findOneBy({ email });
     if (!user) {
-      console.log("User not found");
+      console.log('User not found');
       return null;
     }
     return user;
@@ -61,19 +63,19 @@ export const registration = async (
 ): Promise<Partial<User>> => {
   try {
     const { password, email, phone, role } = data;
-    console.log("Registration data:", data);
+    console.log('Registration data:', data);
     if (!password || !email || !phone) {
-      throw new Error("Password, email and phone are required");
+      throw new Error('Password, email and phone are required');
     }
 
     if (password.length < 8) {
-      throw new Error("Password must be at least 8 characters long");
+      throw new Error('Password must be at least 8 characters long');
     }
 
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
-      throw new Error("User with this email already exists");
+      throw new Error('User with this email already exists');
     }
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -92,7 +94,7 @@ export const registration = async (
     const { password: _, ...userWithoutPassword } = savedUser;
     return userWithoutPassword;
   } catch (error: any) {
-    console.error("Full error details:", error);
+    console.error('Full error details:', error);
     throw error;
   }
 };
@@ -102,24 +104,24 @@ export const authentication = async (data: Partial<User>): Promise<any> => {
     const { email, password } = data;
 
     if (!email || !password) {
-      throw new Error("Email and password are required");
+      throw new Error('Email and password are required');
     }
 
     const user = await getUserByEmail(email);
 
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new Error("Incorrect email or password");
+      throw new Error('Incorrect email or password');
     }
     const token = sign(
       { id: user.id, email: user.email, role: user.role },
       process.env.JWT_SECRET as string,
-      { expiresIn: "7d" },
+      { expiresIn: '7d' },
     );
     const { password: _, ...userWithoutPassword } = user;
     return { token, user: userWithoutPassword };
@@ -130,12 +132,12 @@ export const authentication = async (data: Partial<User>): Promise<any> => {
 
 export const logout = async (response: NextResponse) => {
   response.cookies.set({
-    name: "token",
-    value: "",
+    name: 'token',
+    value: '',
     httpOnly: true,
-    path: "/",
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    path: '/',
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
     maxAge: 0,
   });
 };
@@ -148,7 +150,7 @@ export const updateUser = async (data: Partial<User>, request: NextRequest) => {
     const userRepository = dataSource.getRepository(User);
     const user = await userRepository.findOneBy({ id });
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
     const updatedUser = { ...user, ...rest };
     if (password) {
@@ -168,9 +170,9 @@ export async function updateUserServer(data: any): Promise<Partial<User>> {
     const { id, password, ...rest } = data;
     const dataSource = await getDataSource();
     const userRepository = dataSource.getRepository(User);
-    const user = await userRepository.findOneBy({ id: id });
+    const user = await userRepository.findOneBy({ id });
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
     const updatedUser = { ...user, ...rest };
     if (password) {
@@ -186,9 +188,9 @@ export async function updateUserServer(data: any): Promise<Partial<User>> {
   }
 }
 export const verifyToken = async (request: NextRequest) => {
-  const token = request.cookies.get("token")?.value;
+  const token = request.cookies.get('token')?.value;
   if (!token) {
-    throw new Error("Token not found");
+    throw new Error('Token not found');
   }
   try {
     const payload = verify(
@@ -197,7 +199,7 @@ export const verifyToken = async (request: NextRequest) => {
     ) as JwtPayload;
     const user = await getUserById(payload.id);
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
     const { password: _, ...userWithoutPassword } = user;
     return userWithoutPassword;
@@ -212,7 +214,7 @@ export async function deleteUser(userId: string) {
     const userRepository = dataSource.getRepository(User);
     const user = await userRepository.findOneBy({ id: userId });
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
     await userRepository.remove(user);
   } catch (error) {
@@ -222,8 +224,10 @@ export async function deleteUser(userId: string) {
 export const getUserIdFromRequest = (
   request: NextRequest,
 ): string | undefined => {
-  const token = request.cookies.get("token")?.value;
-  if (!token) return undefined;
+  const token = request.cookies.get('token')?.value;
+  if (!token) {
+    return undefined;
+  }
   try {
     const payload = verify(token, process.env.JWT_SECRET as string) as any;
     return payload?.id;
@@ -232,7 +236,9 @@ export const getUserIdFromRequest = (
   }
 };
 export const getUserIdFromToken = (token: string): string | undefined => {
-  if (!token) return undefined;
+  if (!token) {
+    return undefined;
+  }
   try {
     const payload = verify(token, process.env.JWT_SECRET as string) as any;
     return payload?.id;
@@ -253,9 +259,9 @@ export const ensureSessionCookie = (
       name: process.env.NAME_SESSION_ID as string,
       value: sessionId,
       httpOnly: true,
-      path: "/",
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      path: '/',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
       maxAge: 30 * 24 * 60 * 60,
     });
   }
@@ -266,7 +272,9 @@ export const getUserFromRequest = async (
   request: NextRequest,
 ): Promise<User | null> => {
   const userId = getUserIdFromRequest(request);
-  if (!userId) return null;
+  if (!userId) {
+    return null;
+  }
 
   try {
     return await getUserById(userId);
@@ -280,7 +288,9 @@ export const checkUserRole = async (
   allowedRoles: Role[],
 ): Promise<boolean> => {
   const user = await getUserFromRequest(request);
-  if (!user) return false;
+  if (!user) {
+    return false;
+  }
 
   return allowedRoles.includes(user.role as Role);
 };

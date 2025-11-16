@@ -1,14 +1,13 @@
-import { getDataSource } from "@/libs/DB";
-import { NextRequest, NextResponse } from "next/server";
-import { Product } from "@/models/product";
-import { getOrCreateCartForRequest } from "../cart/service";
-import { registration } from "../users/service";
-import { Order } from "@/models/order";
-import { User } from "@/models/user";
-import { getUserById, getUserByEmail } from "../users/service";
-import { getProductById } from "../product/service";
-import { orderStatus } from "@/config/enum";
-import { getUserIdFromRequest } from "../users/service";
+import type { NextRequest, NextResponse } from 'next/server';
+import type { Product } from '@/models/product';
+import { orderStatus } from '@/config/enum';
+import { getDataSource } from '@/libs/DB';
+import { Order } from '@/models/order';
+import { User } from '@/models/user';
+import { getOrCreateCartForRequest } from '../cart/service';
+import { getProductById } from '../product/service';
+import { getUserByEmail, getUserById, getUserIdFromRequest, registration } from '../users/service';
+
 export async function createOrder(
   data: any,
   request: NextRequest,
@@ -19,16 +18,16 @@ export async function createOrder(
   const { phone, email, password } = data;
   const userId = getUserIdFromRequest(request);
   if (!phone || !email) {
-    throw new Error("Phone and email are required");
+    throw new Error('Phone and email are required');
   }
-  if (!email.includes("@")) {
-    throw new Error("Invalid email");
+  if (!email.includes('@')) {
+    throw new Error('Invalid email');
   }
   if (phone.length < 5) {
-    throw new Error("Invalid phone number");
+    throw new Error('Invalid phone number');
   }
   if (!/^\+?\d+$/.test(phone)) {
-    throw new Error("Invalid phone number");
+    throw new Error('Invalid phone number');
   }
 
   try {
@@ -59,43 +58,43 @@ export async function createOrder(
 
     if (!isRegisteredUser) {
       if (!password) {
-        throw new Error("Password is required for registration");
+        throw new Error('Password is required for registration');
       }
       if (password.length < 8) {
-        throw new Error("Password must be at least 8 characters long");
+        throw new Error('Password must be at least 8 characters long');
       }
 
       const existingUser = await getUserByEmail(email);
       if (existingUser) {
-        throw new Error("User with this email already exists. Please login.");
+        throw new Error('User with this email already exists. Please login.');
       }
 
       user = await registration({ email, password, phone });
       if (!user) {
-        throw new Error("User registration failed");
+        throw new Error('User registration failed');
       }
     }
 
     const cartData = await getOrCreateCartForRequest(request, response);
     if (!cartData) {
-      throw new Error("Cart not found");
+      throw new Error('Cart not found');
     }
     if (!cartData.items || !cartData.items.length) {
-      throw new Error("Cart items not found");
+      throw new Error('Cart items not found');
     }
 
     const products: Product[] = [];
     for (const item of cartData.items) {
       if (!item.product) {
-        throw new Error("Product not found");
+        throw new Error('Product not found');
       }
       products.push(item.product);
     }
 
     const order = orderRepo.create({
-      user: user,
+      user,
       totalAmount: cartData.totalPrice,
-      products: products,
+      products,
       status: orderStatus.pending,
     });
 
@@ -103,7 +102,7 @@ export async function createOrder(
     cartData.items = [];
     return order;
   } catch (error) {
-    console.error("Error creating order:", error);
+    console.error('Error creating order:', error);
     throw error;
   }
 }
@@ -114,34 +113,34 @@ export async function createOrderServer(data: any) {
   try {
     const { userId, products, totalAmount, status } = data;
     if (!userId) {
-      throw new Error("User id is required");
+      throw new Error('User id is required');
     }
     if (!products || !products.length) {
-      throw new Error("Products are required");
+      throw new Error('Products are required');
     }
     if (!totalAmount) {
-      throw new Error("Total amount is required");
+      throw new Error('Total amount is required');
     }
     const user = await getUserById(userId);
     if (!user) {
-      throw new Error("User not found");
+      throw new Error('User not found');
     }
-    let productsToSave: Product[] = [];
+    const productsToSave: Product[] = [];
     for (const product of products) {
       if (!product.id) {
-        throw new Error("Product id is required");
+        throw new Error('Product id is required');
       }
       const productToSave = await getProductById(product.id);
       if (!productToSave) {
-        throw new Error("Product not found");
+        throw new Error('Product not found');
       }
       productsToSave.push(productToSave);
     }
     const order = orderRepo.create({
-      user: user,
-      totalAmount: totalAmount,
+      user,
+      totalAmount,
       products: productsToSave,
-      status: status,
+      status,
     });
     await orderRepo.save(order);
     return order;
@@ -155,7 +154,7 @@ export async function deleteOrder(id: string): Promise<void> {
   try {
     const order = await orderRepo.findOneBy({ id });
     if (!order) {
-      throw new Error("Order not found");
+      throw new Error('Order not found');
     }
     await orderRepo.remove(order);
   } catch (error) {
@@ -168,10 +167,10 @@ export async function getAllOrders(): Promise<Order[]> {
   const orderRepo = dataSource.getRepository(Order);
   try {
     const orders = await orderRepo.find({
-      order: { createdAt: "DESC" },
+      order: { createdAt: 'DESC' },
     });
     if (!orders) {
-      throw new Error("Orders not found");
+      throw new Error('Orders not found');
     }
     return orders;
   } catch (error) {
@@ -182,17 +181,17 @@ export async function getAllOrders(): Promise<Order[]> {
 export async function getOrderById(id: string): Promise<Order> {
   const dataSource = await getDataSource();
   const orderRepo = dataSource.getRepository(Order);
-  
+
   try {
     const order = await orderRepo.findOne({
       where: { id },
-      relations: ['user', 'products']
+      relations: ['user', 'products'],
     });
-    
+
     if (!order) {
-      throw new Error("Order not found");
+      throw new Error('Order not found');
     }
-    
+
     return order;
   } catch (error) {
     throw error;
@@ -205,7 +204,7 @@ export async function updateOrder(id: string, data: any): Promise<Order> {
   try {
     const order = await orderRepo.findOneBy({ id });
     if (!order) {
-      throw new Error("Order not found");
+      throw new Error('Order not found');
     }
     Object.assign(order, data);
     await orderRepo.save(order);

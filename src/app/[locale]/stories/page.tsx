@@ -1,4 +1,5 @@
-import ClientStories from "@/components/Stories/ClientStories";
+import ClientStories from '@/components/Stories/ClientStories';
+
 export default function Stories() {
   return <ClientStories />;
 }

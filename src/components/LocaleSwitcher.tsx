@@ -1,9 +1,10 @@
-"use client";
-import { useLocale } from "next-intl";
-import { useRouter } from "next/navigation";
-import { usePathname } from "@/libs/I18nNavigation";
-import { Icon } from "@iconify/react";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+'use client';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { Icon } from '@iconify/react';
+import { useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
+import { usePathname } from '@/libs/I18nNavigation';
+
 export const LocaleSwitcher = ({ className }: { className?: string }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -16,7 +17,7 @@ export const LocaleSwitcher = ({ className }: { className?: string }) => {
   return (
     <Menu>
       <MenuButton
-        className={`inline-flex cursor-pointer items-center gap-2 rounded-md duration-300 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/20 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:opacity-80 data-open:bg-gray-700 ${className}`}
+        className={`inline-flex cursor-pointer items-center gap-2 rounded-md px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/20 duration-300 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:opacity-80 data-open:bg-gray-700 ${className}`}
       >
         {locale.toUpperCase()}
         <Icon

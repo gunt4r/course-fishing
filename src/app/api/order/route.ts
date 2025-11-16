@@ -1,9 +1,10 @@
-import { NextResponse, NextRequest } from "next/server";
-import { createOrder, getAllOrders } from "@/services/order/service";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
-  const responseInternal = NextResponse.next();
+export async function GET(_request: NextRequest) {
   try {
+    const { getAllOrders } = await import('@/services/order/service');
+
     return NextResponse.json(await getAllOrders(), { status: 200 });
   } catch (error: any) {
     return NextResponse.json(
@@ -13,10 +14,12 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest, response: NextResponse) {
+export async function POST(request: NextRequest) {
+  const responseInternal = NextResponse.next();
   try {
     const data = await request.json();
-    const order = await createOrder(data, request, response);
+    const { createOrder } = await import('@/services/order/service');
+    const order = await createOrder(data, request, responseInternal);
     return NextResponse.json({ success: true, order }, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(

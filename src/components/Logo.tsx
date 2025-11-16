@@ -1,6 +1,7 @@
-"use client";
-import logo from "@/assets/img/logo.svg";
-import { Link } from "@heroui/react";
+'use client';
+import { Link } from '@heroui/react';
+import logo from '@/assets/img/logo.svg';
+
 export default function Logo({
   size = 45,
   classNames,
@@ -10,11 +11,11 @@ export default function Logo({
 }) {
   return (
     <Link
-      className={`flex cursor-pointer hover:opacity-80 transition-opacity duration-300 ${classNames}`}
+      className={`flex cursor-pointer transition-opacity duration-300 hover:opacity-80 ${classNames}`}
       style={{ height: `${size}px` }}
       href="/"
     >
-      <img src={logo.src} alt="logo" className="w-full h-full" />
+      <img src={logo.src} alt="logo" className="h-full w-full" />
     </Link>
   );
 }

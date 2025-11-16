@@ -1,37 +1,37 @@
+import type { Cart } from './cart';
+import type { Product } from './product';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
-  JoinColumn,
   CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
-import { Cart } from "./cart";
-import { Product } from "./product";
+} from 'typeorm';
 
-@Entity({ name: "cart_items" })
+@Entity({ name: 'cart_items' })
 export class CartItem {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne("Cart", "items", { onDelete: "CASCADE" })
-  @JoinColumn({ name: "cart" })
+  @ManyToOne('Cart', 'items', { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'cart' })
   cart: Cart;
 
-  @ManyToOne("Product", "cartItems", {
-    onDelete: "CASCADE",
+  @ManyToOne('Product', 'cartItems', {
+    onDelete: 'CASCADE',
     eager: true,
   })
-  @JoinColumn({ name: "products" })
+  @JoinColumn({ name: 'products' })
   product: Product;
 
-  @Column("decimal", { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
-  @CreateDateColumn({ type: "timestamptz" })
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: "timestamptz" })
+  @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
 }

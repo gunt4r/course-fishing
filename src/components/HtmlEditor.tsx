@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import dynamic from "next/dynamic";
-import React, { useState, useEffect } from "react";
-import Loader from "./Loader";
+import dynamic from 'next/dynamic';
+import React, { useEffect, useState } from 'react';
+import Loader from './Loader';
+import 'react-quill-new/dist/quill.snow.css';
 
-const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
-import "react-quill-new/dist/quill.snow.css";
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
 export type HtmlEditorProps = {
   value?: string;
@@ -14,7 +14,7 @@ export type HtmlEditorProps = {
 };
 
 export default function HtmlEditor({
-  value = "",
+  value = '',
   onChange,
   placeholder,
 }: HtmlEditorProps) {
@@ -27,40 +27,42 @@ export default function HtmlEditor({
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       [{ font: [] }],
       [{ size: [] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
       [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
+        { list: 'ordered' },
+        { list: 'bullet' },
+        { indent: '-1' },
+        { indent: '+1' },
       ],
       [{ color: [] }, { background: [] }],
       [{ align: [] }],
-      ["link", "image", "video"],
-      ["clean"],
+      ['link', 'image', 'video'],
+      ['clean'],
     ],
   };
   const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "video",
-    "color",
-    "background",
-    "align",
+    'header',
+    'font',
+    'size',
+    'bold',
+    'italic',
+    'underline',
+    'strike',
+    'blockquote',
+    'list',
+    'bullet',
+    'indent',
+    'link',
+    'image',
+    'video',
+    'color',
+    'background',
+    'align',
   ];
 
-  if (!mounted) return <Loader />;
+  if (!mounted) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-full">

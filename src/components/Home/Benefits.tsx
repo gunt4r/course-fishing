@@ -1,41 +1,42 @@
-"use client";
-import { useTranslations } from "next-intl";
-import Title from "../Title";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Pagination } from "swiper/modules";
+'use client';
+import { Icon } from '@iconify/react';
+import { useTranslations } from 'next-intl';
+import { A11y, Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-import "swiper/css";
-import "swiper/css/effect-cards";
-import "swiper/css/pagination";
-import "./styleBenefits.scss";
-import MyLink from "../Link";
-import { Icon } from "@iconify/react";
-import { useGetArticlesByType } from "@/app/queries/articles/articlesQuery";
-import Loader from "../Loader";
-import { ArticleEnum } from "@/config/enum";
+import { useGetArticlesByType } from '@/app/queries/articles/articlesQuery';
+import { ArticleEnum } from '@/config/enum';
+import MyLink from '../Link';
+import Loader from '../Loader';
+import Title from '../Title';
+import 'swiper/css';
+import 'swiper/css/effect-cards';
+import 'swiper/css/pagination';
+import './styleBenefits.scss';
+
 export default function Benefits() {
   const { data: articles, isLoading } = useGetArticlesByType(
     ArticleEnum.testimonial,
   );
-  const t = useTranslations("Index");
+  const t = useTranslations('Index');
   const benefits = [
     {
       id: 1,
-      title: t("benefits_money_title"),
-      description: t("benefits_money_description"),
-      icon: "solar:hand-money-linear",
+      title: t('benefits_money_title'),
+      description: t('benefits_money_description'),
+      icon: 'solar:hand-money-linear',
     },
     {
       id: 2,
-      title: t("benefits_housing_title"),
-      description: t("benefits_housing_description"),
-      icon: "solar:armchair-2-bold",
+      title: t('benefits_housing_title'),
+      description: t('benefits_housing_description'),
+      icon: 'solar:armchair-2-bold',
     },
     {
       id: 3,
-      title: t("benefits_experience_title"),
-      description: t("benefits_experience_description"),
-      icon: "arcticons:studysmarter",
+      title: t('benefits_experience_title'),
+      description: t('benefits_experience_description'),
+      icon: 'arcticons:studysmarter',
     },
   ];
   if (isLoading) {
@@ -43,30 +44,30 @@ export default function Benefits() {
   }
   return (
     <section className="mb-20">
-      <Title additionalClassNames="mb-16">{t("benefits_title")}</Title>
-      <center className="flex items-center lg:flex-row flex-col ">
+      <Title additionalClassNames="mb-16">{t('benefits_title')}</Title>
+      <center className="flex flex-col items-center lg:flex-row ">
         <aside className="w-2/4">
           <Swiper
             modules={[A11y, Pagination]}
             slidesPerView={1}
-            onSlideChange={() => console.log("slide change")}
-            onSwiper={(swiper) => console.log(swiper)}
-            className="max-w-4xl md:w-3/4 w-full md:h-[400px] h-[350px] max-h-[600px] mt-16 lg:mb-6 mb-20"
+            onSlideChange={() => console.log('slide change')}
+            onSwiper={swiper => console.log(swiper)}
+            className="mt-16 mb-20 h-[350px] max-h-[600px] w-full max-w-4xl md:h-[400px] md:w-3/4 lg:mb-6"
             effect="cards"
             pagination={{ clickable: true }}
           >
             {articles.map((slide: any) => (
               <SwiperSlide key={slide.id}>
                 <MyLink href={`/products/${slide.id}`}>
-                  <div className="flexflex-col items-center relative ">
+                  <div className="flexflex-col relative items-center ">
                     <img
                       src={slide.image}
                       alt={slide.title}
-                      className="w-full md:h-[400px] h-[300px] max-w-3xl rounded-4xl
-                    flex mx-auto"
+                      className="mx-auto flex h-[300px] w-full max-w-3xl
+                    rounded-4xl md:h-[400px]"
                     />
-                    <div className="absolute -bottom-[5px] bg-cyan-950 w-full max-h-52 h-1/5 flex items-center justify-center rounded-b-4xl">
-                      <p className="text-2xl text-cyan-50 font-bold">
+                    <div className="absolute -bottom-[5px] flex h-1/5 max-h-52 w-full items-center justify-center rounded-b-4xl bg-cyan-950">
+                      <p className="text-2xl font-bold text-cyan-50">
                         {slide.title}
                       </p>
                     </div>
@@ -77,18 +78,18 @@ export default function Benefits() {
           </Swiper>
         </aside>
         <div className="max-w-2xl">
-          <div className="flex flex-col gap-10 items-start">
-            {benefits.map((benefit) => (
-              <div key={benefit.id} className="flex items-center gap-8 mb-4">
+          <div className="flex flex-col items-start gap-10">
+            {benefits.map(benefit => (
+              <div key={benefit.id} className="mb-4 flex items-center gap-8">
                 <Icon
                   icon={benefit.icon}
-                  className="min-w-16 h-16 w-16 text-cyan-50"
+                  className="h-16 w-16 min-w-16 text-cyan-50"
                 />
                 <div className="flex flex-col gap-3.5">
-                  <h3 className="font-bold text-left text-cyan-50 text-3xl">
+                  <h3 className="text-left text-3xl font-bold text-cyan-50">
                     {benefit.title}
                   </h3>
-                  <p className="text-cyan-50 text-left">
+                  <p className="text-left text-cyan-50">
                     {benefit.description}
                   </p>
                 </div>

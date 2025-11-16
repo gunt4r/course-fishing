@@ -1,32 +1,32 @@
-"use client";
-import TableAdmin from "@/components/Table";
-import type { Order } from "@/models/order";
-import getDefaultActions from "@/utils/Helpers";
-import { useState } from "react";
-import ModalDelete from "@/components/Modals/ModalDelete";
-import ModalAddOrder from "@/components/Modals/Orders/ModalAdd";
-import ModalEditOrder from "@/components/Modals/Orders/ModalEdit";
+'use client';
+import type { Order } from '@/models/order';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import {
-  useDeleteOrder,
   getOrders,
-  useUpdateOrder,
   useCreateOrderServer,
-} from "@/app/queries/orders/ordersQuery";
-import { getUsers } from "@/app/queries/users/userQuery";
-import { useProducts } from "@/app/queries/product/productQuery";
-import { useTranslations } from "next-intl";
-import Loader from "@/components/Loader";
-import toast from "react-hot-toast";
+  useDeleteOrder,
+  useUpdateOrder,
+} from '@/app/queries/orders/ordersQuery';
+import { useProducts } from '@/app/queries/product/productQuery';
+import { getUsers } from '@/app/queries/users/userQuery';
+import Loader from '@/components/Loader';
+import ModalDelete from '@/components/Modals/ModalDelete';
+import ModalAddOrder from '@/components/Modals/Orders/ModalAdd';
+import ModalEditOrder from '@/components/Modals/Orders/ModalEdit';
+import TableAdmin from '@/components/Table';
+import getDefaultActions from '@/utils/Helpers';
 
 export default function ClientOrders() {
   const { data: orders, isLoading: ordersLoading, refetch } = getOrders();
   const { data: users, isLoading: usersLoading } = getUsers();
   const { data: products, isLoading: productsLoading } = useProducts();
   const { mutateAsync: deleteOrder, isPending: isDeleting } = useDeleteOrder();
-  const { mutateAsync: createOrder, isPending: isAdding } =
-    useCreateOrderServer();
+  const { mutateAsync: createOrder, isPending: isAdding }
+    = useCreateOrderServer();
   const { mutateAsync: updateOrder, isPending: isUpdating } = useUpdateOrder();
-  const t = useTranslations("Dashboard");
+  const t = useTranslations('Dashboard');
 
   console.log(products);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
@@ -50,10 +50,10 @@ export default function ClientOrders() {
       await deleteOrder(selectedOrder?.id as string);
       setIsModalDeleteOpen(false);
       setSelectedOrder(null);
-      toast.success(t("deleted") ?? "Order deleted successfully");
+      toast.success(t('deleted') ?? 'Order deleted successfully');
     } catch (error) {
-      console.error("Error deleting order:", error);
-      toast.error(t("error") ?? "An error occurred");
+      console.error('Error deleting order:', error);
+      toast.error(t('error') ?? 'An error occurred');
     }
   }
 
@@ -61,10 +61,10 @@ export default function ClientOrders() {
     try {
       await createOrder(data);
       setIsModalAddOpen(false);
-      toast.success(t("added") ?? "Order added successfully");
+      toast.success(t('added') ?? 'Order added successfully');
     } catch (error) {
-      console.error("Error adding order:", error);
-      toast.error(t("error") ?? "An error occurred");
+      console.error('Error adding order:', error);
+      toast.error(t('error') ?? 'An error occurred');
     }
   }
 
@@ -73,14 +73,16 @@ export default function ClientOrders() {
       await updateOrder(data);
       setIsModalEditOpen(false);
       setSelectedOrder(null);
-      toast.success(t("updated") ?? "Order updated successfully");
+      toast.success(t('updated') ?? 'Order updated successfully');
     } catch (error) {
-      console.error("Error updating order:", error);
-      toast.error(t("error") ?? "An error occurred");
+      console.error('Error updating order:', error);
+      toast.error(t('error') ?? 'An error occurred');
     }
   }
 
-  if (ordersLoading || usersLoading || productsLoading) return <Loader />;
+  if (ordersLoading || usersLoading || productsLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-full">
@@ -96,7 +98,7 @@ export default function ClientOrders() {
         handleSubmit={handleDeleteOrder}
         isLoading={isDeleting}
         setIsModalOpen={setIsModalDeleteOpen}
-        title={t("delete") ?? "Delete Order"}
+        title={t('delete') ?? 'Delete Order'}
       />
 
       <ModalAddOrder

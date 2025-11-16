@@ -1,31 +1,31 @@
-"use client";
-import TableAdmin from "@/components/Table";
-import ModalDelete from "@/components/Modals/ModalDelete";
-import ModalAddArticle from "@/components/Modals/Articles/ModalAdd";
-import ModalEditArticle from "@/components/Modals/Articles/ModalEdit";
-import Loader from "@/components/Loader";
-import toast from "react-hot-toast";
-import { useState } from "react";
-import { useTranslations } from "next-intl";
-import getDefaultActions from "@/utils/Helpers";
+'use client';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import {
   useCreateArticle,
+  useDeleteArticle,
   useGetArticles,
   useUpdateArticle,
-  useDeleteArticle,
-} from "@/app/queries/articles/articlesQuery";
+} from '@/app/queries/articles/articlesQuery';
+import Loader from '@/components/Loader';
+import ModalAddArticle from '@/components/Modals/Articles/ModalAdd';
+import ModalEditArticle from '@/components/Modals/Articles/ModalEdit';
+import ModalDelete from '@/components/Modals/ModalDelete';
+import TableAdmin from '@/components/Table';
+import getDefaultActions from '@/utils/Helpers';
 
 export default function ClientArticles() {
-  const t = useTranslations("Header");
-  const tDashboard = useTranslations("Dashboard");
+  const t = useTranslations('Header');
+  const tDashboard = useTranslations('Dashboard');
   const { data: articles, isLoading, refetch } = useGetArticles();
 
-  const { mutateAsync: createArticle, isPending: isCreating } =
-    useCreateArticle();
-  const { mutateAsync: updateArticle, isPending: isUpdating } =
-    useUpdateArticle();
-  const { mutateAsync: deleteArticle, isPending: isDeleting } =
-    useDeleteArticle();
+  const { mutateAsync: createArticle, isPending: isCreating }
+    = useCreateArticle();
+  const { mutateAsync: updateArticle, isPending: isUpdating }
+    = useUpdateArticle();
+  const { mutateAsync: deleteArticle, isPending: isDeleting }
+    = useDeleteArticle();
 
   const [selectedArticle, setSelectedArticle] = useState<any>(null);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
@@ -48,10 +48,10 @@ export default function ClientArticles() {
       await deleteArticle(selectedArticle?.id as string);
       setIsModalDeleteOpen(false);
       setSelectedArticle(null);
-      toast.success(t("deleted") ?? "Article deleted");
+      toast.success(t('deleted') ?? 'Article deleted');
     } catch (err) {
       console.error(err);
-      toast.error("An error occurred");
+      toast.error('An error occurred');
     }
   }
 
@@ -59,10 +59,10 @@ export default function ClientArticles() {
     try {
       await createArticle(data);
       setIsModalAddOpen(false);
-      toast.success(t("saved") ?? "Article added");
+      toast.success(t('saved') ?? 'Article added');
     } catch (err) {
       console.error(err);
-      toast.error("An error occurred");
+      toast.error('An error occurred');
     }
   }
 
@@ -71,21 +71,23 @@ export default function ClientArticles() {
       await updateArticle(data);
       setIsModalEditOpen(false);
       setSelectedArticle(null);
-      toast.success(t("saved") ?? "Article updated");
+      toast.success(t('saved') ?? 'Article updated');
     } catch (err) {
       console.error(err);
-      toast.error("An error occurred");
+      toast.error('An error occurred');
     }
   }
 
-  if (isLoading) return <Loader />;
+  if (isLoading) {
+    return <Loader />;
+  }
   console.log(articles);
   return (
     <div className="w-full">
       <TableAdmin
         list={articles || []}
         actions={actionsArticles}
-        titleTable={"Articles"}
+        titleTable="Articles"
         onAddItem={() => setIsModalAddOpen(true)}
       />
 
@@ -94,7 +96,7 @@ export default function ClientArticles() {
         handleSubmit={handleDelete}
         isLoading={isDeleting}
         setIsModalOpen={setIsModalDeleteOpen}
-        title={tDashboard("delete") ?? "Delete Article"}
+        title={tDashboard('delete') ?? 'Delete Article'}
       />
 
       <ModalAddArticle

@@ -1,16 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/app/api/axios';
 import {
-  REACT_QUERY_GET_PRODUCTS_KEY,
   REACT_QUERY_GET_PRODUCT_KEY,
-} from "@/config/const";
-import { api } from "@/app/api/axios";
+  REACT_QUERY_GET_PRODUCTS_KEY,
+} from '@/config/const';
+
 export function useProducts() {
   return useQuery({
     queryKey: [REACT_QUERY_GET_PRODUCTS_KEY],
     queryFn: async () => {
       try {
         console.log(api);
-        const response = await api.get("/api/products");
+        const response = await api.get('/api/products');
 
         return response.data;
       } catch (error) {
@@ -40,9 +41,9 @@ export function useCreateProduct() {
   return useMutation({
     mutationFn: async (data: any) => {
       try {
-        const response = await api.post("/api/products", data, {
+        const response = await api.post('/api/products', data, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         });
         return response.data;
@@ -62,7 +63,7 @@ export function useUpdateProduct() {
       try {
         const response = await api.patch(`/api/products/${data.id}`, data, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         });
         return response.data;

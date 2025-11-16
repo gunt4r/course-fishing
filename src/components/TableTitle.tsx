@@ -1,5 +1,6 @@
-import { Button } from "@heroui/react";
-import { Icon } from "@iconify/react";
+import { Button } from '@heroui/react';
+import { Icon } from '@iconify/react';
+
 export default function TableTitle({
   title,
   classNames,
@@ -10,9 +11,9 @@ export default function TableTitle({
   addItem?: () => void;
 }) {
   return (
-    <header className="flex items-center  mb-4">
+    <header className="mb-4 flex  items-center">
       <p
-        className={`font-semibold ${addItem ? "ml-auto" : "mx-auto"} my-0 text-center uppercase  ${classNames}`}
+        className={`font-semibold ${addItem ? 'ml-auto' : 'mx-auto'} my-0 text-center uppercase  ${classNames}`}
       >
         {title}
       </p>

@@ -9,7 +9,7 @@ export default function Title({
 }) {
   return (
     <h1
-      className={`text-3xl text-center mx-auto text-cyan-50 max-w-6xl font-bold ${addMarginTop ? "mt-20" : ""} ${additionalClassNames}`}
+      className={`mx-auto max-w-6xl text-center text-3xl font-bold text-cyan-50 ${addMarginTop ? 'mt-20' : ''} ${additionalClassNames}`}
     >
       {children}
     </h1>

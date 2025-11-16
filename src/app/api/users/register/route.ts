@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
-import { registration } from "@/services/users/service";
+import { NextResponse } from 'next/server';
+
 export async function POST(request: Request) {
+  const { registration } = await import('@/services/users/service');
   try {
-    console.log(request);
     const data = await request.json();
 
     const user = await registration(data);
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   } catch (error: any) {
     return NextResponse.json(
       {
-        error: error.message || "Failed to create user",
+        error: error.message || 'Failed to create user',
         details: error.detail || error.toString(),
       },
       { status: 500 },

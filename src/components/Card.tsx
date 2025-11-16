@@ -1,5 +1,6 @@
-import type { Card } from "@/types/card";
-import MyLink from "./Link";
+import type { Card } from '@/types/card';
+import MyLink from './Link';
+
 export default function Card({ image, title, link }: Card) {
   return (
     <MyLink addHoverOpacity href={link}>

@@ -1,18 +1,19 @@
+import type { TableAction } from '@/types/tableAction';
+
 import {
+  Button,
+  TableBody,
+  TableCell,
+  TableColumn,
   Table as TableComponent,
   TableHeader,
-  TableColumn,
-  TableBody,
   TableRow,
-  TableCell,
   Tooltip,
-} from "@heroui/react";
+} from '@heroui/react';
+import { Icon } from '@iconify/react';
+import { renderValue } from '@/utils/Helpers';
+import TableTitle from './TableTitle';
 
-import TableTitle from "./TableTitle";
-import { renderValue } from "@/utils/Helpers";
-import type { TableAction } from "@/types/tableAction";
-import { Button } from "@heroui/react";
-import { Icon } from "@iconify/react";
 type CellStyleMapper = (
   value: any,
   key: string,
@@ -35,18 +36,20 @@ export default function TableAdmin({
   ommitedAttributes,
   actions = [],
   classNamesWrapper,
-  titleTable = "Table",
+  titleTable = 'Table',
   cellStyleMapper,
   onAddItem,
   maxTableHeight = undefined,
 }: TableProps) {
-  if (!list || !list?.length) return null;
+  if (!list || !list?.length) {
+    return null;
+  }
   const first = list?.[0] ?? {};
   const keys = Object.keys(first).filter(
-    (key) => !ommitedAttributes?.includes(key),
+    key => !ommitedAttributes?.includes(key),
   );
   const headerColumns = [
-    ...keys.map((k) => <TableColumn key={k}>{k}</TableColumn>),
+    ...keys.map(k => <TableColumn key={k}>{k}</TableColumn>),
     ...(actions.length > 0
       ? [<TableColumn key="actions">Actions</TableColumn>]
       : []),
@@ -57,25 +60,25 @@ export default function TableAdmin({
       isStriped
       isVirtualized
       aria-label="Dynamic table"
-      className={`p-8 rounded-md text-zinc-900 w-full max-w-full h-screen scrollbar-hide ${classNamesWrapper}`}
+      className={`scrollbar-hide h-screen w-full max-w-full rounded-md p-8 text-zinc-900 ${classNamesWrapper}`}
       classNames={{
-        wrapper: `scrollbar-hide ${maxTableHeight ? "" : "!h-screen"}`,
+        wrapper: `scrollbar-hide ${maxTableHeight ? '' : '!h-screen'}`,
       }}
       maxTableHeight={maxTableHeight}
       rowHeight={40}
       shadow="md"
-      topContent={
+      topContent={(
         <TableTitle
           classNames="text-center"
           addItem={onAddItem}
           title={titleTable}
         />
-      }
+      )}
     >
       <TableHeader>{headerColumns}</TableHeader>
       <TableBody
         className="scrollbar-hide"
-        emptyContent={"No rows to display."}
+        emptyContent="No rows to display."
       >
         {list.map((item, rowIndex) => {
           const cells = [
@@ -84,11 +87,11 @@ export default function TableAdmin({
               const displayValue = renderValue(rawValue);
               const customClass = cellStyleMapper
                 ? cellStyleMapper(rawValue, key, item)
-                : "";
+                : '';
               return (
                 <TableCell
                   key={String(key)}
-                  className={`text-sm max-w-32 scrollbar-hide overflow-y-hidden text-nowrap ${customClass}`}
+                  className={`scrollbar-hide max-w-32 overflow-y-hidden text-sm text-nowrap ${customClass}`}
                 >
                   {displayValue}
                 </TableCell>
@@ -112,7 +115,7 @@ export default function TableAdmin({
                         isIconOnly
                         size="sm"
                         variant="light"
-                        color={action.color || "default"}
+                        color={action.color || 'default'}
                         onPress={() => action.action(item)}
                         isDisabled={
                           action.isDisabled || action.isVisible === false

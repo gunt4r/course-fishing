@@ -1,64 +1,65 @@
+import type { CartItem } from './cartItem';
+import type { Order } from './order';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
-  OneToMany,
-  ManyToMany,
+  Entity,
   JoinTable,
-} from "typeorm";
-import { CartItem } from "./cartItem";
-import type { Order } from "./order";
-@Entity({ name: "products" })
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+@Entity({ name: 'products' })
 export class Product {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: "varchar", length: 255, unique: true })
+  @Column({ type: 'varchar', length: 255, unique: true })
   name: string;
 
-  @Column({ type: "text" })
+  @Column({ type: 'text' })
   description: string;
 
-  @Column("decimal", { precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
-  @Column({ type: "varchar", length: 500, nullable: true })
+  @Column({ type: 'varchar', length: 500, nullable: true })
   image: string;
 
-  @Column({ type: "boolean", default: true })
+  @Column({ type: 'boolean', default: true })
   isActive: boolean;
 
-  @OneToMany("CartItem", "product", { cascade: true })
+  @OneToMany('CartItem', 'product', { cascade: true })
   cartItems: CartItem[];
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: 'text', nullable: true })
   html: string;
 
-  @Column({ type: "text", nullable: true })
+  @Column({ type: 'text', nullable: true })
   sanitizedHtml: string;
 
-  @ManyToMany("Order", "products", { cascade: true })
+  @ManyToMany('Order', 'products', { cascade: true })
   @JoinTable({
-    name: "order_products",
+    name: 'order_products',
     joinColumn: {
-      name: "product_id",
-      referencedColumnName: "id",
+      name: 'product_id',
+      referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: "order_id",
-      referencedColumnName: "id",
+      name: 'order_id',
+      referencedColumnName: 'id',
     },
   })
   orders: Order[];
 
-  @Column({ type: "varchar", length: 500, nullable: true })
+  @Column({ type: 'varchar', length: 500, nullable: true })
   document: string;
-  
-  @CreateDateColumn({ type: "timestamptz" })
+
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: "timestamptz" })
+  @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
 }

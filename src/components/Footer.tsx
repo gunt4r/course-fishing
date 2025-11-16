@@ -1,75 +1,84 @@
-"use client";
-import Container from "./container/Container";
-import Logo from "./Logo";
-import { useTranslations } from "next-intl";
-import { Icon } from "@iconify/react";
-import MyLink from "./Link";
+'use client';
+import { Icon } from '@iconify/react';
+import { useTranslations } from 'next-intl';
+import Container from './container/Container';
+import MyLink from './Link';
+import Logo from './Logo';
+
 export default function Footer() {
-  const navigationTranslation = useTranslations("Header");
-  const t = useTranslations("Footer");
+  const navigationTranslation = useTranslations('Header');
+  const t = useTranslations('Footer');
   return (
     <Container>
-      <footer className="flex flex-col text-cyan-50 text-[16px] gap-16 mt-10 mx-auto pb-14">
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-16 ">
-          {" "}
+      <footer className="mx-auto mt-10 flex flex-col gap-16 pb-14 text-[16px] text-cyan-50">
+        <section className="grid grid-cols-1 gap-16 md:grid-cols-3 ">
+          {' '}
           <div>
-            <Logo classNames="mb-6" size={60} />{" "}
-            <p className="text-center">{t("description")}</p>
+            <Logo classNames="mb-6" size={60} />
+            {' '}
+            <p className="text-center">{t('description')}</p>
           </div>
           <div>
-            <p className="text-2xl text-center mb-4">{t("contacts")}</p>{" "}
-            <div className="flex justify-center items-center gap-3.5">
-              <Icon icon="material-symbols:mail" />{" "}
+            <p className="mb-4 text-center text-2xl">{t('contacts')}</p>
+            {' '}
+            <div className="flex items-center justify-center gap-3.5">
+              <Icon icon="material-symbols:mail" />
+              {' '}
               <a
                 href="mailto:office@alexfisherway.com"
-                className="duration-400 hover:opacity-50 transition-opacity"
+                className="transition-opacity duration-400 hover:opacity-50"
               >
                 office@alexfisherway.com
               </a>
             </div>
           </div>
-          <div className="md:self-start self-center w-fit justify-self-center">
-            <p className="text-2xl mb-4">{t("navigation")}</p>{" "}
+          <div className="w-fit place-self-center md:self-start">
+            <p className="mb-4 text-2xl">{t('navigation')}</p>
+            {' '}
             <ul className="flex flex-col gap-3 md:self-start">
               <li>
                 <MyLink addHoverOpacity href="/">
-                  {navigationTranslation("home_link")}
+                  {navigationTranslation('home_link')}
                 </MyLink>
               </li>
               <li>
                 <MyLink addHoverOpacity href="/products">
-                  {navigationTranslation("products_link")}
+                  {navigationTranslation('products_link')}
                 </MyLink>
               </li>
 
               <li>
                 <MyLink addHoverOpacity href="/reviews">
-                  {navigationTranslation("reviews_link")}
+                  {navigationTranslation('reviews_link')}
                 </MyLink>
               </li>
 
               <li>
                 <MyLink addHoverOpacity href="/stories">
-                  {navigationTranslation("stories_link")}
+                  {navigationTranslation('stories_link')}
                 </MyLink>
               </li>
               <li>
                 <MyLink addHoverOpacity href="/cart">
-                  {navigationTranslation("cart_link")}
+                  {navigationTranslation('cart_link')}
                 </MyLink>
               </li>
             </ul>
           </div>
         </section>
-        <section className="flex justify-center items-center gap-2 flex-col">
-          <p className="text-center max-w-4xl">{t("small_description")}</p>
+        <section className="flex flex-col items-center justify-center gap-2">
+          <p className="max-w-4xl text-center">{t('small_description')}</p>
           <MyLink addHoverOpacity href="/policy">
-            {t("policy")}
+            {t('policy')}
           </MyLink>
           <p>
-            {t("copyright")} {new Date().getFullYear()}.{" "}
+            {t('copyright')}
+            {' '}
+            {new Date().getFullYear()}
+            .
+            {' '}
             <a
-              className="duration-400 hover:opacity-50 transition-opacity"
+              className="transition-opacity duration-400 hover:opacity-50"
               href="mailto:vladprangati@gmail.com"
             >
               Made by Vlad Prangati

@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
-import { getTranslations, setRequestLocale } from "next-intl/server";
-import ClientSignUp from "@/components/SignUp/ClientSignUp";
+import type { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import ClientSignUp from '@/components/SignUp/ClientSignUp';
+
 type ISignUpPageProps = {
   params: Promise<{ locale: string }>;
 };
@@ -11,12 +12,12 @@ export async function generateMetadata(
   const { locale } = await props.params;
   const t = await getTranslations({
     locale,
-    namespace: "SignUp",
+    namespace: 'SignUp',
   });
 
   return {
-    title: t("meta_title"),
-    description: t("meta_description"),
+    title: t('meta_title'),
+    description: t('meta_description'),
   };
 }
 

@@ -1,8 +1,9 @@
-import { setRequestLocale } from "next-intl/server";
-import Header from "@/components/Header";
-import Container from "@/components/container/Container";
-import Footer from "@/components/Footer";
-import { Toaster } from "react-hot-toast";
+import { setRequestLocale } from 'next-intl/server';
+import { Toaster } from 'react-hot-toast';
+import Container from '@/components/container/Container';
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+
 export default async function Layout(props: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;

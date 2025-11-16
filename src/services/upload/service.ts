@@ -1,15 +1,15 @@
-import { NextRequest } from "next/server";
-import { v4 as uuidv4 } from "uuid";
-import path from "path";
-import { promises as fs } from "fs";
+import type { NextRequest } from 'next/server';
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
+import { v4 as uuidv4 } from 'uuid';
 
-const BASE_UPLOAD_DIR = path.join(process.cwd(), "public");
+const BASE_UPLOAD_DIR = path.join(process.cwd(), 'public');
 
 async function ensureDirectoryExists(dirPath: string) {
   try {
     await fs.access(dirPath);
   } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
       await fs.mkdir(dirPath, { recursive: true });
     } else {
       throw error;
@@ -17,7 +17,7 @@ async function ensureDirectoryExists(dirPath: string) {
   }
 }
 
-export interface UploadOptions {
+export type UploadOptions = {
   allowedExtensions?: string[];
 
   allowedMimeTypes?: string[];
@@ -25,16 +25,16 @@ export interface UploadOptions {
   uploadPath?: string;
 
   maxSize?: number;
-}
+};
 export async function uploadFile(
   request: NextRequest,
   fieldName: string,
   options: UploadOptions = {},
 ): Promise<string> {
   const {
-    allowedExtensions = [".pdf"],
-    allowedMimeTypes = ["application/pdf"],
-    uploadPath = "uploads",
+    allowedExtensions = ['.pdf'],
+    allowedMimeTypes = ['application/pdf'],
+    uploadPath = 'uploads',
     maxSize = 10485760,
   } = options;
 
@@ -49,7 +49,7 @@ export async function uploadFile(
   }
 
   if (!(file instanceof Blob)) {
-    throw new Error(`Неверный тип данных в поле "${fieldName}"`);
+    throw new TypeError(`Неверный тип данных в поле "${fieldName}"`);
   }
 
   if (file.size > maxSize) {
@@ -60,16 +60,16 @@ export async function uploadFile(
 
   if (allowedMimeTypes.length && !allowedMimeTypes.includes(file.type)) {
     throw new Error(
-      `Недопустимый тип файла. Разрешены: ${allowedMimeTypes.join(", ")}`,
+      `Недопустимый тип файла. Разрешены: ${allowedMimeTypes.join(', ')}`,
     );
   }
 
-  const originalName = file.name || "file";
+  const originalName = file.name || 'file';
   const ext = path.extname(originalName).toLowerCase();
 
   if (allowedExtensions.length && !allowedExtensions.includes(ext)) {
     throw new Error(
-      `Недопустимое расширение файла. Разрешены: ${allowedExtensions.join(", ")}`,
+      `Недопустимое расширение файла. Разрешены: ${allowedExtensions.join(', ')}`,
     );
   }
 
@@ -83,13 +83,13 @@ export async function uploadFile(
 }
 
 export async function uploadPdfBlob(
-  fileBlob: Blob, 
-  options: UploadOptions = {}
+  fileBlob: Blob,
+  options: UploadOptions = {},
 ): Promise<string> {
   const {
-    allowedExtensions = [".pdf"],
-    allowedMimeTypes = ["application/pdf"],
-    uploadPath = "documents",
+    allowedExtensions = ['.pdf'],
+    allowedMimeTypes = ['application/pdf'],
+    uploadPath = 'documents',
     maxSize = 10485760,
   } = options;
 
@@ -97,18 +97,18 @@ export async function uploadPdfBlob(
   await ensureDirectoryExists(uploadDir);
 
   if (allowedMimeTypes.length && !allowedMimeTypes.includes(fileBlob.type)) {
-    throw new Error(`Invalid file type. Allowed: ${allowedMimeTypes.join(", ")}`);
+    throw new Error(`Invalid file type. Allowed: ${allowedMimeTypes.join(', ')}`);
   }
 
   if (fileBlob.size > maxSize) {
     throw new Error(`File too large. Max size: ${maxSize / 1024 / 1024}MB`);
   }
 
-  const originalName = (fileBlob as any).name || "file.pdf";
+  const originalName = (fileBlob as any).name || 'file.pdf';
   const ext = path.extname(originalName).toLowerCase();
-  
+
   if (allowedExtensions.length && !allowedExtensions.includes(ext)) {
-    throw new Error(`Invalid file extension. Allowed: ${allowedExtensions.join(", ")}`);
+    throw new Error(`Invalid file extension. Allowed: ${allowedExtensions.join(', ')}`);
   }
 
   const safeFilename = `${uuidv4()}${ext}`;

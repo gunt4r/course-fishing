@@ -1,8 +1,9 @@
-import { NextResponse, NextRequest } from "next/server";
-import { createOrderServer } from "@/services/order/service";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function POST(request: NextRequest, response: NextResponse) {
+export async function POST(request: NextRequest) {
   try {
+    const { createOrderServer } = await import('@/services/order/service');
     const data = await request.json();
     const order = await createOrderServer(data);
     return NextResponse.json({ success: true, order }, { status: 200 });

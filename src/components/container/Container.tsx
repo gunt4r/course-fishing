@@ -1,4 +1,4 @@
-"use client";
+'use client';
 export default function Container({ children }: { children: React.ReactNode }) {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-12 lg:px-8">{children}</div>

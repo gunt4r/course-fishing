@@ -1,50 +1,50 @@
+import type { CartItem } from './cartItem';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
-  OneToOne,
-  JoinColumn,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
+  JoinColumn,
   OneToMany,
-} from "typeorm";
-import { User } from "./user";
-import { CartItem } from "./cartItem";
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { User } from './user';
 
-@Entity({ name: "carts" })
+@Entity({ name: 'carts' })
 export class Cart {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: "uuid", nullable: true })
+  @Column({ type: 'uuid', nullable: true })
   userId: string | null;
 
-  @OneToOne(() => User, (user) => user.cart, {
+  @OneToOne(() => User, user => user.cart, {
     nullable: true,
-    onDelete: "CASCADE",
+    onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: "userId" })
+  @JoinColumn({ name: 'userId' })
   user: User | null;
 
-  @Column({ type: "varchar", length: 255, nullable: true, unique: true })
+  @Column({ type: 'varchar', length: 255, nullable: true, unique: true })
   sessionId: string | null;
 
-  @OneToMany("CartItem", "cart", {
+  @OneToMany('CartItem', 'cart', {
     cascade: true,
     eager: true,
   })
   items: CartItem[];
 
-  @Column({ type: "varchar", length: 50, nullable: true })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   couponCode: string | null;
 
-  @Column({ type: "decimal", precision: 5, scale: 2, default: 0 })
+  @Column({ type: 'decimal', precision: 5, scale: 2, default: 0 })
   discountPercent: number;
 
-  @CreateDateColumn({ type: "timestamptz" })
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: "timestamptz" })
+  @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
 
   getSubtotal(): number {

@@ -1,19 +1,20 @@
-import { getEmailTranslation } from "@/libs/email/templates";
-import { Order } from "@/models/order";
-import nodemailer from "nodemailer";
-import path from "path";
-import * as fs from "fs";
-interface EmailAttachment {
+import type { Order } from '@/models/order';
+import * as fs from 'node:fs';
+import path from 'node:path';
+import nodemailer from 'nodemailer';
+import { getEmailTranslation } from '@/libs/email/templates';
+
+type EmailAttachment = {
   filename: string;
   path: string;
-}
+};
 export const sendEmail = async (
   email: string,
   subject: string,
   message: string,
 ) => {
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD,
@@ -29,15 +30,15 @@ export const sendEmail = async (
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully");
+    console.log('Email sent successfully');
   } catch (error) {
-    console.error("Error sending email:", error);
+    console.error('Error sending email:', error);
   }
 };
 
 export const sendOrderConfirmationEmail = async (
   order: Order,
-  locale: string = "en",
+  locale: string = 'en',
 ) => {
   const translations = getEmailTranslation(locale);
 
@@ -45,7 +46,7 @@ export const sendOrderConfirmationEmail = async (
 
   for (const product of order.products) {
     if (product.document) {
-      const pdfPath = path.join(process.cwd(), "public", product.document);
+      const pdfPath = path.join(process.cwd(), 'public', product.document);
 
       if (fs.existsSync(pdfPath)) {
         attachments.push({
@@ -65,7 +66,7 @@ export const sendOrderConfirmationEmail = async (
       (product, index) =>
         `${index + 1}. ${product.name} - $${Number(product.price).toFixed(2)}`,
     )
-    .join("\n");
+    .join('\n');
 
   const htmlContent = generateOrderEmailHTML(order, translations);
 
@@ -88,7 +89,7 @@ ${translations?.support}
   `.trim();
 
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: 'gmail',
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD,
@@ -101,7 +102,7 @@ ${translations?.support}
     subject: `${translations?.subject} #${order.id.slice(0, 8)}`,
     text: textContent,
     html: htmlContent,
-    attachments: attachments,
+    attachments,
   };
 
   try {
@@ -109,7 +110,7 @@ ${translations?.support}
     console.log(`Order confirmation email sent to ${order.user.email}`);
     return true;
   } catch (error) {
-    console.error("Error sending order confirmation email:", error);
+    console.error('Error sending order confirmation email:', error);
     throw error;
   }
 };
@@ -117,7 +118,7 @@ ${translations?.support}
 function generateOrderEmailHTML(order: Order, translations: any): string {
   const productRows = order.products
     .map(
-      (product) => `
+      product => `
     <tr>
       <td style="padding: 12px; border-bottom: 1px solid #eee;">
         ${product.name}
@@ -128,7 +129,7 @@ function generateOrderEmailHTML(order: Order, translations: any): string {
     </tr>
   `,
     )
-    .join("");
+    .join('');
 
   return `
 <!DOCTYPE html>

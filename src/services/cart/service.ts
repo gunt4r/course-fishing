@@ -1,13 +1,13 @@
-import { getDataSource } from "@/libs/DB";
-import { Cart } from "@/models/cart";
-import { CartItem } from "@/models/cartItem";
-import { NextRequest, NextResponse } from "next/server";
-import { Product } from "@/models/product";
+import type { NextRequest, NextResponse } from 'next/server';
+import { getDataSource } from '@/libs/DB';
+import { Cart } from '@/models/cart';
+import { CartItem } from '@/models/cartItem';
+import { Product } from '@/models/product';
 import {
-  getUserIdFromRequest,
   ensureSessionCookie,
+  getUserIdFromRequest,
   getUserIdFromToken,
-} from "../users/service";
+} from '../users/service';
 
 export async function getCartById(cartId: string): Promise<Cart | null> {
   const dataSource = await getDataSource();
@@ -15,7 +15,7 @@ export async function getCartById(cartId: string): Promise<Cart | null> {
   try {
     const cart = await cartRepo.findOne({
       where: { id: cartId },
-      relations: ["items", "items.product"],
+      relations: ['items', 'items.product'],
     });
     if (!cart) {
       return null;
@@ -37,14 +37,14 @@ export const getOrCreateCartForRequest = async (
   if (userId) {
     let cart = await cartRepo.findOne({
       where: { userId },
-      relations: ["items", "items.product"],
+      relations: ['items', 'items.product'],
     });
     if (!cart) {
       cart = cartRepo.create({ userId, items: [] });
       await cartRepo.save(cart);
       cart = (await cartRepo.findOne({
         where: { id: cart.id },
-        relations: ["items", "items.product"],
+        relations: ['items', 'items.product'],
       })) as Cart;
     }
     const totalPrice = getTotalPrice(cart);
@@ -54,14 +54,14 @@ export const getOrCreateCartForRequest = async (
   const sessionId = ensureSessionCookie(request, response);
   let cart = await cartRepo.findOne({
     where: { sessionId },
-    relations: ["items", "items.product"],
+    relations: ['items', 'items.product'],
   });
   if (!cart) {
     cart = cartRepo.create({ sessionId, items: [] });
     await cartRepo.save(cart);
     cart = (await cartRepo.findOne({
       where: { id: cart.id },
-      relations: ["items", "items.product"],
+      relations: ['items', 'items.product'],
     })) as Cart;
   }
   const totalPrice = getTotalPrice(cart);
@@ -78,14 +78,14 @@ export const getOrCreateCartServer = async (
   if (userId) {
     let cart = await cartRepo.findOne({
       where: { userId },
-      relations: ["items", "items.product"],
+      relations: ['items', 'items.product'],
     });
     if (!cart) {
       cart = cartRepo.create({ userId, items: [] });
       await cartRepo.save(cart);
       cart = (await cartRepo.findOne({
         where: { id: cart.id },
-        relations: ["items", "items.product"],
+        relations: ['items', 'items.product'],
       })) as Cart;
     }
     const totalPrice = getTotalPrice(cart);
@@ -94,14 +94,14 @@ export const getOrCreateCartServer = async (
 
   let cart = await cartRepo.findOne({
     where: { sessionId },
-    relations: ["items", "items.product"],
+    relations: ['items', 'items.product'],
   });
   if (!cart) {
     cart = cartRepo.create({ sessionId, items: [] });
     await cartRepo.save(cart);
     cart = (await cartRepo.findOne({
       where: { id: cart.id },
-      relations: ["items", "items.product"],
+      relations: ['items', 'items.product'],
     })) as Cart;
   }
   const totalPrice = getTotalPrice(cart);
@@ -118,25 +118,27 @@ export const addToCart = async (
   const itemRepo = dataSource.getRepository(CartItem);
 
   const product = await productRepo.findOneBy({ id: productId });
-  if (!product) throw new Error("Product not found");
+  if (!product) {
+    throw new Error('Product not found');
+  }
 
   const cart = await getOrCreateCartForRequest(request, response);
-  const priceValue =
-    typeof product.price === "string" ? Number(product.price) : product.price;
+  const priceValue
+    = typeof product.price === 'string' ? Number(product.price) : product.price;
   if (priceValue === undefined || Number.isNaN(priceValue)) {
-    throw new Error("Product has invalid price");
+    throw new Error('Product has invalid price');
   }
 
   const item = itemRepo.create({
-    cart: cart,
-    product: product,
+    cart,
+    product,
     price: priceValue,
   });
   await itemRepo.save(item);
 
   const updatedCart = await dataSource
     .getRepository(Cart)
-    .findOne({ where: { id: cart.id }, relations: ["items", "items.product"] });
+    .findOne({ where: { id: cart.id }, relations: ['items', 'items.product'] });
   return { cart: updatedCart as Cart };
 };
 
@@ -150,20 +152,20 @@ export async function deleteItemFromCart(
   try {
     const cart = await getOrCreateCartForRequest(request, response);
     if (!cart) {
-      throw new Error("Cart not found");
+      throw new Error('Cart not found');
     }
     if (!cart.items) {
-      throw new Error("Cart items not found");
+      throw new Error('Cart items not found');
     }
     const itemToDelete = cart.items.find(
-      (item) => item.product.id === productId,
+      item => item.product.id === productId,
     );
     if (!itemToDelete) {
       throw new Error(`Item with id ${productId} not found in cart`);
     }
     await itemRepo.delete({ id: itemToDelete.id });
   } catch (error) {
-    console.error("Error deleting item from cart:", error);
+    console.error('Error deleting item from cart:', error);
     throw error;
   }
 }
@@ -176,11 +178,11 @@ export const mergeGuestCartIntoUser = async (
   const userId = getUserIdFromRequest(request);
   if (!userId) {
     throw new Error(
-      "User not authenticated — cannot merge guest cart into user cart.",
+      'User not authenticated — cannot merge guest cart into user cart.',
     );
   }
 
-  const cookieName = (process.env.NAME_SESSION_ID as string) || "sessionId";
+  const cookieName = (process.env.NAME_SESSION_ID as string) || 'sessionId';
 
   return await dataSource.transaction(async (em) => {
     const cartRepository = em.getRepository(Cart);
@@ -190,14 +192,14 @@ export const mergeGuestCartIntoUser = async (
     if (!sessionId) {
       let userCart = await cartRepository.findOne({
         where: { userId },
-        relations: ["items", "items.product"],
+        relations: ['items', 'items.product'],
       });
       if (!userCart) {
         userCart = cartRepository.create({ userId, items: [] });
         await cartRepository.save(userCart);
         userCart = (await cartRepository.findOne({
           where: { id: userCart.id },
-          relations: ["items", "items.product"],
+          relations: ['items', 'items.product'],
         })) as Cart;
       }
       return userCart;
@@ -205,25 +207,25 @@ export const mergeGuestCartIntoUser = async (
 
     const guestCart = await cartRepository.findOne({
       where: { sessionId },
-      relations: ["items", "items.product"],
+      relations: ['items', 'items.product'],
     });
     if (!guestCart || !guestCart.items?.length) {
       response.cookies.set({
         name: cookieName,
-        value: "",
-        path: "/",
+        value: '',
+        path: '/',
         maxAge: 0,
       });
       let userCart = await cartRepository.findOne({
         where: { userId },
-        relations: ["items", "items.product"],
+        relations: ['items', 'items.product'],
       });
       if (!userCart) {
         userCart = cartRepository.create({ userId, items: [] });
         await cartRepository.save(userCart);
         userCart = (await cartRepository.findOne({
           where: { id: userCart.id },
-          relations: ["items", "items.product"],
+          relations: ['items', 'items.product'],
         })) as Cart;
       }
       return userCart;
@@ -231,14 +233,14 @@ export const mergeGuestCartIntoUser = async (
 
     let userCart = await cartRepository.findOne({
       where: { userId },
-      relations: ["items", "items.product"],
+      relations: ['items', 'items.product'],
     });
     if (!userCart) {
       userCart = cartRepository.create({ userId, items: [] });
       await cartRepository.save(userCart);
       userCart = (await cartRepository.findOne({
         where: { id: userCart.id },
-        relations: ["items", "items.product"],
+        relations: ['items', 'items.product'],
       })) as Cart;
     }
 
@@ -249,17 +251,17 @@ export const mergeGuestCartIntoUser = async (
     }
 
     for (const guestItem of guestCart.items || []) {
-      const guestPrice =
-        guestItem.price !== undefined && guestItem.price !== null
-          ? typeof guestItem.price === "string"
+      const guestPrice
+        = guestItem.price !== undefined && guestItem.price !== null
+          ? typeof guestItem.price === 'string'
             ? Number(guestItem.price)
             : guestItem.price
-          : typeof guestItem.product.price === "string"
+          : typeof guestItem.product.price === 'string'
             ? Number(guestItem.product.price)
             : guestItem.product.price;
 
       if (guestPrice === undefined || Number.isNaN(guestPrice)) {
-        throw new Error("Invalid price on guest item or product");
+        throw new Error('Invalid price on guest item or product');
       }
 
       const newItem = itemRepository.create({
@@ -273,11 +275,11 @@ export const mergeGuestCartIntoUser = async (
     await itemRepository.delete({ cart: guestCart });
     await cartRepository.delete({ id: guestCart.id });
 
-    response.cookies.set({ name: cookieName, value: "", path: "/", maxAge: 0 });
+    response.cookies.set({ name: cookieName, value: '', path: '/', maxAge: 0 });
 
     const merged = await cartRepository.findOne({
       where: { id: userCart.id },
-      relations: ["items", "items.product"],
+      relations: ['items', 'items.product'],
     });
     return merged;
   });
@@ -285,8 +287,8 @@ export const mergeGuestCartIntoUser = async (
 
 export function getTotalPrice(cart: Cart): number {
   return cart.items.reduce((total, item) => {
-    const itemPrice =
-      typeof item.price === "string" ? Number(item.price) : item.price;
+    const itemPrice
+      = typeof item.price === 'string' ? Number(item.price) : item.price;
     return total + (itemPrice || 0);
   }, 0);
 }

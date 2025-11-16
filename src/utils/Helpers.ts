@@ -1,14 +1,15 @@
-import { routing } from "@/libs/I18nRouting";
-import { TableAction } from "@/types/tableAction";
-import { isEmptyObject } from "@heroui/shared-utils";
+import type { TableAction } from '@/types/tableAction';
+import { isEmptyObject } from '@heroui/shared-utils';
+import { routing } from '@/libs/I18nRouting';
+
 export const getBaseUrl = () => {
   if (process.env.NEXT_PUBLIC_APP_URL) {
     return process.env.NEXT_PUBLIC_APP_URL;
   }
 
   if (
-    process.env.VERCEL_ENV === "production" &&
-    process.env.VERCEL_PROJECT_PRODUCTION_URL
+    process.env.VERCEL_ENV === 'production'
+    && process.env.VERCEL_PROJECT_PRODUCTION_URL
   ) {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
   }
@@ -17,7 +18,7 @@ export const getBaseUrl = () => {
     return `https://${process.env.VERCEL_URL}`;
   }
 
-  return "http://localhost:3000";
+  return 'http://localhost:3000';
 };
 
 export const getI18nPath = (url: string, locale: string) => {
@@ -29,50 +30,64 @@ export const getI18nPath = (url: string, locale: string) => {
 };
 
 export const isServer = () => {
-  return typeof window === "undefined";
+  return typeof window === 'undefined';
 };
 
 export const renderValue = (value: any): string | number | React.ReactNode => {
   if (
-    value === null ||
-    value === undefined ||
-    value === "" ||
-    isEmptyObject(value)
+    value === null
+    || value === undefined
+    || value === ''
+    || isEmptyObject(value)
   ) {
-    return "-";
+    return '-';
   }
 
   if (value instanceof Date) {
     return value.toLocaleString();
   }
-  if (typeof value === "string" && isIsoDateString(value)) {
+  if (typeof value === 'string' && isIsoDateString(value)) {
     const d = new Date(value);
-    return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(d);
+    return new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' }).format(d);
   }
   if (
-    typeof value === "string" ||
-    typeof value === "number" ||
-    typeof value === "boolean"
+    typeof value === 'string'
+    || typeof value === 'number'
+    || typeof value === 'boolean'
   ) {
     return value.toString();
   }
   if (Array.isArray(value)) {
-    if (value.length === 0) return "-";
+    if (value.length === 0) {
+      return '-';
+    }
 
     const returnValue = value.map((item) => {
       return renderValue(item);
     });
-    return returnValue.join(", ");
+    return returnValue.join(', ');
   }
 
-  if (typeof value === "object") {
-    if (value.name) return value.name;
-    if (value.size) return value.size;
-    if (value.path) return value.path;
-    if (value.title) return value.title;
-    if (value.email) return value.email;
+  if (typeof value === 'object') {
+    if (value.name) {
+      return value.name;
+    }
+    if (value.size) {
+      return value.size;
+    }
+    if (value.path) {
+      return value.path;
+    }
+    if (value.title) {
+      return value.title;
+    }
+    if (value.email) {
+      return value.email;
+    }
 
-    if (value.id) return value.id;
+    if (value.id) {
+      return value.id;
+    }
     return `Object`;
   }
 
@@ -95,18 +110,18 @@ export default function getDefaultActions({
 }: Actions) {
   const actions: TableAction[] = [
     {
-      label: "Edit",
-      icon: "ic:outline-edit",
+      label: 'Edit',
+      icon: 'ic:outline-edit',
       action: handleEdit,
-      color: "default",
+      color: 'default',
       isDisabled: !isEditable,
       isVisible: true,
     },
     {
-      label: "Delete",
-      icon: "mingcute:close-fill",
+      label: 'Delete',
+      icon: 'mingcute:close-fill',
       action: handleDelete,
-      color: "danger",
+      color: 'danger',
       isDisabled: !isDeletable,
       isVisible: true,
     },
@@ -115,19 +130,19 @@ export default function getDefaultActions({
 }
 
 export function defaultMapper(value: string, key: string) {
-  if (key === "status") {
+  if (key === 'status') {
     switch (value) {
-      case "completed":
-        return "bg-green-100 text-green-800";
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      case "cancelled":
-        return "bg-red-100 text-red-800";
+      case 'completed':
+        return 'bg-green-100 text-green-800';
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'cancelled':
+        return 'bg-red-100 text-red-800';
       default:
-        return "";
+        return '';
     }
   }
-  return "";
+  return '';
 }
 const isoDateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/;
 

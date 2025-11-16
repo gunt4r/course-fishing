@@ -1,5 +1,6 @@
-import MyLink from "../Link";
-import { Icon } from "@iconify/react";
+import { Icon } from '@iconify/react';
+import MyLink from '../Link';
+
 export default function LinkWhiteBorder({
   href,
   children,
@@ -22,7 +23,7 @@ export default function LinkWhiteBorder({
       wrapperClassNames={`border gap-2 rounded-full text-cyan-50 border-white py-2 px-4 hover:bg-white hover:text-black transition-all duration-300 ${wrapperClassNames}`}
       additionalClassNames={` ${classNames}`}
     >
-      {showIcon && <Icon icon={"ep:arrow-right"} />}
+      {showIcon && <Icon icon="ep:arrow-right" />}
       {children}
     </MyLink>
   );

@@ -1,14 +1,9 @@
-import { NextResponse, NextRequest } from "next/server";
-import {
-  getOrCreateCartForRequest,
-  addToCart as addToCartService,
-  mergeGuestCartIntoUser,
-  deleteItemFromCart,
-} from "@/services/cart/service";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 const COOKIE_NAMES_TO_COPY = [
-  (process.env.NAME_SESSION_ID as string) || "sessionId",
-  "token",
+  (process.env.NAME_SESSION_ID as string) || 'sessionId',
+  'token',
 ];
 
 async function copyCookies(from: NextResponse, to: NextResponse) {
@@ -19,10 +14,10 @@ async function copyCookies(from: NextResponse, to: NextResponse) {
         to.cookies.set({
           name,
           value: c.value,
-          path: c?.path ?? "/",
+          path: c?.path ?? '/',
           httpOnly: c?.httpOnly ?? true,
-          sameSite: c?.sameSite ?? "lax",
-          secure: process.env.NODE_ENV === "production",
+          sameSite: c?.sameSite ?? 'lax',
+          secure: process.env.NODE_ENV === 'production',
         });
       }
     } catch (e) {}
@@ -32,6 +27,9 @@ async function copyCookies(from: NextResponse, to: NextResponse) {
 export async function GET(request: NextRequest) {
   const responseInternal = NextResponse.next();
   try {
+    const { getOrCreateCartForRequest } = await import(
+      '@/services/cart/service',
+    );
     const cart = await getOrCreateCartForRequest(request, responseInternal);
     const out = NextResponse.json({ success: true, cart }, { status: 200 });
     await copyCookies(responseInternal as any, out as any);
@@ -46,11 +44,14 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const url = new URL(request.url);
-  const action = url.searchParams.get("action");
+  const action = url.searchParams.get('action');
   //  Merge carts from guest to user
-  if (action === "merge") {
+  if (action === 'merge') {
     const responseInternal = NextResponse.next();
     try {
+      const { mergeGuestCartIntoUser } = await import(
+        '@/services/cart/service',
+      );
       const mergedCart = await mergeGuestCartIntoUser(
         request,
         responseInternal,
@@ -72,15 +73,15 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json().catch(() => ({}));
     const productId = body?.productId;
-
+    const { addToCart } = await import('@/services/cart/service');
     if (!productId) {
       return NextResponse.json(
-        { success: false, error: "productId is required" },
+        { success: false, error: 'productId is required' },
         { status: 400 },
       );
     }
 
-    const result = await addToCartService(request, responseInternal, productId);
+    const result = await addToCart(request, responseInternal, productId);
     const out = NextResponse.json(
       { success: true, cart: result.cart },
       { status: 200 },
@@ -95,18 +96,26 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest, response: NextResponse) {
+export async function DELETE(request: NextRequest) {
+  const responseInternal = NextResponse.next();
   try {
     const { productId } = await request.json().catch(() => ({}));
-    if (productId) {
-      const result = await deleteItemFromCart(request, response, productId);
-      return NextResponse.json({ success: true, result }, { status: 200 });
+    const { deleteItemFromCart } = await import('@/services/cart/service');
+    if (!productId) {
+      return NextResponse.json(
+        { success: false, error: 'productId is required' },
+        { status: 400 },
+      );
     }
+
+    const result = await deleteItemFromCart(request, responseInternal, productId);
+    const out = NextResponse.json({ success: true, result }, { status: 200 });
+    await copyCookies(responseInternal, out);
+    return out;
+  } catch (error: any) {
     return NextResponse.json(
-      { success: false, error: "productId is required" },
-      { status: 400 },
+      { success: false, error: error?.message || String(error) },
+      { status: 500 },
     );
-  } catch (error) {
-    throw error;
   }
 }

@@ -1,37 +1,37 @@
-import { Order } from "@/models/order";
-import { User } from "./user";
-import { Product } from "@/models/product";
-import { ProductProps } from "./product";
+import type { ProductProps } from './product';
+import type { User } from './user';
+import type { Order } from '@/models/order';
+import type { Product } from '@/models/product';
 
-export interface ModalProps {
+export type ModalProps = {
   isModalOpen: boolean;
   setIsModalOpen: (value: boolean) => void;
   isLoading: boolean;
   refetch?: () => void;
-}
-export interface ModalEditUserProps extends ModalProps {
+};
+export type ModalEditUserProps = {
   handleSubmit: (data: User) => void;
   user: User | null;
-}
+} & ModalProps;
 
-export interface ModalAddUserProps extends ModalProps {
+export type ModalAddUserProps = {
   handleSubmit: (data: User) => void;
-}
+} & ModalProps;
 
-export interface ModalAddOrderProps extends ModalProps {
+export type ModalAddOrderProps = {
   handleSubmit: (data: Order) => void;
   users: User[] | null;
   products: Product[] | null;
-}
+} & ModalProps;
 
-export interface ModalEditOrderProps extends ModalProps {
+export type ModalEditOrderProps = {
   handleSubmit: (data: Order) => void;
   order: Order | null;
   users: User[] | null;
   products: Product[] | null;
-}
+} & ModalProps;
 
-export interface ModalAddProductProps extends ModalProps {
+export type ModalAddProductProps = {
   handleSubmit: (data: any) => void;
   template?: any;
   fields?: Array<{
@@ -40,17 +40,17 @@ export interface ModalAddProductProps extends ModalProps {
     type?: string;
     required?: boolean;
   }>;
-}
-export interface ModalEditProductProps extends ModalProps {
+} & ModalProps;
+export type ModalEditProductProps = {
   handleSubmit: (data: any) => void;
   product: ProductProps | null;
-}
+} & ModalProps;
 
-export interface ModalAddArticleProps extends ModalProps {
+export type ModalAddArticleProps = {
   handleSubmit: (data: any) => Promise<void>;
-}
+} & ModalProps;
 
-export interface ModalEditArticleProps extends ModalProps {
+export type ModalEditArticleProps = {
   article: any | null;
   handleSubmit: (data: any) => Promise<void>;
-}
+} & ModalProps;

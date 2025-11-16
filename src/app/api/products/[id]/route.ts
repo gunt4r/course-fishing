@@ -1,15 +1,13 @@
-import {
-  getProductById,
-  updateProduct,
-  deleteProduct,
-} from "@/services/product/service";
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } },
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
+    const { getProductById } = await import('@/services/product/service');
     const product = await getProductById(id);
     return NextResponse.json({ success: true, product }, { status: 200 });
   } catch (error: any) {
@@ -22,8 +20,9 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
+  const { updateProduct } = await import('@/services/product/service');
   try {
     const { id } = await params;
     const formData = await request.formData();
@@ -34,7 +33,6 @@ export async function PATCH(
     });
 
     data.id = id;
-    console.log(data);
     const updatedProduct = await updateProduct(data);
     return NextResponse.json(
       { success: true, updatedProduct },
@@ -46,9 +44,10 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } },
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
 ) {
+  const { deleteProduct } = await import('@/services/product/service');
   try {
     const { id } = await params;
     const deletedProduct = await deleteProduct(id);

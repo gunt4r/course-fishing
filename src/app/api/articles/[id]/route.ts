@@ -1,16 +1,13 @@
-import {
-  getArticleById,
-  deleteArticle,
-  updateArticle,
-} from "@/services/articles/service";
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } },
+  _request: Request,
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
+    const { getArticleById } = await import('@/services/articles/service');
     const article = await getArticleById(id);
     return NextResponse.json(article, { status: 200 });
   } catch (error) {
@@ -19,27 +16,32 @@ export async function GET(
 }
 
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } },
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
+    const { deleteArticle } = await import('@/services/articles/service');
     const deletedProduct = await deleteArticle(id);
     return NextResponse.json(
       { success: true, deletedProduct },
       { status: 200 },
     );
   } catch (error) {
-    throw error;
+    return NextResponse.json(
+      { success: false, error: error instanceof Error ? error.message : String(error) },
+      { status: 500 },
+    );
   }
 }
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
+    const { updateArticle } = await import('@/services/articles/service');
     const formData = await request.formData();
 
     const data: any = {};
@@ -54,6 +56,9 @@ export async function PATCH(
       { status: 200 },
     );
   } catch (error) {
-    throw error;
+    return NextResponse.json(
+      { success: false, error: error instanceof Error ? error.message : String(error) },
+      { status: 500 },
+    );
   }
 }

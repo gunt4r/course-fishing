@@ -3,12 +3,12 @@ export type TableAction = {
   icon: any;
   action: (item: any) => void;
   color?:
-    | "default"
-    | "primary"
-    | "secondary"
-    | "success"
-    | "warning"
-    | "danger";
+    | 'default'
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'warning'
+    | 'danger';
   isDisabled?: boolean;
   isVisible?: boolean;
 };

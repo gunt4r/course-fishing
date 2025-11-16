@@ -1,5 +1,5 @@
-import { setRequestLocale } from "next-intl/server";
-import { routing } from "@/libs/I18nRouting";
+import { setRequestLocale } from 'next-intl/server';
+import { routing } from '@/libs/I18nRouting';
 
 export default async function AuthLayout(props: {
   children: React.ReactNode;
@@ -8,10 +8,10 @@ export default async function AuthLayout(props: {
   const { locale } = await props.params;
   setRequestLocale(locale);
 
-  let signInUrl = "/sign-in";
-  let signUpUrl = "/sign-up";
-  let dashboardUrl = "/admin";
-  let afterSignOutUrl = "/";
+  let signInUrl = '/sign-in';
+  let signUpUrl = '/sign-up';
+  let dashboardUrl = '/admin';
+  let afterSignOutUrl = '/';
 
   if (locale !== routing.defaultLocale) {
     signInUrl = `/${locale}${signInUrl}`;

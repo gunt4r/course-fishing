@@ -1,5 +1,5 @@
-"use client";
-import { Link } from "@heroui/react";
+'use client';
+import { Link } from '@heroui/react';
 
 export default function MyLink({
   href,
@@ -17,7 +17,7 @@ export default function MyLink({
   return (
     <Link
       href={href}
-      className={`${addHoverOpacity ? "hover:opacity-80 duration-300 transition-opacity" : ""} text-cyan-50 ${wrapperClassNames} `}
+      className={`${addHoverOpacity ? 'transition-opacity duration-300 hover:opacity-80' : ''} text-cyan-50 ${wrapperClassNames} `}
     >
       <main className={`flex items-center ${additionalClassNames}`}>
         {children}

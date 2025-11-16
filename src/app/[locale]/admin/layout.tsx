@@ -1,6 +1,7 @@
-import { setRequestLocale } from "next-intl/server";
-import { Toaster } from "react-hot-toast";
-import SideBar from "@/components/Admin/Dashboard/Sidebar";
+import { setRequestLocale } from 'next-intl/server';
+import { Toaster } from 'react-hot-toast';
+import SideBar from '@/components/Admin/Dashboard/Sidebar';
+
 export default async function Layout(props: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;

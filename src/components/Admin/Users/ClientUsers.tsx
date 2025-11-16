@@ -1,27 +1,27 @@
-"use client";
-import TableAdmin from "@/components/Table";
-import type { User } from "@/types/user";
-import getDefaultActions from "@/utils/Helpers";
-import { useState } from "react";
-import ModalDelete from "@/components/Modals/ModalDelete";
-import ModalAddUser from "@/components/Modals/User/ModalAdd";
-import ModalEditUser from "@/components/Modals/User/ModalEdit";
+'use client';
+import type { User } from '@/types/user';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import {
+  getUsers,
   useDeleteUser,
   useRegisterUser,
   useUpdateUser,
-} from "@/app/queries/users/userQuery";
-import { useTranslations } from "next-intl";
-import Loader from "@/components/Loader";
-import toast from "react-hot-toast";
-import { getUsers } from "@/app/queries/users/userQuery";
+} from '@/app/queries/users/userQuery';
+import Loader from '@/components/Loader';
+import ModalDelete from '@/components/Modals/ModalDelete';
+import ModalAddUser from '@/components/Modals/User/ModalAdd';
+import ModalEditUser from '@/components/Modals/User/ModalEdit';
+import TableAdmin from '@/components/Table';
+import getDefaultActions from '@/utils/Helpers';
 
 export default function ClientUsers() {
   const { data: users, isLoading } = getUsers();
   const { mutateAsync: deleteUser, isPending: isDeleting } = useDeleteUser();
   const { mutateAsync: registerUser, isPending: isAdding } = useRegisterUser();
   const { mutateAsync: updateUser, isPending: isUpdating } = useUpdateUser();
-  const t = useTranslations("Header");
+  const t = useTranslations('Header');
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
@@ -44,10 +44,10 @@ export default function ClientUsers() {
       await deleteUser(selectedUser?.id as string);
       setIsModalDeleteOpen(false);
       setSelectedUser(null);
-      toast.success(t("deleted") ?? "User deleted successfully");
+      toast.success(t('deleted') ?? 'User deleted successfully');
     } catch (error) {
-      console.error("Error deleting user:", error);
-      toast.error("An error occurred");
+      console.error('Error deleting user:', error);
+      toast.error('An error occurred');
     }
   }
 
@@ -55,10 +55,10 @@ export default function ClientUsers() {
     try {
       await registerUser(data);
       setIsModalAddOpen(false);
-      toast.success(t("saved") ?? "User added successfully");
+      toast.success(t('saved') ?? 'User added successfully');
     } catch (error) {
-      console.error("Error adding user:", error);
-      toast.error("An error occurred");
+      console.error('Error adding user:', error);
+      toast.error('An error occurred');
     }
   }
 
@@ -67,14 +67,16 @@ export default function ClientUsers() {
       await updateUser(data);
       setIsModalEditOpen(false);
       setSelectedUser(null);
-      toast.success(t("saved") ?? "User updated successfully");
+      toast.success(t('saved') ?? 'User updated successfully');
     } catch (error) {
-      console.error("Error updating user:", error);
-      toast.error("An error occurred");
+      console.error('Error updating user:', error);
+      toast.error('An error occurred');
     }
   }
 
-  if (isLoading) return <Loader />;
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-full">
@@ -90,7 +92,7 @@ export default function ClientUsers() {
         handleSubmit={handleDeleteUser}
         isLoading={isDeleting}
         setIsModalOpen={setIsModalDeleteOpen}
-        title={t("delete") ?? "Delete User"}
+        title={t('delete') ?? 'Delete User'}
       />
 
       <ModalAddUser

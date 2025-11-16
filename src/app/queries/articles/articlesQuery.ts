@@ -1,15 +1,16 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "@/app/api/axios";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/app/api/axios';
 import {
-  REACT_QUERY_GET_ARTICLES_KEY,
   REACT_QUERY_GET_ARTICLE_KEY,
-} from "@/config/const";
+  REACT_QUERY_GET_ARTICLES_KEY,
+} from '@/config/const';
+
 export function useGetArticles() {
   return useQuery({
     queryKey: [REACT_QUERY_GET_ARTICLES_KEY],
     queryFn: async () => {
       try {
-        const response = await api.get("/api/articles");
+        const response = await api.get('/api/articles');
         return response.data;
       } catch (error) {
         throw error;
@@ -51,9 +52,9 @@ export function useCreateArticle() {
   return useMutation({
     mutationFn: async (data: any) => {
       try {
-        const response = await api.post("/api/articles", data, {
+        const response = await api.post('/api/articles', data, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         });
         return response.data;
@@ -95,7 +96,7 @@ export function useUpdateArticle() {
       try {
         const response = await api.patch(`/api/articles/${data.id}`, data, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         });
         return response.data;

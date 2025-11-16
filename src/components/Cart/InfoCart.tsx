@@ -1,25 +1,38 @@
-"use client";
-import { useTranslations } from "next-intl";
-import LinkWhiteBorder from "../Buttons/ButtonWhiteBorder";
+'use client';
+import { useTranslations } from 'next-intl';
+import LinkWhiteBorder from '../Buttons/ButtonWhiteBorder';
+
 export default function InfoCart({ totalPrice }: { totalPrice: number }) {
-  const t = useTranslations("Cart");
+  const t = useTranslations('Cart');
   return (
     <div
-      style={{ boxShadow: "0 8px 32px rgba(31,38,135,0.15)" }}
-      className="flex max-w-1/4 w-full text-left justify-self-end flex-col justify-between items-center mb-8 p-6 rounded-2xl backdrop-blur-md shadow-lg border border-white/20"
+      style={{ boxShadow: '0 8px 32px rgba(31,38,135,0.15)' }}
+      className="mb-8 flex w-full max-w-1/4 flex-col items-center justify-between justify-self-end rounded-2xl border border-white/20 p-6 text-left shadow-lg backdrop-blur-md"
     >
-      <p className="flex w-full text-small mb-6 text-left justify-between">
-        Subtotal: <span>{totalPrice.toFixed(2)} €</span>
+      <p className="mb-6 flex w-full justify-between text-left text-small">
+        Subtotal:
+        {' '}
+        <span>
+          {totalPrice.toFixed(2)}
+          {' '}
+          €
+        </span>
       </p>
-      <p className="flex w-full text-xl font-medium justify-between mb-8">
-        Total: <span>{totalPrice.toFixed(2)} €</span>
+      <p className="mb-8 flex w-full justify-between text-xl font-medium">
+        Total:
+        {' '}
+        <span>
+          {totalPrice.toFixed(2)}
+          {' '}
+          €
+        </span>
       </p>
       <LinkWhiteBorder
         href="/checkout"
         wrapperClassNames="mt-6 py-4 w-full justify-center uppercase"
         showIcon={false}
       >
-        {t("checkout")}
+        {t('checkout')}
       </LinkWhiteBorder>
     </div>
   );

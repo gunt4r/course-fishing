@@ -1,11 +1,11 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import type { User } from '@/types/user';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { api } from '@/app/api/axios';
 import {
+  REACT_QUERY_GET_ME_KEY,
   REACT_QUERY_GET_USER_KEY,
   REACT_QUERY_GET_USERS_KEY,
-  REACT_QUERY_GET_ME_KEY,
-} from "@/config/const";
-import type { User } from "@/types/user";
-import { api } from "@/app/api/axios";
+} from '@/config/const';
 
 export function useCurrentUser() {
   return useQuery({
@@ -42,7 +42,7 @@ export function getUsers() {
     queryKey: [REACT_QUERY_GET_USERS_KEY],
     queryFn: async () => {
       try {
-        const response = await api.get("/api/users");
+        const response = await api.get('/api/users');
 
         return response.data;
       } catch (error) {
@@ -57,7 +57,7 @@ export function useRegisterUser() {
   return useMutation({
     mutationFn: async (data: User) => {
       try {
-        const response = await api.post("/api/users/register", data);
+        const response = await api.post('/api/users/register', data);
         return response.data;
       } catch (error) {
         throw error;
@@ -75,7 +75,7 @@ export function useLoginUser() {
   return useMutation({
     mutationFn: async (data: User) => {
       try {
-        const response = await api.post("/api/users/login", data);
+        const response = await api.post('/api/users/login', data);
         return response.data;
       } catch (error) {
         throw error;
@@ -93,7 +93,7 @@ export function useUpdateUser() {
   return useMutation({
     mutationFn: async (data: User) => {
       try {
-        const response = await api.patch("/api/users", data);
+        const response = await api.patch('/api/users', data);
         return response.data;
       } catch (error) {
         throw error;
@@ -109,7 +109,7 @@ export function useUpdateUserServer() {
   return useMutation({
     mutationFn: async (data: User) => {
       try {
-        const response = await api.patch("/api/users", data);
+        const response = await api.patch('/api/users', data);
         return response.data;
       } catch (error) {
         throw error;

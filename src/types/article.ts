@@ -1,1 +1,1 @@
-export type ArticleType = "review" | "testimonial";
+export type ArticleType = 'review' | 'testimonial';

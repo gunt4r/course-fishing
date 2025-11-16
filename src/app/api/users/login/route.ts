@@ -1,6 +1,8 @@
-import { authentication } from "@/services/users/service";
-import { NextResponse, NextRequest } from "next/server";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+
 export async function POST(request: NextRequest) {
+  const { authentication } = await import('@/services/users/service');
   try {
     const data = await request.json();
     const { token, user } = await authentication(data);
@@ -8,12 +10,12 @@ export async function POST(request: NextRequest) {
     const res = NextResponse.json(user, { status: 201 });
 
     res.cookies.set({
-      name: "token",
+      name: 'token',
       value: token,
       httpOnly: true,
-      path: "/",
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      path: '/',
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
       maxAge: 7 * 24 * 60 * 60,
     });
 
@@ -21,7 +23,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     return NextResponse.json(
       {
-        error: error.message || "Failed to create user",
+        error: error.message || 'Failed to create user',
         details: error.detail || error.toString(),
       },
       { status: 500 },

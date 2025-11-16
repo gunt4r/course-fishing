@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { routing } from "@/libs/I18nRouting";
-import "@/styles/global.css";
-import { Providers } from "./providers";
+import type { Metadata } from 'next';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
+import { setRequestLocale } from 'next-intl/server';
+import { notFound } from 'next/navigation';
+import { routing } from '@/libs/I18nRouting';
+import { Providers } from './providers';
+import '@/styles/global.css';
+
 export const metadata: Metadata = {
   title: 'Fisherway',
   description: 'Curs de formare pentru angajare in industria pescuitului',
@@ -34,10 +35,10 @@ export const metadata: Metadata = {
     'msapplication-TileImage': '/favicon-144x144.png',
     'msapplication-config': '/browserconfig.xml',
   },
-}
+};
 
 export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
+  return routing.locales.map(locale => ({ locale }));
 }
 
 export default async function RootLayout(props: {

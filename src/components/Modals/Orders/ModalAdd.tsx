@@ -1,23 +1,23 @@
-import Modal from "../Modal";
-import { useEffect } from "react";
-import { useTranslations } from "next-intl";
+import type { Order } from '@/models/order';
+import type { Product } from '@/models/product';
+import type { ModalAddOrderProps } from '@/types/modal';
+import type { User } from '@/types/user';
 import {
   Field,
-  Label,
   Input,
+  Label,
   Listbox,
   ListboxButton,
-  ListboxOptions,
   ListboxOption,
-} from "@headlessui/react";
-import { Icon } from "@iconify/react";
-import type { Order } from "@/models/order";
-import type { User } from "@/types/user";
-import type { Product } from "@/models/product";
-import { useState, useMemo, Fragment } from "react";
-import { ModalAddOrderProps } from "@/types/modal";
-import { Transition } from "@headlessui/react";
-import { orderStatus } from "@/config/enum";
+  ListboxOptions,
+  Transition,
+} from '@headlessui/react';
+import { Icon } from '@iconify/react';
+import { useTranslations } from 'next-intl';
+import { Fragment, useEffect, useMemo, useState } from 'react';
+import { orderStatus } from '@/config/enum';
+import Modal from '../Modal';
+
 export default function ModalAddOrder({
   isModalOpen,
   setIsModalOpen,
@@ -27,28 +27,32 @@ export default function ModalAddOrder({
   products,
   refetch,
 }: ModalAddOrderProps) {
-  const t = useTranslations("Dashboard");
-  const tProducts = useTranslations("Products");
+  const t = useTranslations('Dashboard');
+  const tProducts = useTranslations('Products');
   const [formData, setFormData] = useState<Partial<Order>>({
     user: undefined,
     products: [],
     totalAmount: 0,
-    status: "",
+    status: '',
   });
-  const [userSearch, setUserSearch] = useState("");
+  const [userSearch, setUserSearch] = useState('');
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
-  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState<Boolean>(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState<boolean>(false);
 
   const filteredUsers = useMemo(() => {
-    if (!users) return [];
-    if (!userSearch) return users;
+    if (!users) {
+      return [];
+    }
+    if (!userSearch) {
+      return users;
+    }
     return users.filter((user: User) =>
       user.email.toLowerCase().includes(userSearch.toLowerCase()),
     );
   }, [users, userSearch]);
 
   const handleUserSelect = (user: any) => {
-    setFormData((prev) => ({ ...prev, user }));
+    setFormData(prev => ({ ...prev, user }));
     setUserSearch(user.email);
   };
   const onSubmit = (e: React.FormEvent) => {
@@ -68,7 +72,7 @@ export default function ModalAddOrder({
       user: undefined,
       products: [],
       totalAmount: 0,
-      status: "",
+      status: '',
     });
   };
 
@@ -78,7 +82,7 @@ export default function ModalAddOrder({
         user: undefined,
         products: [],
         totalAmount: 0,
-        status: "",
+        status: '',
       });
     }
   }, [isModalOpen]);
@@ -97,49 +101,51 @@ export default function ModalAddOrder({
           user: undefined,
           products: [],
           totalAmount: 0,
-          status: "",
+          status: '',
         });
         setIsModalOpen(false);
       }}
-      title={<span>{t("add") ?? "Add Order"}</span>}
+      title={<span>{t('add') ?? 'Add Order'}</span>}
       size="xl"
-      footer={
-        <footer className="flex flex-row justify-between w-full">
+      footer={(
+        <footer className="flex w-full flex-row justify-between">
           <button
             onClick={() => {
               setFormData({
                 user: undefined,
                 products: [],
                 totalAmount: 0,
-                status: "",
+                status: '',
               });
               setIsModalOpen(false);
             }}
-            className="px-4 py-2 rounded-2xl border bg-red-700 text-cyan-100 border-slate-300 dark:border-slate-600 hover:bg-red-900 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            className="cursor-pointer rounded-2xl border border-slate-300 bg-red-700 px-4 py-2 text-cyan-100 transition-colors hover:bg-red-900 dark:border-slate-600 dark:hover:bg-slate-800"
             disabled={isLoading}
             type="button"
           >
-            {t("cancel") ?? "Cancel"}
+            {t('cancel') ?? 'Cancel'}
           </button>
 
           <button
             onClick={onSubmit}
-            className="px-4 py-2 rounded-2xl bg-green-700 text-white cursor-pointer disabled:opacity-50 hover:opacity-70 duration-300 transition-opacity"
+            className="cursor-pointer rounded-2xl bg-green-700 px-4 py-2 text-white transition-opacity duration-300 hover:opacity-70 disabled:opacity-50"
             disabled={isLoading}
             type="submit"
           >
-            {isLoading ? (t("adding") ?? "Adding...") : (t("add") ?? "Add")}
+            {isLoading ? (t('adding') ?? 'Adding...') : (t('add') ?? 'Add')}
           </button>
         </footer>
-      }
+      )}
     >
       <form
         onSubmit={onSubmit}
-        className="space-y-4 text-slate-900 dark:text-slate-100 px-2 mb-2.5"
+        className="mb-2.5 space-y-4 px-2 text-slate-900 dark:text-slate-100"
       >
         <Field className="flex flex-col gap-2">
-          <Label className="font-medium text-sm">
-            {"User"} <span className="text-red-500">*</span>
+          <Label className="text-sm font-medium">
+            User
+            {' '}
+            <span className="text-red-500">*</span>
           </Label>
           <Input
             name="userSearch"
@@ -150,14 +156,15 @@ export default function ModalAddOrder({
               setUserSearch(e.target.value);
               setIsUserDropdownOpen(Boolean(e.target.value));
               if (!e.target.value) {
-                setFormData((prev) => ({ ...prev, user: undefined }));
+                setFormData(prev => ({ ...prev, user: undefined }));
               }
             }}
             onFocus={() => {
-              if (userSearch && filteredUsers.length > 0)
+              if (userSearch && filteredUsers.length > 0) {
                 setIsUserDropdownOpen(true);
+              }
             }}
-            className="border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 rounded-lg w-full focus:outline-none        focus:ring-2 transition-all"
+            className="w-full rounded-lg border border-slate-300 bg-white px-4 py-2 transition-all focus:ring-2 focus:outline-none        dark:border-slate-600 dark:bg-slate-800"
             placeholder="Search user by email..."
           />
 
@@ -171,13 +178,13 @@ export default function ModalAddOrder({
             leaveFrom="transform opacity-100 translate-y-0"
             leaveTo="transform opacity-0 -translate-y-1"
           >
-            <div className="max-h-48 overflow-y-auto border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800">
-              {!formData.user &&
-                filteredUsers.map((user: User) => (
+            <div className="max-h-48 overflow-y-auto rounded-lg border border-slate-300 bg-white dark:border-slate-600 dark:bg-slate-800">
+              {!formData.user
+                && filteredUsers.map((user: User) => (
                   <div
                     key={user.id}
                     onClick={() => handleUserSelect(user)}
-                    className="px-4 py-2 cursor-pointer hover:bg-zinc-100 dark:hover:bg-slate-700 transition-colors"
+                    className="cursor-pointer px-4 py-2 transition-colors hover:bg-zinc-100 dark:hover:bg-slate-700"
                     onMouseDown={(e) => {
                       e.preventDefault();
                       handleUserSelect(user);
@@ -193,17 +200,19 @@ export default function ModalAddOrder({
             </div>
           </Transition>
           {formData.user && (
-            <div className="p-3  flex items-center justify-between bg-green-50 dark:bg-cyan-900/20 rounded-lg border border-cyan-200 dark:border-cyan-800">
+            <div className="flex  items-center justify-between rounded-lg border border-cyan-200 bg-green-50 p-3 dark:border-cyan-800 dark:bg-cyan-900/20">
               <p className="text-sm font-medium">
-                {t("selected")}: {formData.user.email}
+                {t('selected')}
+                :
+                {formData.user.email}
               </p>
               <button
                 onClick={() => {
-                  setFormData((prev) => ({ ...prev, user: undefined }));
-                  setUserSearch("");
+                  setFormData(prev => ({ ...prev, user: undefined }));
+                  setUserSearch('');
                   setIsUserDropdownOpen(false);
                 }}
-                className="cursor-pointer hover:opacity-30 duration-300 transition-opacity"
+                className="cursor-pointer transition-opacity duration-300 hover:opacity-30"
               >
                 <Icon
                   icon="mingcute:close-fill"
@@ -215,8 +224,9 @@ export default function ModalAddOrder({
         </Field>
 
         <Field className="flex flex-col gap-2">
-          <Label className="font-medium text-sm">
-            {tProducts("title") ?? "Products"}{" "}
+          <Label className="text-sm font-medium">
+            {tProducts('title') ?? 'Products'}
+            {' '}
             <span className="text-red-500">*</span>
           </Label>
           <Listbox
@@ -226,16 +236,16 @@ export default function ModalAddOrder({
           >
             {({ open }) => (
               <div>
-                <ListboxButton className="relative w-full cursor-pointer border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 rounded-lg text-left focus:outline-none focus:ring-2 focus:ring-zinc-800 dark:focus:ring-zinc-600 transition-all min-h-[42px]">
+                <ListboxButton className="relative min-h-[42px] w-full cursor-pointer rounded-lg border border-slate-300 bg-white px-4 py-2 text-left transition-all focus:ring-2 focus:ring-zinc-800 focus:outline-none dark:border-slate-600 dark:bg-slate-800 dark:focus:ring-zinc-600">
                   <span className="block truncate">
                     {selectedProducts.length > 0
                       ? `${selectedProducts.length} product(s) selected`
-                      : "Select products..."}
+                      : 'Select products...'}
                   </span>
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     <Icon
                       icon="mdi:chevron-down"
-                      className={`h-5 w-5 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}
+                      className={`h-5 w-5 text-slate-400 transition-transform ${open ? 'rotate-180' : ''}`}
                     />
                   </span>
                 </ListboxButton>
@@ -250,42 +260,45 @@ export default function ModalAddOrder({
                 >
                   <ListboxOptions
                     anchor="bottom start"
-                    className="z-[100] mt-1 max-h-60 w-[var(--button-width)] overflow-auto rounded-lg bg-white dark:bg-slate-800 py-1 shadow-xl ring-1 ring-black/10 dark:ring-white/10 focus:outline-none [--anchor-gap:4px]"
+                    className="z-[100] mt-1 max-h-60 w-[var(--button-width)] overflow-auto rounded-lg bg-white py-1 shadow-xl ring-1 ring-black/10 [--anchor-gap:4px] focus:outline-none dark:bg-slate-800 dark:ring-white/10"
                   >
-                    {products && products.length > 0 ? (
-                      products.map((product: Product) => (
-                        <ListboxOption
-                          key={product.id}
-                          value={product}
-                          className="relative cursor-pointer select-none duration-300 transition-all py-2 px-4 data-[focus]:opacity-70 data-[focus]:dark:bg-cyan-900/30 hover:bg-zinc-100 data-[focus]:dark:text-cyan-100 text-slate-900 dark:text-slate-100"
-                        >
-                          {({ selected }) => (
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <span
-                                  className={`block truncate ${selected ? "font-semibold" : "font-normal"}`}
-                                >
-                                  {product.name}
-                                </span>
-                                <span className="text-sm text-slate-500 dark:text-slate-400">
-                                  ${Number(product.price).toFixed(2)}
-                                </span>
-                              </div>
-                              {selected && (
-                                <Icon
-                                  icon="mdi:check"
-                                  className="h-5 w-5 text-cyan-600 dark:text-cyan-400"
-                                />
+                    {products && products.length > 0
+                      ? (
+                          products.map((product: Product) => (
+                            <ListboxOption
+                              key={product.id}
+                              value={product}
+                              className="relative cursor-pointer px-4 py-2 text-slate-900 transition-all duration-300 select-none hover:bg-zinc-100 data-[focus]:opacity-70 dark:text-slate-100 data-[focus]:dark:bg-cyan-900/30 data-[focus]:dark:text-cyan-100"
+                            >
+                              {({ selected }) => (
+                                <div className="flex items-center justify-between">
+                                  <div>
+                                    <span
+                                      className={`block truncate ${selected ? 'font-semibold' : 'font-normal'}`}
+                                    >
+                                      {product.name}
+                                    </span>
+                                    <span className="text-sm text-slate-500 dark:text-slate-400">
+                                      $
+                                      {Number(product.price).toFixed(2)}
+                                    </span>
+                                  </div>
+                                  {selected && (
+                                    <Icon
+                                      icon="mdi:check"
+                                      className="h-5 w-5 text-cyan-600 dark:text-cyan-400"
+                                    />
+                                  )}
+                                </div>
                               )}
-                            </div>
-                          )}
-                        </ListboxOption>
-                      ))
-                    ) : (
-                      <div className="px-4 py-2 text-sm text-slate-500">
-                        No products available
-                      </div>
-                    )}
+                            </ListboxOption>
+                          ))
+                        )
+                      : (
+                          <div className="px-4 py-2 text-sm text-slate-500">
+                            No products available
+                          </div>
+                        )}
                   </ListboxOptions>
                 </Transition>
               </div>
@@ -294,49 +307,54 @@ export default function ModalAddOrder({
         </Field>
 
         {selectedProducts.length > 0 && (
-          <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700">
-            <p className="text-sm font-medium mb-2">Selected Products:</p>
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-800/50">
+            <p className="mb-2 text-sm font-medium">Selected Products:</p>
             <ul className="space-y-1">
-              {selectedProducts.map((product) => (
+              {selectedProducts.map(product => (
                 <li
                   key={product.id}
-                  className="text-sm flex justify-between items-center"
+                  className="flex items-center justify-between text-sm"
                 >
                   <span>{product.name}</span>
                   <span className="font-medium">
-                    ${Number(product.price).toFixed(2)}
+                    $
+                    {Number(product.price).toFixed(2)}
                   </span>
                 </li>
               ))}
             </ul>
-            <div className="mt-2 pt-2 border-t border-slate-200 dark:border-slate-700">
-              <p className="text-sm font-semibold flex justify-between">
+            <div className="mt-2 border-t border-slate-200 pt-2 dark:border-slate-700">
+              <p className="flex justify-between text-sm font-semibold">
                 <span>Calculated Total:</span>
-                <span>${totalPrice.toFixed(2)}</span>
+                <span>
+                  $
+                  {totalPrice.toFixed(2)}
+                </span>
               </p>
             </div>
           </div>
         )}
 
         <Field className="flex flex-col gap-2">
-          <Label className="font-medium text-sm">
-            {"Status"} <span className="text-red-500">*</span>
+          <Label className="text-sm font-medium">
+            Status
+            {' '}
+            <span className="text-red-500">*</span>
           </Label>
           <Listbox
-            onChange={(val) =>
-              setFormData((prev) => ({ ...prev, status: val }))
-            }
+            onChange={val =>
+              setFormData(prev => ({ ...prev, status: val }))}
           >
             {({ open }) => (
               <div>
-                <ListboxButton className="relative w-full cursor-pointer border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 rounded-lg text-left focus:outline-none focus:ring-2 focus:ring-zinc-800 dark:focus:ring-zinc-600 transition-all min-h-[42px]">
+                <ListboxButton className="relative min-h-[42px] w-full cursor-pointer rounded-lg border border-slate-300 bg-white px-4 py-2 text-left transition-all focus:ring-2 focus:ring-zinc-800 focus:outline-none dark:border-slate-600 dark:bg-slate-800 dark:focus:ring-zinc-600">
                   <span className="block truncate">
-                    {formData.status ? formData.status : "Select status..."}
+                    {formData.status ? formData.status : 'Select status...'}
                   </span>
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                     <Icon
                       icon="mdi:chevron-down"
-                      className={`h-5 w-5 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}
+                      className={`h-5 w-5 text-slate-400 transition-transform ${open ? 'rotate-180' : ''}`}
                     />
                   </span>
                 </ListboxButton>
@@ -351,19 +369,19 @@ export default function ModalAddOrder({
                 >
                   <ListboxOptions
                     anchor="bottom start"
-                    className="z-[100] mt-1 max-h-60 w-[var(--button-width)] overflow-auto rounded-lg bg-white dark:bg-slate-800 py-1 shadow-xl ring-1 ring-black/10 dark:ring-white/10 focus:outline-none [--anchor-gap:4px]"
+                    className="z-[100] mt-1 max-h-60 w-[var(--button-width)] overflow-auto rounded-lg bg-white py-1 shadow-xl ring-1 ring-black/10 [--anchor-gap:4px] focus:outline-none dark:bg-slate-800 dark:ring-white/10"
                   >
                     {Object.values(orderStatus).map((status: string) => (
                       <ListboxOption
                         key={status}
                         value={status}
-                        className="relative cursor-pointer select-none duration-300 transition-all py-2 px-4 data-[focus]:opacity-70 data-[focus]:dark:bg-cyan-900/30 hover:bg-zinc-100 data-[focus]:dark:text-cyan-100 text-slate-900 dark:text-slate-100"
+                        className="relative cursor-pointer px-4 py-2 text-slate-900 transition-all duration-300 select-none hover:bg-zinc-100 data-[focus]:opacity-70 dark:text-slate-100 data-[focus]:dark:bg-cyan-900/30 data-[focus]:dark:text-cyan-100"
                       >
                         {({ selected }) => (
                           <div className="flex items-center justify-between">
                             <div>
                               <span
-                                className={`block truncate ${selected ? "font-semibold" : "font-normal"}`}
+                                className={`block truncate ${selected ? 'font-semibold' : 'font-normal'}`}
                               >
                                 {status}
                               </span>

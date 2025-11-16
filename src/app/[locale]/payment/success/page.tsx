@@ -1,34 +1,34 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale } from 'next-intl';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 
-export default function PaymentSuccessPage() {
+function PaymentSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const locale = useLocale();
-  const [status, setStatus] = useState<"processing" | "success" | "error">(
-    "processing",
+  const [status, setStatus] = useState<'processing' | 'success' | 'error'>(
+    'processing',
   );
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     const capturePayment = async () => {
-      const paypalOrderId = searchParams.get("token");
-      const orderId = searchParams.get("orderId");
+      const paypalOrderId = searchParams.get('token');
+      const orderId = searchParams.get('orderId');
 
       if (!paypalOrderId || !orderId) {
-        setStatus("error");
-        setError("Missing payment information");
+        setStatus('error');
+        setError('Missing payment information');
         return;
       }
 
       try {
-        const response = await fetch("/api/payment/capture", {
-          method: "POST",
+        const response = await fetch('/api/payment/capture', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             paypalOrderId,
@@ -40,19 +40,19 @@ export default function PaymentSuccessPage() {
         const data = await response.json();
 
         if (response.ok && data.success) {
-          setStatus("success");
+          setStatus('success');
 
           setTimeout(() => {
             router.push(`/`);
           }, 3000);
         } else {
-          setStatus("error");
-          setError(data.error || "Payment capture failed");
+          setStatus('error');
+          setError(data.error || 'Payment capture failed');
         }
       } catch (err: any) {
-        console.error("Error capturing payment:", err);
-        setStatus("error");
-        setError(err.message || "An error occurred");
+        console.error('Error capturing payment:', err);
+        setStatus('error');
+        setError(err.message || 'An error occurred');
       }
     };
 
@@ -60,12 +60,12 @@ export default function PaymentSuccessPage() {
   }, [searchParams, locale, router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
-        {status === "processing" && (
+    <div className="flex min-h-screen items-center justify-center px-4">
+      <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
+        {status === 'processing' && (
           <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-b-2 border-blue-600"></div>
+            <h2 className="mb-2 text-2xl font-semibold text-gray-800">
               Processing Payment...
             </h2>
             <p className="text-gray-600">
@@ -74,11 +74,11 @@ export default function PaymentSuccessPage() {
           </div>
         )}
 
-        {status === "success" && (
+        {status === 'success' && (
           <div className="text-center">
-            <div className="bg-green-100 rounded-full p-4 inline-block mb-4">
+            <div className="mb-4 inline-block rounded-full bg-green-100 p-4">
               <svg
-                className="w-16 h-16 text-green-600"
+                className="h-16 w-16 text-green-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -91,10 +91,10 @@ export default function PaymentSuccessPage() {
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            <h2 className="mb-2 text-2xl font-semibold text-gray-800">
               Payment Successful!
             </h2>
-            <p className="text-gray-600 mb-4">
+            <p className="mb-4 text-gray-600">
               Thank you for your purchase. A confirmation email with your course
               materials has been sent to your email address.
             </p>
@@ -104,11 +104,11 @@ export default function PaymentSuccessPage() {
           </div>
         )}
 
-        {status === "error" && (
+        {status === 'error' && (
           <div className="text-center">
-            <div className="bg-red-100 rounded-full p-4 inline-block mb-4">
+            <div className="mb-4 inline-block rounded-full bg-red-100 p-4">
               <svg
-                className="w-16 h-16 text-red-600"
+                className="h-16 w-16 text-red-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -121,13 +121,14 @@ export default function PaymentSuccessPage() {
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            <h2 className="mb-2 text-2xl font-semibold text-gray-800">
               Payment Failed
             </h2>
-            <p className="text-gray-600 mb-4">{error}</p>
+            <p className="mb-4 text-gray-600">{error}</p>
             <button
-              onClick={() => router.push("/")}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+              type="button"
+              onClick={() => router.push('/')}
+              className="rounded-lg bg-blue-600 px-6 py-2 text-white transition hover:bg-blue-700"
             >
               Return Home
             </button>
@@ -135,5 +136,18 @@ export default function PaymentSuccessPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={(
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-16 w-16 animate-spin rounded-full border-b-2 border-blue-600"></div>
+      </div>
+    )}
+    >
+      <PaymentSuccessContent />
+    </Suspense>
   );
 }
