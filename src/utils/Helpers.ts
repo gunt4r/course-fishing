@@ -1,5 +1,4 @@
 import type { TableAction } from '@/types/tableAction';
-import { isEmptyObject } from '@heroui/shared-utils';
 import { routing } from '@/libs/I18nRouting';
 
 export const getBaseUrl = () => {
@@ -38,7 +37,7 @@ export const renderValue = (value: any): string | number | React.ReactNode => {
     value === null
     || value === undefined
     || value === ''
-    || isEmptyObject(value)
+    || value === 'undefined'
   ) {
     return '-';
   }
