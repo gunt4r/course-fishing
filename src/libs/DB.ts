@@ -25,14 +25,13 @@ function createDataSource() {
     });
   }
 
-  // Fallback на отдельные переменные
   return new DataSource({
     type: 'postgres',
-    host: process.env.DB_HOST || 'localhost',
-    port: Number(process.env.DB_PORT || 5432),
-    username: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME || 'postgres',
+    host: process.env.PGHOST || 'localhost',
+    port: Number(process.env.PGPORT || 5432),
+    username: process.env.PGUSER || 'postgres',
+    password: process.env.PGPASSWORD,
+    database: process.env.PGDATABASE || 'postgres',
     entities,
     synchronize: process.env.NODE_ENV !== 'production',
     logging: process.env.NODE_ENV !== 'production',

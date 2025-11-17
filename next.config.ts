@@ -3,6 +3,7 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 import createNextIntlPlugin from 'next-intl/plugin';
 // Define the base Next.js configuration
 const baseConfig: NextConfig = {
+  output: 'standalone',
   eslint: {
     dirs: ['.'],
     ignoreDuringBuilds: true,
