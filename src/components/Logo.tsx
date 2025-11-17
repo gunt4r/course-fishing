@@ -14,7 +14,7 @@ export default function Logo({
       style={{ height: `${size}px` }}
       href="/"
     >
-      <Image src="/logo.svg" alt="logo" className="h-full w-full" />
+      <Image src="/logo.svg" alt="logo" className="h-full w-full opacity-100" />
     </Link>
   );
 }

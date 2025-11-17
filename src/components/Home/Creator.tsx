@@ -15,6 +15,7 @@ export default function Creator() {
       <Title additionalClassNames="mb-16">AlexFisherWay</Title>
       <div className="flex flex-col items-center gap-20 lg:flex-row">
         <Image
+          className='opacity-100 rounded-4xl'
           classNames={{
             wrapper: 'h-full max-h-[600px] max-w-2/4 rounded-4xl',
           }}

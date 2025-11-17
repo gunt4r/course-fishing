@@ -64,7 +64,7 @@ export default function Benefits() {
                       src={slide.image}
                       alt={slide.title}
                       className="mx-auto flex h-[300px] w-full max-w-3xl
-                    rounded-4xl md:h-[400px]"
+                    rounded-4xl md:h-[400px] opacity-100"
                     />
                     <div className="absolute -bottom-[5px] flex h-1/5 max-h-52 w-full items-center justify-center rounded-b-4xl bg-cyan-950">
                       <p className="text-2xl font-bold text-cyan-50">

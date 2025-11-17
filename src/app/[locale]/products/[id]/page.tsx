@@ -46,7 +46,7 @@ export default function ProductPage() {
       <main className="mb-40 flex flex-col items-center gap-16 lg:flex-row">
         <Image
           src={data.product.image || 'https://picsum.photos/192/180'}
-          className="w-2/4"
+          className="w-2/4 opacity-100"
           alt={data.product.name}
         />
         <div>

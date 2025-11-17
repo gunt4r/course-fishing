@@ -4,7 +4,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/libs/I18nRouting';
 import { Providers } from './providers';
-import '@/styles/global.css';
+import '../../styles/global.css';
 
 export const metadata: Metadata = {
   title: 'Fisherway',

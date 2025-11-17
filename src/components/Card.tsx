@@ -7,7 +7,7 @@ export default function Card({ image, title, link }: Card) {
     <MyLink addHoverOpacity href={link}>
       <div className="w-96">
         <figure>
-          <Image src={image} alt={title} />
+          <Image src={image} alt={title} className='opacity-100' />
         </figure>
         <div className="card-body">
           <h2 className="text-center text-2xl">{title}</h2>

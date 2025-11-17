@@ -40,7 +40,7 @@ export default function CardCart({ cartItem }: CardCartProps) {
           <Image
             src={cartItem.image}
             alt={cartItem.name}
-            className="mr-4 h-16 rounded object-cover"
+            className="mr-4 h-16 rounded object-cover opacity-100"
           />
         </MyLink>
         <div>

@@ -1,10 +1,10 @@
 import { DataSource } from 'typeorm';
-import { Article } from '@/models/article';
-import { Cart } from '@/models/cart';
-import { CartItem } from '@/models/cartItem';
-import { Order } from '@/models/order';
-import { Product } from '@/models/product';
-import { User } from '@/models/user';
+import { Article } from '../models/article';
+import { Cart } from '../models/cart';
+import { CartItem } from '../models/cartItem';
+import { Order } from '../models/order';
+import { Product } from '../models/product';
+import { User } from '../models/user';
 import 'reflect-metadata';
 
 let dataSource: DataSource | null = null;

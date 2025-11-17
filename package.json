@@ -9,7 +9,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "build-stats": "cross-env ANALYZE=true npm run build:next",
-    "start": "node .next/standalone/server.js",
+    "start": "next start",
     "migrate": "ts-node ./scripts/migrations.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

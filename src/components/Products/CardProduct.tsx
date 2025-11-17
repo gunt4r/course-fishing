@@ -19,7 +19,7 @@ export default function CardProduct({
       href={`/products/${id}`}
     >
       <Image
-        className="flex self-center"
+        className="flex self-center opacity-100"
         src={image || 'https://picsum.photos/192/180'}
         alt={name}
       />
