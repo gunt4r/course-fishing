@@ -7,31 +7,61 @@ import { Product } from '@/models/product';
 import { User } from '@/models/user';
 import 'reflect-metadata';
 
-const options = process.env.DATABASE_URL
-  ? {
-      type: 'postgres' as const,
-      url: process.env.DATABASE_URL,
-      entities: [User, Cart, Product, CartItem, Order, Article],
-      synchronize: process.env.NODE_ENV !== 'production',
-      logging: process.env.NODE_ENV !== 'production',
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-    }
-  : {
-      type: 'postgres' as const,
-      host: process.env.DB_HOST || 'localhost',
-      port: Number(process.env.DB_PORT || 5432),
-      username: process.env.DB_USER || 'postgres',
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME || 'postgres',
-      entities: [User, Cart, Product, CartItem, Order, Article],
-      synchronize: process.env.NODE_ENV !== 'production',
-      logging: process.env.NODE_ENV !== 'production',
-    };
+let dataSource: DataSource | null = null;
 
-export const AppDataSource = new DataSource(options);
-export async function getDataSource() {
-  if (!AppDataSource.isInitialized) {
-    await AppDataSource.initialize();
+function createDataSource() {
+  const entities = [User, Cart, Product, CartItem, Order, Article];
+
+  if (process.env.DATABASE_URL) {
+    return new DataSource({
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
+      entities,
+      synchronize: process.env.NODE_ENV !== 'production',
+      logging: process.env.NODE_ENV !== 'production',
+      ssl: process.env.NODE_ENV === 'production'
+        ? { rejectUnauthorized: false }
+        : false,
+    });
   }
-  return AppDataSource;
+
+  // Fallback на отдельные переменные
+  return new DataSource({
+    type: 'postgres',
+    host: process.env.DB_HOST || 'localhost',
+    port: Number(process.env.DB_PORT || 5432),
+    username: process.env.DB_USER || 'postgres',
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME || 'postgres',
+    entities,
+    synchronize: process.env.NODE_ENV !== 'production',
+    logging: process.env.NODE_ENV !== 'production',
+  });
+}
+
+export async function getDataSource() {
+  if (!dataSource) {
+    dataSource = createDataSource();
+  }
+
+  if (!dataSource.isInitialized) {
+    try {
+      console.log('🔌 Connecting to database...');
+      console.log('📍 Connection details:', {
+        type: dataSource.options.type,
+        database: dataSource.options.database || 'from URL',
+        hasDatabaseUrl: !!process.env.DATABASE_URL,
+      });
+
+      await dataSource.initialize();
+      console.log('✅ Database connected successfully');
+      console.log('📊 Entities:', dataSource.entityMetadatas.map(e => e.tableName));
+    } catch (error: any) {
+      console.error('❌ Database connection failed:', error.message);
+      console.error('Full error:', error);
+      throw error;
+    }
+  }
+
+  return dataSource;
 }
