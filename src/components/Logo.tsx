@@ -1,6 +1,5 @@
 'use client';
 import { Image, Link } from '@heroui/react';
-import logo from '@/assets/img/logo.svg';
 
 export default function Logo({
   size = 45,
@@ -15,7 +14,7 @@ export default function Logo({
       style={{ height: `${size}px` }}
       href="/"
     >
-      <Image src={logo.src} alt="logo" className="h-full w-full" />
+      <Image src="/logo.svg" alt="logo" className="h-full w-full" />
     </Link>
   );
 }
