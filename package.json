@@ -1,5 +1,6 @@
 {
   "name": "course-fishing",
+  "type": "module",
   "author": "GUNT4R https://github.com/gunt4r",
   "engines": {
     "node": ">=20"
@@ -8,7 +9,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "build-stats": "cross-env ANALYZE=true npm run build:next",
-    "start": "next start",
+    "start": "node .next/standalone/server.js",
+    "migrate": "ts-node ./scripts/migrations.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "check:types": "tsc --noEmit --pretty",
