@@ -47,6 +47,8 @@ export async function getTotalRevenue(): Promise<number> {
     const dataSource = await getDataSource();
     const orderRepo = dataSource.getRepository(Order);
 
+    if (Number(orderRepo.count()) === 0) return 0;
+
     const totalRevenue = await orderRepo
       .createQueryBuilder('o')
       .select('SUM(o.totalAmount)', 'total')
@@ -83,6 +85,8 @@ export async function getMonthlyRevenue(): Promise<number[]> {
     const dataSource = await getDataSource();
     const orderRepo = dataSource.getRepository(Order);
 
+    if (Number(orderRepo.count()) === 0) return [];
+    
     const monthlyRevenue = await orderRepo
       .createQueryBuilder('o')
       .select('EXTRACT(MONTH FROM o.createdAt)', 'month')
