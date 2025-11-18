@@ -3,7 +3,9 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { NextResponse } from 'next/server';
 import { v4 as uuid } from 'uuid';
-
+import { getAllProducts, createProduct, updateProduct, deleteProduct } from '@/services/product/service';
+import { requireAdmin } from '@/middlewares/auth';
+import { uploadPdfBlob } from '@/services/upload/service';
 export const config = {
   api: {
     bodyParser: false,
@@ -38,7 +40,6 @@ function extFromContentType(contentType?: string) {
 
 export async function GET() {
   try {
-    const { getAllProducts } = await import('@/services/product/service');
     const products = await getAllProducts();
     return NextResponse.json({ success: true, products });
   } catch (error: any) {
@@ -50,9 +51,6 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const { createProduct } = await import('@/services/product/service');
-  const { requireAdmin } = await import('@/middlewares/auth');
-  const { uploadPdfBlob } = await import('@/services/upload/service');
   try {
     await requireAdmin(request);
 
@@ -173,8 +171,6 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  const { updateProduct } = await import('@/services/product/service');
-  const { requireAdmin } = await import('@/middlewares/auth');
   try {
     await requireAdmin(request);
     const data = await request.json();
@@ -191,8 +187,6 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const { deleteProduct } = await import('@/services/product/service');
-  const { requireAdmin } = await import('@/middlewares/auth');
   try {
     await requireAdmin(request);
     const { id } = await request.json();

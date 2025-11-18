@@ -1,8 +1,7 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-
+import { authentication } from '@/services/users/service';
 export async function POST(request: NextRequest) {
-  const { authentication } = await import('@/services/users/service');
   try {
     const data = await request.json();
     const { token, user } = await authentication(data);

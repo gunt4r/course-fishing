@@ -1,14 +1,12 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
+import { getOrderById } from '@/services/order/service';
+import { createPayPalOrder } from '@/services/paypal/service';
+import { sendOrderConfirmationEmail } from '@/services/mail/service';
+import { getDataSource } from '@/libs/DB';
+import { Order } from '@/models/order';
 
 export async function POST(request: NextRequest) {
-  const { getOrderById } = await import('@/services/order/service');
-  const { createPayPalOrder } = await import('@/services/paypal/service');
-  const { sendOrderConfirmationEmail } = await import(
-    '@/services/mail/service',
-  );
-  const { getDataSource } = await import('@/libs/DB');
-  const { Order } = await import('@/models/order');
   try {
     const body = await request.json();
     const { orderId, locale = 'en' } = body;

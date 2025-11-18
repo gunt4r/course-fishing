@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-
+import { getOrCreateCartForRequest, addToCart, deleteItemFromCart, mergeGuestCartIntoUser } from '@/services/cart/service';
 const COOKIE_NAMES_TO_COPY = [
   (process.env.NAME_SESSION_ID as string) || 'sessionId',
   'token',
@@ -27,9 +27,6 @@ async function copyCookies(from: NextResponse, to: NextResponse) {
 export async function GET(request: NextRequest) {
   const responseInternal = NextResponse.next();
   try {
-    const { getOrCreateCartForRequest } = await import(
-      '@/services/cart/service',
-    );
     const cart = await getOrCreateCartForRequest(request, responseInternal);
     const out = NextResponse.json({ success: true, cart }, { status: 200 });
     await copyCookies(responseInternal as any, out as any);
@@ -49,9 +46,6 @@ export async function POST(request: NextRequest) {
   if (action === 'merge') {
     const responseInternal = NextResponse.next();
     try {
-      const { mergeGuestCartIntoUser } = await import(
-        '@/services/cart/service',
-      );
       const mergedCart = await mergeGuestCartIntoUser(
         request,
         responseInternal,
@@ -73,7 +67,6 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json().catch(() => ({}));
     const productId = body?.productId;
-    const { addToCart } = await import('@/services/cart/service');
     if (!productId) {
       return NextResponse.json(
         { success: false, error: 'productId is required' },
@@ -100,7 +93,6 @@ export async function DELETE(request: NextRequest) {
   const responseInternal = NextResponse.next();
   try {
     const { productId } = await request.json().catch(() => ({}));
-    const { deleteItemFromCart } = await import('@/services/cart/service');
     if (!productId) {
       return NextResponse.json(
         { success: false, error: 'productId is required' },

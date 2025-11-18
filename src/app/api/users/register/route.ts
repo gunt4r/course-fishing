@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
-
+import { registration } from '@/services/users/service';
 export async function POST(request: Request) {
-  const { registration } = await import('@/services/users/service');
   try {
     const data = await request.json();
 

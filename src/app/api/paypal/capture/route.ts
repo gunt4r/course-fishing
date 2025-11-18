@@ -1,17 +1,10 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { orderStatus } from '@/config/enum';
-
+import { getOrderById, updateOrder } from '@/services/order/service';
+import { capturePayPalOrder, getPayPalOrderDetails } from '@/services/paypal/service';
+import { sendOrderConfirmationEmail } from '@/services/mail/service';
 export async function POST(request: NextRequest) {
-  const { getOrderById, updateOrder } = await import(
-    '@/services/order/service',
-  );
-  const { capturePayPalOrder, getPayPalOrderDetails } = await import(
-    '@/services/paypal/service',
-  );
-  const { sendOrderConfirmationEmail } = await import(
-    '@/services/mail/service',
-  );
   try {
     let body;
     try {

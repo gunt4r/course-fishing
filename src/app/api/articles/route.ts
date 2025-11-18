@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
-
+import { getAllArticles, createArticle } from '@/services/articles/service';
 export async function GET() {
   try {
-    const { getAllArticles } = await import('@/services/articles/service');
     const articles = await getAllArticles();
     return NextResponse.json(articles);
   } catch (error) {
@@ -13,7 +12,6 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const form = await request.formData();
-    const { createArticle } = await import('@/services/articles/service');
     const entries = Object.fromEntries(form) as Record<
       string,
       FormDataEntryValue

@@ -1,9 +1,8 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-
+import { createPayPalOrder } from '@/services/paypal/service';
+import { getOrderById } from '@/services/order/service';
 export async function POST(request: NextRequest) {
-  const { createPayPalOrder } = await import('@/services/paypal/service');
-  const { getOrderById } = await import('@/services/order/service');
   try {
     const body: { orderId?: string } = await request.json();
     const { orderId } = body;
