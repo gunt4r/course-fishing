@@ -12,6 +12,13 @@ export default function ClientDashboard() {
   if (isLoading) {
     return <Loader />;
   }
+  if (isError || !analytics) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center">
+        <p className="text-red-500 text-xl">Eroare la încărcarea datelor</p>
+      </div>
+    );
+  }
   const analyticsData = [
     {
       title: t('count_orders'),
@@ -31,13 +38,6 @@ export default function ClientDashboard() {
       currency: '€',
     },
   ];
-    if (isError || !analytics) {
-    return (
-      <div className="min-h-screen w-full flex items-center justify-center">
-        <p className="text-red-500 text-xl">Eroare la încărcarea datelor</p>
-      </div>
-    );
-  }
   const clampFunction = 'clamp(1.125rem, 4vw, 2rem)';
   return (
     <div className="min-h-screen w-full place-content-center bg-none text-cyan-50">

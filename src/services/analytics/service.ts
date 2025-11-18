@@ -47,17 +47,12 @@ export async function getTotalRevenue(): Promise<number> {
     const dataSource = await getDataSource();
     const orderRepo = dataSource.getRepository(Order);
 
-    if (Number(orderRepo.count()) === 0) return 0;
-
     const totalRevenue = await orderRepo
       .createQueryBuilder('o')
       .select('SUM(o.totalAmount)', 'total')
       .where('o.status = :status', { status: 'completed' })
       .getRawOne();
 
-    if (!totalRevenue || !totalRevenue.total) {
-      throw new Error('Total revenue not found');
-    }
     return Number(totalRevenue?.total ?? 0);
   } catch (error) {
     throw error;
@@ -70,6 +65,7 @@ export async function getLastOrders(): Promise<Order[]> {
     const orderRepo = dataSource.getRepository(Order);
 
     const lastOrders = await orderRepo.find({
+      relations: ['user'],
       order: { createdAt: 'DESC' },
       take: 5,
     });
@@ -86,7 +82,7 @@ export async function getMonthlyRevenue(): Promise<number[]> {
     const orderRepo = dataSource.getRepository(Order);
 
     if (Number(orderRepo.count()) === 0) return [];
-    
+
     const monthlyRevenue = await orderRepo
       .createQueryBuilder('o')
       .select('EXTRACT(MONTH FROM o.createdAt)', 'month')

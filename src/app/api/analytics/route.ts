@@ -1,13 +1,16 @@
 import { NextResponse } from 'next/server';
 import { getCountOrder, getCountViewers, getRegisteredUsers, getTotalRevenue, getLastOrders, getMonthlyRevenue } from '@/services/analytics/service';
 export async function GET() {
-  try {
-    const countOrder = await getCountOrder();
-    const countViewers = await getCountViewers();
-    const registeredUsers = await getRegisteredUsers();
-    const totalRevenue = await getTotalRevenue();
-    const lastOrders = await getLastOrders();
-    const monthlyRevenue = await getMonthlyRevenue();
+try {
+    const [countOrder, countViewers, registeredUsers, totalRevenue, lastOrders, monthlyRevenue] = await Promise.all([
+      getCountOrder(),
+      getCountViewers(),
+      getRegisteredUsers(),
+      getTotalRevenue(),
+      getLastOrders(),
+      getMonthlyRevenue(),
+    ]);
+
     return NextResponse.json({
       countOrder,
       countViewers,
@@ -17,6 +20,10 @@ export async function GET() {
       monthlyRevenue,
     });
   } catch (error) {
-    throw error;
+    console.error('Analytics error:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch analytics data' },
+      { status: 500 }
+    );
   }
 }
