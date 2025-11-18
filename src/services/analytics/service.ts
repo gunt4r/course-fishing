@@ -9,6 +9,7 @@ export async function getCountViewers(): Promise<number> {
     const cartRepo = dataSource.getRepository(Cart);
 
     const countViewers = await cartRepo.count();
+
     return countViewers;
   } catch (error) {
     throw error;
