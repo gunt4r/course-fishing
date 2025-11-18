@@ -72,7 +72,8 @@ export async function getLastOrders(): Promise<Order[]> {
 
     return lastOrders;
   } catch (error) {
-    throw error;
+    console.error('Error getting last orders:', error);
+    return [];
   }
 }
 

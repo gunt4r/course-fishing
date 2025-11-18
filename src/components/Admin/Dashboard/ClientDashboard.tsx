@@ -66,14 +66,15 @@ export default function ClientDashboard() {
           </Wrapper>
         ))}
         <Wrapper className="scrollbar-hide max-h-[200px] overflow-x-hidden ">
-          {analytics.lastOrders && analytics.lastOrders.map((order: any, index: number) => (
+          {analytics.lastOrders && analytics.lastOrders.length > 0 ? (
+  analytics.lastOrders.map((order: any, index: number) => (
             <div
               className="flex items-center justify-between border-b border-gray-200 py-4"
               key={index}
             >
               <div>
-                <h3 className=" text-[clamp(1.125rem,4vw,2rem] font-medium">
-                  {order.user.email}
+                <h3 className=" text-[clamp(1.125rem,4vw,2rem)] font-medium">
+                  {order.user?.email || 'Utilizator anonim'}
                 </h3>
                 <p className="text-sm text-gray-500">
                   {new Date(order.createdAt).toLocaleDateString()}
@@ -81,7 +82,7 @@ export default function ClientDashboard() {
               </div>
               <div className="flex items-center">
                 <AnimatedNumber
-                  animateToNumber={order.totalAmount}
+                  animateToNumber={order.totalAmount ?? 0}
                   fontStyle={{
                     fontSize: clampFunction,
                   }}
@@ -91,8 +92,10 @@ export default function ClientDashboard() {
                 <p className="text-2xl">€</p>
               </div>
             </div>
-          ))}
-          {!analytics.lastOrders && <p className="text-2xl">Nu sunt comenzi</p>}
+          ))
+) : (
+  <p>Nu sunt comenzi</p>
+)}
         </Wrapper>
         <Wrapper className="max-h-[200px] overflow-x-hidden">
           {analytics.monthlyRevenue && analytics.monthlyRevenue.map((item: any, index: number) => (
@@ -102,14 +105,14 @@ export default function ClientDashboard() {
             >
               <div>
                 <h3 className="text-4xl font-medium">
-                  {item.month}
+                  {item.month && item.month}
                   {' '}
                   lună
                 </h3>
               </div>
               <div className="flex items-center">
                 <AnimatedNumber
-                  animateToNumber={item.total}
+                  animateToNumber={item.total && item.total}
                   useThousandsSeparator
                   fontStyle={{
                     fontSize: clampFunction,
