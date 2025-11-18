@@ -10,9 +10,6 @@ export async function getCountViewers(): Promise<number> {
 
     const countViewers = await cartRepo.count();
 
-    if (!countViewers) {
-      throw new Error('Count viewers not found');
-    }
     return countViewers;
   } catch (error) {
     throw error;
@@ -26,9 +23,6 @@ export async function getCountOrder(): Promise<number> {
 
     const countOrder = await orderRepo.count();
 
-    if (!countOrder) {
-      throw new Error('Count order not found');
-    }
     return countOrder;
   } catch (error) {
     throw error;
@@ -42,9 +36,6 @@ export async function getRegisteredUsers(): Promise<number> {
 
     const registeredUsers = await userRepo.count();
 
-    if (!registeredUsers) {
-      throw new Error('Registered users not found');
-    }
     return registeredUsers;
   } catch (error) {
     throw error;
@@ -65,7 +56,7 @@ export async function getTotalRevenue(): Promise<number> {
     if (!totalRevenue || !totalRevenue.total) {
       throw new Error('Total revenue not found');
     }
-    return Number(totalRevenue.total);
+    return Number(totalRevenue?.total ?? 0);
   } catch (error) {
     throw error;
   }
@@ -81,9 +72,6 @@ export async function getLastOrders(): Promise<Order[]> {
       take: 5,
     });
 
-    if (!lastOrders) {
-      throw new Error('Last orders not found');
-    }
     return lastOrders;
   } catch (error) {
     throw error;
@@ -104,10 +92,7 @@ export async function getMonthlyRevenue(): Promise<number[]> {
       .orderBy('month', 'ASC')
       .getRawMany();
 
-    if (!monthlyRevenue) {
-      throw new Error('Monthly revenue not found');
-    }
-    return monthlyRevenue;
+    return monthlyRevenue ?? [];
   } catch (error) {
     throw error;
   }
