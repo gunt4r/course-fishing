@@ -84,5 +84,5 @@
     ".next/types/**/*.ts",
     "**/*.mts",
     "server.js"
-  ]
+, "scripts/start-db.js"  ]
 }

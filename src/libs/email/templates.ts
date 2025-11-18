@@ -19,7 +19,7 @@ export const emailTranslations: Record<string, EmailTranslations> = {
     totalAmount: 'Total Amount',
     products: 'Products',
     attachedFiles: 'Your course materials are attached to this email.',
-    footer: 'Best regards,\nYour Team',
+    footer: 'Best regards,\nFisher Way',
     support: 'If you have any questions, please contact our support.',
   },
   ru: {
@@ -30,7 +30,7 @@ export const emailTranslations: Record<string, EmailTranslations> = {
     totalAmount: 'Общая сумма',
     products: 'Продукты',
     attachedFiles: 'Материалы курса прикреплены к этому письму.',
-    footer: 'С уважением,\nВаша команда',
+    footer: 'С уважением,\nFisherway',
     support:
       'Если у вас есть вопросы, пожалуйста, свяжитесь с нашей поддержкой.',
   },
@@ -42,7 +42,7 @@ export const emailTranslations: Record<string, EmailTranslations> = {
     totalAmount: 'Suma totală',
     products: 'Produse',
     attachedFiles: 'Materialele cursului sunt atașate la acest email.',
-    footer: 'Cu stimă,\nEchipa dvs.',
+    footer: 'Cu stimă,\nFisherway',
     support: 'Dacă aveți întrebări, vă rugăm să contactați suportul nostru.',
   },
 };
