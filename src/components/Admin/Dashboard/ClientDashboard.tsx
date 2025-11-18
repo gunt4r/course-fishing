@@ -33,7 +33,7 @@ export default function ClientDashboard() {
   ];
   const clampFunction = 'clamp(1.125rem, 4vw, 2rem)';
   return (
-    <div className="min-h-screen w-full place-content-center bg-none">
+    <div className="min-h-screen w-full place-content-center bg-none text-cyan-50">
       <Grid className=" gap-8 px-10">
         {analyticsData.map((item, index) => (
           <Wrapper
@@ -41,7 +41,8 @@ export default function ClientDashboard() {
             key={index}
           >
             <div className={`${item.currency && 'flex items-center gap-4'}`}>
-              <AnimatedNumber
+              {item.value ? (
+                <AnimatedNumber
                 animateToNumber={item.value}
                 useThousandsSeparator
                 fontStyle={{
@@ -49,13 +50,16 @@ export default function ClientDashboard() {
                 }}
                 className=" mt-4 text-center font-bold text-cyan-50"
               />
+              ) : (
+                <h3 className="text-4xl font-medium text-cyan-50">0€</h3>
+              )}
               {item.currency && <p className="text-2xl">{item.currency}</p>}
             </div>
             <p className="text-2xl">{item.title}</p>
           </Wrapper>
         ))}
         <Wrapper className="scrollbar-hide max-h-[200px] overflow-x-hidden ">
-          {analytics.lastOrders.map((order: any, index: number) => (
+          {analytics.lastOrders && analytics.lastOrders.map((order: any, index: number) => (
             <div
               className="flex items-center justify-between border-b border-gray-200 py-4"
               key={index}
@@ -81,9 +85,10 @@ export default function ClientDashboard() {
               </div>
             </div>
           ))}
+          {!analytics.lastOrders && <p className="text-2xl">Nu sunt comenzi</p>}
         </Wrapper>
         <Wrapper className="max-h-[200px] overflow-x-hidden">
-          {analytics.monthlyRevenue.map((item: any, index: number) => (
+          {analytics.monthlyRevenue && analytics.monthlyRevenue.map((item: any, index: number) => (
             <div
               className="scrollbar-hide flex items-center justify-between border-b border-gray-200 py-4"
               key={index}
@@ -108,6 +113,7 @@ export default function ClientDashboard() {
               </div>
             </div>
           ))}
+          {!analytics.monthlyRevenue && <p className="text-2xl">Nu sunt comenzi</p>}
         </Wrapper>
       </Grid>
     </div>

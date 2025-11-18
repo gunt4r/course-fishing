@@ -34,8 +34,8 @@ function createDataSource() {
     password: process.env.PGPASSWORD,
     database: process.env.PGDATABASE || 'postgres',
     entities,
-    synchronize: true,
-    logging: true,
+    synchronize: process.env.NODE_ENV !== 'production',
+    logging: process.env.NODE_ENV !== 'production',
   });
 }
 
