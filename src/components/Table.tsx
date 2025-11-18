@@ -13,6 +13,7 @@ import {
 import { Icon } from '@iconify/react';
 import { renderValue } from '@/utils/Helpers';
 import TableTitle from './TableTitle';
+import '../styles/global.css';
 
 type CellStyleMapper = (
   value: any,
@@ -62,7 +63,7 @@ export default function TableAdmin({
       aria-label="Dynamic table"
       className={`scrollbar-hide h-screen w-full max-w-full rounded-md p-8 text-zinc-900 ${classNamesWrapper}`}
       classNames={{
-        wrapper: `scrollbar-hide ${maxTableHeight ? '' : '!h-screen'}`,
+        wrapper: `scrollbar-hide ${maxTableHeight ? '' : '!h-screen'} bg-cyan-50 rounded-xl`,
       }}
       maxTableHeight={maxTableHeight}
       rowHeight={40}
@@ -108,6 +109,10 @@ export default function TableAdmin({
                       key={actionIndex}
                       content={action.label}
                       color={action.color}
+                      classNames={{
+                        base: '',
+                        content: `${action.color == 'danger' && 'bg-red-700 !text-cyan-50'} ${action.color == 'default' && 'bg-cyan-50 text-zinc-900'} rounded-xl border border-zinc-800 p-4`
+                      }}
                       className="text-zinc-900"
                     >
                       <Button
@@ -130,7 +135,7 @@ export default function TableAdmin({
             );
           }
 
-          return <TableRow key={item.id ?? rowIndex}>{cells}</TableRow>;
+          return <TableRow key={item.id ?? rowIndex} className={`${rowIndex % 2 === 0 ? 'bg-[#dadada47] rounded-xl' : ''}`}>{cells}</TableRow>;
         })}
       </TableBody>
     </TableComponent>

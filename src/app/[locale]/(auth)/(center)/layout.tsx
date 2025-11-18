@@ -2,6 +2,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { Toaster } from 'react-hot-toast';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
+import Container from '@/components/container/Container';
 
 export default async function CenteredLayout(props: {
   children: React.ReactNode;
@@ -14,9 +15,11 @@ export default async function CenteredLayout(props: {
     <section>
       <Toaster position="bottom-right" />
       <Header />
-      <div className="flex flex-col items-center justify-center">
+      <Container>
+        <div className="flex flex-col items-center justify-center">
         {props.children}
       </div>
+      </Container>
       <Footer />
     </section>
   );

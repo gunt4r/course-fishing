@@ -85,6 +85,7 @@ export default function ClientUsers() {
         actions={actionsUsers}
         titleTable="USERS"
         onAddItem={() => setIsModalAddOpen(true)}
+        ommitedAttributes={['password']}
       />
 
       <ModalDelete

@@ -38,9 +38,6 @@ export const config = {
   // Match all pathnames except for
   // - … if they start with `/_next`, `/_vercel` or `monitoring`
   // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: [
-    '/((?!api|_next|_vercel|monitoring|.*\\..*).*)',
-    '/((?!api).*)/admin/:path*',
-  ],
-  runtime: 'nodejs',
+  matcher: "/((?!_next|_vercel|monitoring|api|.*\\..*).*)",
+  runtime: "nodejs",
 };

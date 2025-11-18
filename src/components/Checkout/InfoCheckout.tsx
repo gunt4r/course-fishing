@@ -65,7 +65,7 @@ export default function InfoCheckout({ totalPrice, items }: InfoCheckoutProps) {
   return (
     <div
       style={{ boxShadow: '0 8px 32px rgba(31,38,135,0.15)' }}
-      className="mb-8 flex w-full max-w-2/5 flex-col items-center justify-between justify-self-end rounded-2xl border border-white/20 p-6 text-left shadow-lg backdrop-blur-md"
+      className="flex md:max-w-2/5 sm:max-w-4/5 transition-all duration-300 ease-in-out w-full text-left justify-self-end flex-col justify-between items-center mb-8 p-6 rounded-2xl backdrop-blur-md shadow-lg border border-white/20"
     >
       {items.map((item: any, index: number) => (
         <p

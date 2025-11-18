@@ -4,7 +4,7 @@ import { orderStatus } from '@/config/enum';
 import { getDataSource } from '@/libs/DB';
 import { Order } from '@/models/order';
 import { User } from '@/models/user';
-import { getOrCreateCartForRequest } from '../cart/service';
+import { getOrCreateCartForRequest, clearCart } from '../cart/service';
 import { getProductById } from '../product/service';
 import { getUserByEmail, getUserById, getUserIdFromRequest, registration } from '../users/service';
 
@@ -99,7 +99,7 @@ export async function createOrder(
     });
 
     await orderRepo.save(order);
-    cartData.items = [];
+    await clearCart(cartData.id);
     return order;
   } catch (error) {
     console.error('Error creating order:', error);

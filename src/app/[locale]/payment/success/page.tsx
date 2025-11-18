@@ -3,7 +3,7 @@
 import { useLocale } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
-
+import { useTranslations } from 'next-intl';
 function PaymentSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -12,7 +12,7 @@ function PaymentSuccessContent() {
     'processing',
   );
   const [error, setError] = useState<string>('');
-
+const t = useTranslations("Payment.success");
   useEffect(() => {
     const capturePayment = async () => {
       const paypalOrderId = searchParams.get('token');
@@ -66,10 +66,10 @@ function PaymentSuccessContent() {
           <div className="text-center">
             <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-b-2 border-blue-600"></div>
             <h2 className="mb-2 text-2xl font-semibold text-gray-800">
-              Processing Payment...
+              {t("processing")}
             </h2>
             <p className="text-gray-600">
-              Please wait while we confirm your payment.
+              {t("wait_confirm")}
             </p>
           </div>
         )}
@@ -92,14 +92,13 @@ function PaymentSuccessContent() {
               </svg>
             </div>
             <h2 className="mb-2 text-2xl font-semibold text-gray-800">
-              Payment Successful!
+              {t("success")}
             </h2>
             <p className="mb-4 text-gray-600">
-              Thank you for your purchase. A confirmation email with your course
-              materials has been sent to your email address.
+              {t("thanks")}
             </p>
             <p className="text-sm text-gray-500">
-              Redirecting to your order...
+              {t("redirect")}
             </p>
           </div>
         )}
@@ -122,7 +121,7 @@ function PaymentSuccessContent() {
               </svg>
             </div>
             <h2 className="mb-2 text-2xl font-semibold text-gray-800">
-              Payment Failed
+              {t("error")}
             </h2>
             <p className="mb-4 text-gray-600">{error}</p>
             <button
@@ -130,7 +129,7 @@ function PaymentSuccessContent() {
               onClick={() => router.push('/')}
               className="rounded-lg bg-blue-600 px-6 py-2 text-white transition hover:bg-blue-700"
             >
-              Return Home
+              {t("back")}
             </button>
           </div>
         )}

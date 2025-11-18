@@ -7,7 +7,7 @@ export default function InfoCart({ totalPrice }: { totalPrice: number }) {
   return (
     <div
       style={{ boxShadow: '0 8px 32px rgba(31,38,135,0.15)' }}
-      className="mb-8 flex w-full max-w-1/4 flex-col items-center justify-between justify-self-end rounded-2xl border border-white/20 p-6 text-left shadow-lg backdrop-blur-md"
+      className="mb-8 flex lg:max-w-2/5 sm:max-w-4/5 transition-all duration-300 ease-in-out w-full max-w-1/4 flex-col items-center justify-between justify-self-end rounded-2xl border border-white/20 p-6 text-left shadow-lg backdrop-blur-md"
     >
       <p className="mb-6 flex w-full justify-between text-left text-small">
         Subtotal:

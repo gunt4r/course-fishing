@@ -17,7 +17,7 @@ export default function ClientCheckout({ cart }: { cart: any }) {
       <Title additionalClassNames="mb-10 uppercase" addMarginTop>
         {t('title')}
       </Title>
-      <main className="mb-40 flex w-full items-center gap-20 lg:gap-30">
+      <main className="flex items-center w-full lg:gap-30 gap-20 mb-40 md:flex-row flex-col">
         <BodyCheckout user={currentUser} />
         <InfoCheckout totalPrice={cart.totalPrice} items={cart.items} />
       </main>

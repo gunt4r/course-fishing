@@ -36,8 +36,8 @@
     "navigation": "Navigare"
   },
   "Index": {
-    "meta_title": "Fisherway - Curs de formare pentru angajare in industria pescuitului",
-    "meta_description": "Curs de formare pentru angajare in industria pescuitului",
+    "meta_title": "Fisherway",
+    "meta_description": "Cursuri pentru cei care vor să muncească pe vase de pescuit în Norvegia. Instruire practică, pregătire pentru interviu, asistență la documente și obținerea certificărilor necesare.",
     "sponsors_title": "Sponsori",
     "hero_link": "Obține acces acum!",
     "benefits_title": "O oportunitate ideală pentru bărbații pregătiți să muncească și să-și susțină familia",
@@ -79,7 +79,7 @@
   },
   "Products": {
     "meta_title": "Produse",
-    "meta_description": "Descriere pagină produse",
+    "meta_description": "Pagina cu produsele oferite de Alex Fisher Way",
     "title": "Produse",
     "buy_now": "Cumpără acum",
     "product_has_been_added": "Produsul a fost adăugat în coș!",
@@ -142,6 +142,7 @@
   },
   "Dashboard": {
     "meta_title": "Panou administrare",
+    "meta_description": "Admin panel dashboard",
     "hello_message": "Salut, {email}!",
     "alternative_message": "Vrei să creezi un SaaS mai rapid folosind aceeași tehnologie? Încearcă <url></url>.",
     "count_orders": "Comenzi",
@@ -225,12 +226,25 @@
       }
     }
   },
-  "UserProfile": {
-    "meta_title": "Profil utilizator"
+"Payment": {
+    "success": {
+      "processing": "Se procesează plata...",
+      "success": "Plata a fost efectuată cu succes!",
+      "error": "Eroare la plată!",
+      "wait_confirm": "Vă rugăm să așteptați confirmarea plății...",
+      "thanks": "Vă mulțumim pentru achiziție. Un e-mail de confirmare cu materialele cursului a fost trimis la adresa dvs. de e-mail.",
+      "redirect": "Redirecționare către pagina principală...",
+      "back": "Înapoi la pagina principală"
+    }
   },
-  "DashboardLayout": {
-    "dashboard_link": "Panou",
-    "user_profile_link": "Gestionează contul",
-    "sign_out": "Deconectare"
+  "Stories": {
+    "meta_title": "Povești",
+    "meta_description": "Poveștile clienților noștri care ne ajută să creștem.",
+    "title": "Povești"
+  },
+  "Reviews": {
+    "meta_title": "Recenzii",
+    "meta_description": "Recenziile clienților noștri care ne ajută să creștem.",
+    "title": "Recenzii"
   }
 }

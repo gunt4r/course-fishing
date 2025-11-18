@@ -15,7 +15,7 @@ export default function Creator() {
       <Title additionalClassNames="mb-16">AlexFisherWay</Title>
       <div className="flex flex-col items-center gap-20 lg:flex-row">
         <Image
-          className='opacity-100 rounded-4xl'
+          className='opacity-100 rounded-4xl w-screen object-cover'
           classNames={{
             wrapper: 'h-full max-h-[600px] max-w-2/4 rounded-4xl',
           }}
@@ -34,7 +34,7 @@ export default function Creator() {
             })}
           </div>
           <LinkWhiteBorder
-            classNames="flex justify-self-center text-xl"
+            wrapperClassNames="flex justify-self-center text-xl"
             href="https://www.linkedin.com/in/alexey-fisherway"
           >
             {t('creator_read_more')}

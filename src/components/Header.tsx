@@ -13,10 +13,10 @@ import {
   NavbarMenu,
   NavbarMenuItem,
 } from '@heroui/react';
-
+import { Transition } from '@headlessui/react';
 import { Icon } from '@iconify/react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { useCurrentUser } from '@/app/queries/users/userQuery';
 import Container from './container/Container';
 import HeaderDropdown from './HeaderDropdown';
@@ -100,23 +100,32 @@ export default function Header(props: NavbarProps) {
         <div className="flex gap-2.5 md:hidden">
           <LocaleSwitcher className="" />
           <Button
-            className="cursor-pointer rounded-full text-cyan-50 backdrop-blur-sm duration-300 hover:bg-zinc-200 hover:px-4  hover:py-2.5 hover:text-blue-950 hover:transition-colors"
+            className="hover:opacity-80 transition-opacity bg-transparent rounded-full hover:py-2.5 hover:px-4 duration-300  text-cyan-50 backdrop-blur-sm cursor-pointer"
             onPress={() => setIsMenuOpen(true)}
           >
             <Icon icon="radix-icons:hamburger-menu" />
           </Button>
         </div>
-
-        <NavbarMenu className="top-0 flex h-screen max-h-screen  w-full flex-col items-center gap-3 bg-default-200/50 pt-6 pb-6 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50">
+        <Transition
+          as={Fragment}
+          show={isMenuOpen}
+          enter="transition-opacity duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="transition-opacity duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+          >
+        <NavbarMenu className="top-0 flex !h-screen max-h-screen  w-full flex-col items-center gap-3 bg-default-200/50 pt-6 pb-6 shadow-medium backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50 z-100 text-cyan-50">
           <Button
-            className="bg-opacity-40 absolute top-7 right-7 flex h-10 w-10 rounded-full bg-gray-600 bg-clip-padding p-0 backdrop-blur-md backdrop-filter duration-300 hover:bg-gray-200 hover:text-gray-500 hover:transition-colors md:hidden"
+            className="bg-opacity-40 absolute top-7 right-10 flex h-10 w-10 rounded-full bg-gray-600 bg-clip-padding p-0 backdrop-blur-md backdrop-filter duration-300 hover:bg-gray-200 hover:text-gray-500 hover:transition-colors md:hidden"
             onPress={() => setIsMenuOpen(false)}
           >
             <Icon icon="iconamoon:close-bold" />
           </Button>
-          <NavbarMenuItem>
+          <NavbarMenuItem className='mt-16'>
             <Link
-              className="text-cyan-950 transition-opacity hover:opacity-80"
+              className="transition-opacity hover:opacity-80"
               href="/"
               size="sm"
             >
@@ -125,7 +134,7 @@ export default function Header(props: NavbarProps) {
           </NavbarMenuItem>
           <NavbarMenuItem>
             <Link
-              className="text-cyan-950 transition-opacity hover:opacity-80"
+              className="transition-opacity hover:opacity-80"
               href="/stories"
               size="sm"
             >
@@ -134,7 +143,7 @@ export default function Header(props: NavbarProps) {
           </NavbarMenuItem>
           <NavbarMenuItem>
             <Link
-              className="text-cyan-950 transition-opacity hover:opacity-80"
+              className="transition-opacity hover:opacity-80"
               href="/reviews"
               size="sm"
             >
@@ -143,7 +152,7 @@ export default function Header(props: NavbarProps) {
           </NavbarMenuItem>
           <NavbarMenuItem>
             <Link
-              className="text-cyan-950 transition-opacity hover:opacity-80"
+              className="transition-opacity hover:opacity-80"
               href="/products"
               size="sm"
             >
@@ -165,7 +174,7 @@ export default function Header(props: NavbarProps) {
           </NavbarMenuItem>
           <NavbarMenuItem>
             <Button
-              className="flex cursor-pointer bg-foreground px-4 py-2.5 font-medium text-background transition-opacity hover:opacity-80"
+              className="flex text-cyan-50 cursor-pointer bg-foreground px-4 py-2.5 font-medium transition-opacity hover:opacity-80 hover:text-zinc-900"
               color="secondary"
               endContent={<Icon icon="solar:alt-arrow-right-linear" />}
               radius="full"
@@ -178,6 +187,7 @@ export default function Header(props: NavbarProps) {
             </Button>
           </NavbarMenuItem>
         </NavbarMenu>
+        </Transition>
       </Navbar>
     </Container>
   );

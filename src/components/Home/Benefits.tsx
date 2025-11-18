@@ -58,7 +58,7 @@ export default function Benefits() {
           >
             {articles && articles.map((slide: any) => (
               <SwiperSlide key={slide.id}>
-                <MyLink href={`/products/${slide.id}`}>
+                <MyLink href={`/reviews/${slide.id}`}>
                   <div className="flex flex-col relative items-center ">
                     <Image
                       src={slide.image}
@@ -66,7 +66,7 @@ export default function Benefits() {
                       className="mx-auto flex h-[300px] w-full max-w-3xl
                     rounded-4xl md:h-[400px] opacity-100"
                     />
-                    <div className="absolute -bottom-[5px] flex h-1/5 max-h-52 w-full items-center justify-center rounded-b-4xl bg-cyan-950">
+                    <div className="absolute -bottom-[5px] flex h-1/5 max-h-52 w-full items-center justify-center rounded-b-4xl bg-cyan-950 z-10">
                       <p className="text-2xl font-bold text-cyan-50">
                         {slide.title}
                       </p>

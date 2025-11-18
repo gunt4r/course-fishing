@@ -15,7 +15,7 @@ export default function CardProduct({
   return (
     <MyLink
       addHoverOpacity
-      additionalClassNames="flex flex-col gap-6 items-center justify-center w-full"
+      additionalClassNames="flex flex-col min-w-[300px] max-w-[350px] gap-6 items-center justify-center w-full"
       href={`/products/${id}`}
     >
       <Image

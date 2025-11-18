@@ -242,7 +242,7 @@ export default function HeaderDropdown({
         : (
             <>
               <Button
-                className="cursor-pointer self-center rounded-full px-4 py-2.5 text-cyan-50 duration-300 hover:bg-cyan-50 hover:transition-colors "
+                className="cursor-pointer self-center rounded-full px-4 py-2.5 text-cyan-50 duration-300 hover:bg-cyan-50 hover:transition-colors hover:text-zinc-800"
                 as={Link}
                 href="/sign-in"
                 radius="full"

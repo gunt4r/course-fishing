@@ -79,7 +79,7 @@
   },
   "Products": {
     "meta_title": "Products",
-    "meta_description": "Products page description",
+    "meta_description": "Products offered by Alex Fisher Way",
     "title": "Products",
     "buy_now": "Buy now",
     "product_has_been_added": "The product has been added to the shopping cart!",
@@ -142,6 +142,7 @@
   },
   "Dashboard": {
     "meta_title": "Dashboard",
+    "meta_description": "Admin panel dashboard",
     "hello_message": "Hello, {email}!",
     "alternative_message": "Want to build your SaaS faster using the same stack? Try <url></url>.",
     "count_orders": "Orders",
@@ -226,12 +227,25 @@
       }
     }
   },
-  "UserProfile": {
-    "meta_title": "User profile"
+  "Payment": {
+    "success": {
+      "processing": "Processing payment...",
+      "success": "Payment successful!",
+      "error": "Payment error!",
+      "wait_confirm": "Please wait for the payment confirmation...",
+      "thanks": "Thank you for your purchase. A confirmation email with your course materials has been sent to your email address.",
+      "redirect": "Redirect to home page...",
+      "back": "Return to home page"
+    }
   },
-  "DashboardLayout": {
-    "dashboard_link": "Dashboard",
-    "user_profile_link": "Manage your account",
-    "sign_out": "Sign out"
+  "Stories": {
+    "meta_title": "Stories",
+    "meta_description": "Stories of our clients which help us to grow.",
+    "title": "Stories"
+  },
+  "Reviews": {
+    "meta_title": "Reviews",
+    "meta_description": "Reviews of our clients which help us to grow.",
+    "title": "Reviews"
   }
 }
