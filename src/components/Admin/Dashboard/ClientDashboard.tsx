@@ -7,7 +7,7 @@ import Loader from '../../Loader';
 import Wrapper from '../../Wrapper';
 
 export default function ClientDashboard() {
-  const { data: analytics, isLoading } = useAnalytics();
+  const { data: analytics, isLoading, isError } = useAnalytics();
   const t = useTranslations('Dashboard');
   if (isLoading) {
     return <Loader />;
@@ -15,33 +15,40 @@ export default function ClientDashboard() {
   const analyticsData = [
     {
       title: t('count_orders'),
-      value: analytics.countOrder,
+      value: analytics.countOrder ?? 0,
     },
     {
       title: t('count_viewers'),
-      value: analytics.countViewers,
+      value: analytics.countViewers ?? 0,
     },
     {
       title: t('count_users'),
-      value: analytics.registeredUsers,
+      value: analytics.registeredUsers ?? 0,
     },
     {
       title: t('total_revenue'),
-      value: analytics.totalRevenue,
+      value: analytics.totalRevenue ?? 0,
       currency: '€',
     },
   ];
+    if (isError || !analytics) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center">
+        <p className="text-red-500 text-xl">Eroare la încărcarea datelor</p>
+      </div>
+    );
+  }
   const clampFunction = 'clamp(1.125rem, 4vw, 2rem)';
   return (
     <div className="min-h-screen w-full place-content-center bg-none text-cyan-50">
       <Grid className=" gap-8 px-10">
-        {analyticsData.map((item, index) => (
+        {analyticsData && analyticsData.map((item, index) => (
           <Wrapper
             className="scrollbar-hide flex w-1/3 flex-col items-center text-center"
             key={index}
           >
             <div className={`${item.currency && 'flex items-center gap-4'}`}>
-              {item.value ? (
+              {Boolean(item.value) ? (
                 <AnimatedNumber
                 animateToNumber={item.value}
                 useThousandsSeparator
