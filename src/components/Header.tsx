@@ -26,9 +26,9 @@ import Logo from './Logo';
 
 export default function Header(props: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { data: user, isLoading, error } = useCurrentUser();
+  const { data: user, isLoading } = useCurrentUser();
   const t = useTranslations('Header');
-  if (isLoading || !error) {
+  if (isLoading) {
     return <Loader />;
   }
 
