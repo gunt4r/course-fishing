@@ -76,7 +76,7 @@ export default function Modal({
           leaveTo="opacity-0 translate-y-4 scale-95"
         >
           <div
-            className={`relative z-50 inline-block w-full ${sizeClasses[size]} my-8 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-2xl transition-all dark:bg-slate-900 ${classNames || ''}`}
+            className={`relative z-100 inline-block w-full ${sizeClasses[size]} my-8 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-2xl transition-all dark:bg-slate-900 ${classNames || ''}`}
             role="dialog"
             aria-modal="true"
             onClick={e => e.stopPropagation()}
