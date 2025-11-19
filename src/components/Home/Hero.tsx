@@ -16,7 +16,7 @@ export default function Hero() {
         className="mx-auto mt-10 mb-12 flex w-3/4 max-w-6xl"
       />
       <LinkWhiteBorder
-        wrapperClassNames="flex justify-self-center"
+        wrapperClassNames="flex justify-self-center max-w-max"
         href="/products"
       >
         {t('hero_link')}

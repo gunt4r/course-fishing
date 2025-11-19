@@ -20,7 +20,7 @@ export default function LinkWhiteBorder({
     <MyLink
       href={href}
       {...props}
-      wrapperClassNames={`border gap-2 rounded-full text-cyan-50 border-white py-2 px-4 hover:bg-white hover:text-black transition-all duration-300 ${wrapperClassNames}`}
+      wrapperClassNames={`border gap-2 rounded-full text-cyan-50 max-w-sm border-white py-2 px-4 hover:bg-white hover:text-black transition-all focus:text-black focus:bg-white focus:outline-none duration-300 ${wrapperClassNames}`}
       additionalClassNames={` ${classNames}`}
     >
       {showIcon && <Icon icon="ep:arrow-right" />}
