@@ -15,6 +15,7 @@ export type ModalProps = {
   size?: ModalSize;
   closeOnOverlayClick?: boolean;
   ariaLabel?: string;
+  classNames?: string;
 };
 
 const sizeClasses: Record<ModalSize, string> = {
@@ -33,12 +34,13 @@ export default function Modal({
   size = 'md',
   closeOnOverlayClick = true,
   ariaLabel = 'Modal',
+  classNames,
 }: ModalProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6"
+        className={`fixed inset-0 z-100 flex items-center justify-center px-4 py-6`}
         onClose={() => {
           if (closeOnOverlayClick) {
             onClose();
@@ -57,7 +59,7 @@ export default function Modal({
         >
           <DialogBackdrop
             onClick={() => closeOnOverlayClick && onClose()}
-            className="fixed inset-0 z-40 min-w-2/5 cursor-pointer bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0 z-100 min-w-2/5 cursor-pointer bg-black/40 backdrop-blur-sm"
           />
         </Transition.Child>
         <span className="inline-block h-screen align-middle" aria-hidden="true">
@@ -74,7 +76,7 @@ export default function Modal({
           leaveTo="opacity-0 translate-y-4 scale-95"
         >
           <div
-            className={`relative z-50 inline-block w-full ${sizeClasses[size]} my-8 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-2xl transition-all dark:bg-slate-900`}
+            className={`relative z-50 inline-block w-full ${sizeClasses[size]} my-8 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-2xl transition-all dark:bg-slate-900 ${classNames || ''}`}
             role="dialog"
             aria-modal="true"
             onClick={e => e.stopPropagation()}

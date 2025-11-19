@@ -18,9 +18,11 @@ import Modal from './Modals/Modal';
 export default function HeaderDropdown({
   user,
   isAdmin = false,
+  isMobile = false,
 }: {
   user: any;
   isAdmin?: boolean;
+  isMobile?: boolean;
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [phone, setPhone] = useState(user?.phone ?? '');
@@ -104,6 +106,7 @@ export default function HeaderDropdown({
         onClose={() => setIsModalOpen(false)}
         title={<span>{t('settings_link')}</span>}
         size="md"
+        classNames='z-100'
         footer={(
           <>
             <button
@@ -185,14 +188,14 @@ export default function HeaderDropdown({
 
               <MenuItems
                 anchor="bottom end"
-                className=" z-100 rounded-xl border border-white/5 bg-white/5 p-1 text-sm/6 text-cyan-50 transition-colors-opacity duration-300 ease-out focus:outline-none data-closed:scale-95 data-closed:opacity-0"
+                className={` z-100 rounded-xl border border-white/5 bg-white/5 p-1 text-sm/6 text-cyan-50 transition-colors-opacity duration-300 ease-out focus:outline-none data-closed:scale-95 data-closed:opacity-0`}
               >
                 {user.role !== Role.USER && (
                   <MenuItem>
                     {({ active }) => (
                       <LinkWhiteBorder
                         href="/admin"
-                        wrapperClassNames={`block px-4 py-2 bg-transparent text-left text-sm border-none w-full rounded-xl ${
+                        wrapperClassNames={`block px-4 py-2 bg-transparent text-left text-sm border-none w-full rounded-xl ${isMobile && 'text-xl'} ${
                           active
                             ? 'bg-cyan-50 text-zinc-800 duration-300 transition-background '
                             : ''
@@ -209,7 +212,7 @@ export default function HeaderDropdown({
                   {({ active }) => (
                     <Button
                       onClick={openProfileModal}
-                      className={`block w-full bg-transparent px-4 py-2 text-left text-sm text-cyan-50 ${
+                      className={`block w-full bg-transparent px-4 py-2 text-left text-sm text-cyan-50 ${isMobile && 'text-xl'} ${
                         active
                           ? 'rounded-xl bg-cyan-50 text-zinc-800 transition-background duration-300'
                           : ''
@@ -224,7 +227,7 @@ export default function HeaderDropdown({
                 <MenuItem>
                   {({ active }) => (
                     <Button
-                      className={`block w-full bg-transparent px-4 py-2 text-left text-sm text-cyan-50 ${
+                      className={`block w-full bg-transparent px-4 py-2 text-left text-sm text-cyan-50 ${isMobile && 'text-xl'} ${
                         active
                           ? 'rounded-xl bg-cyan-50 text-zinc-800 transition-background duration-300'
                           : ''
